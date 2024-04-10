@@ -35,11 +35,9 @@ SOFTWARE.
 
 class LSM6DSV16X {
 public:
-    // Costruttori privati
     LSM6DSV16X(PinName sda, PinName scl);
     LSM6DSV16X(PinName mosi, PinName miso, PinName sck, PinName cs);
 
-    // Distruttore privato
     ~LSM6DSV16X();
 
     enum InterfaceType {
@@ -99,19 +97,22 @@ public:
     LSM6DSV16XStatusTypeDef Enable_Auto_Increment();
     LSM6DSV16XStatusTypeDef Disable_Auto_Increment();
     LSM6DSV16XStatusTypeDef Device_Reset(LSM6DSV16X_Reset_t flags);
-    //bool isConnected();    
     
     void set_SDO_SAO_TO_GND();
     void set_SDO_SAO_TO_VCC();
 
 
 private:
-    // Variabili membro private per la gestione del sensore
     I2C* i2c;
     SPI* spi;
     DigitalOut* cs_pin;
 
-    uint8_t lsm6ds01tis_8bit_address = (0x6A << 1); // 8 bits device address
+    #ifdef IKS4A1
+        uint8_t lsm6ds01tis_8bit_address = (0x6B << 1); // 8 bits device address
+    #else // DEFAULT ADDRESS
+        uint8_t lsm6ds01tis_8bit_address = (0x6B << 1); // 8 bits device address
+    #endif
+
     uint32_t spi_speed;
 
     lsm6dsv16x_data_rate_t acc_odr;
@@ -148,7 +149,6 @@ private:
 
     bool readRegister(uint8_t reg, uint8_t *value, uint16_t len);
     bool writeRegister(uint8_t reg, const uint8_t *value, uint16_t len);
-
     
     int32_t auto_increment_set(uint8_t val);
     int32_t block_data_update_set(uint8_t val);
@@ -194,9 +194,6 @@ private:
     int32_t ln_pg_write(uint16_t address, uint8_t *buf, uint8_t len);
     int32_t reset_set(lsm6dsv16x_reset_t val);
     int32_t reset_get(lsm6dsv16x_reset_t *val);
-    
-    
-    
 };
 
 #endif // LSM6DSV16X_H

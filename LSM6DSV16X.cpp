@@ -28,19 +28,16 @@ SOFTWARE.
 #include <cstdint>
 #include "mbed.h"
 
-// Costruttore privato per I2C
 LSM6DSV16X::LSM6DSV16X(PinName sda, PinName scl) {
     i2c = new I2C(sda, scl);
     initialize();
 }
 
-// Costruttore privato per SPI
 LSM6DSV16X::LSM6DSV16X(PinName mosi, PinName miso, PinName sck, PinName cs) {
     // Inizializzazione del sensore tramite SPI
     initialize();
 }
 
-// Distruttore privato
 LSM6DSV16X::~LSM6DSV16X() {
     // Pulizia delle risorse, se necessario
     delete i2c;
@@ -49,14 +46,11 @@ LSM6DSV16X::~LSM6DSV16X() {
 }
 
 void LSM6DSV16X::initialize() {
-    // Configurazione del sensore
     if (i2c) {
         i2c->frequency(400000); // Set I2C frequency to 400kHz
     } else if (spi) {
-        // Configurazione specifica per SPI
-        cs_pin->write(0); // Attiva il chip select se necessario
-        // Scrivi la configurazione iniziale ai registri del sensore
-        cs_pin->write(1); // Disattiva il chip select se necessario
+        cs_pin->write(0); 
+        cs_pin->write(1); 
     }
 }
 
@@ -157,7 +151,6 @@ LSM6DSV16XStatusTypeDef LSM6DSV16X::Disable_X()
 
   return LSM6DSV16X_OK;
 }
-
 
 LSM6DSV16XStatusTypeDef LSM6DSV16X::Disable_G()
 {
