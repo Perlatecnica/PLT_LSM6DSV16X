@@ -50,7 +50,9 @@ public:
     LSM6DSV16XStatusTypeDef ReadID(uint8_t *val);
     LSM6DSV16XStatusTypeDef begin(void);
     LSM6DSV16XStatusTypeDef end();
+    LSM6DSV16XStatusTypeDef Enable_X();
     LSM6DSV16XStatusTypeDef Disable_X();
+    LSM6DSV16XStatusTypeDef Enable_G();
     LSM6DSV16XStatusTypeDef Disable_G();
     LSM6DSV16XStatusTypeDef Get_G_Sensitivity(float *Sensitivity);
     float Convert_G_Sensitivity(lsm6dsv16x_gy_full_scale_t full_scale);

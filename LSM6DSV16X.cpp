@@ -109,6 +109,40 @@ LSM6DSV16XStatusTypeDef LSM6DSV16X::begin()
   return LSM6DSV16X_OK;
 }
 
+LSM6DSV16XStatusTypeDef LSM6DSV16X::Enable_X()
+{
+  /* Check if the component is already enabled */
+  if (acc_is_enabled == 1U) {
+    return LSM6DSV16X_OK;
+  }
+
+  /* Output data rate selection. */
+  if (xl_data_rate_set(acc_odr) != LSM6DSV16X_OK) {
+    return LSM6DSV16X_ERROR;
+  }
+
+  acc_is_enabled = 1U;
+
+  return LSM6DSV16X_OK;
+}
+
+LSM6DSV16XStatusTypeDef LSM6DSV16X::Enable_G()
+{
+  /* Check if the component is already enabled */
+  if (gyro_is_enabled == 1U) {
+    return LSM6DSV16X_OK;
+  }
+
+  /* Output data rate selection. */
+  if (gy_data_rate_set(gyro_odr) != LSM6DSV16X_OK) {
+    return LSM6DSV16X_ERROR;
+  }
+
+  gyro_is_enabled = 1U;
+
+  return LSM6DSV16X_OK;
+}
+
 LSM6DSV16XStatusTypeDef LSM6DSV16X::end()
 {
   /* Disable the component */
