@@ -1,0 +1,1 @@
+# PLT_LSM6DSV16X
