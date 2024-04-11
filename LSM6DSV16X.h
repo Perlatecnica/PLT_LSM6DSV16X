@@ -51,6 +51,11 @@ public:
     LSM6DSV16XStatusTypeDef begin(void);
     LSM6DSV16XStatusTypeDef end();
     LSM6DSV16XStatusTypeDef Enable_X();
+    LSM6DSV16XStatusTypeDef Set_X_FS(int32_t FullScale);
+    LSM6DSV16XStatusTypeDef Set_X_ODR(float Odr, LSM6DSV16X_ACC_Operating_Mode_t Mode);
+    LSM6DSV16XStatusTypeDef Set_X_ODR_When_Enabled(float Odr);
+    LSM6DSV16XStatusTypeDef Set_X_ODR_When_Disabled(float Odr);
+    LSM6DSV16XStatusTypeDef FIFO_Set_Mode(uint8_t Mode);
     LSM6DSV16XStatusTypeDef Disable_X();
     LSM6DSV16XStatusTypeDef Enable_G();
     LSM6DSV16XStatusTypeDef Disable_G();

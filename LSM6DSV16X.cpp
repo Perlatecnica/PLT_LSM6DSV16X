@@ -109,6 +109,155 @@ LSM6DSV16XStatusTypeDef LSM6DSV16X::begin()
   return LSM6DSV16X_OK;
 }
 
+LSM6DSV16XStatusTypeDef LSM6DSV16X::Set_X_FS(int32_t FullScale)
+{
+  lsm6dsv16x_xl_full_scale_t new_fs;
+
+  /* Seems like MISRA C-2012 rule 14.3a violation but only from single file statical analysis point of view because
+     the parameter passed to the function is not known at the moment of analysis */
+  new_fs = (FullScale <= 2) ? LSM6DSV16X_2g
+           : (FullScale <= 4) ? LSM6DSV16X_4g
+           : (FullScale <= 8) ? LSM6DSV16X_8g
+           :                    LSM6DSV16X_16g;
+
+  if (new_fs == acc_fs) {
+    return LSM6DSV16X_OK;
+  }
+  acc_fs = new_fs;
+
+  if (xl_full_scale_set(acc_fs) != LSM6DSV16X_OK) {
+    return LSM6DSV16X_ERROR;
+  }
+
+  return LSM6DSV16X_OK;
+}
+
+LSM6DSV16XStatusTypeDef LSM6DSV16X::Set_X_ODR(float Odr, LSM6DSV16X_ACC_Operating_Mode_t Mode)
+{
+  switch (Mode) {
+    case LSM6DSV16X_ACC_HIGH_PERFORMANCE_MODE: {
+        if (xl_mode_set(LSM6DSV16X_XL_HIGH_PERFORMANCE_MD) != LSM6DSV16X_OK) {
+          return LSM6DSV16X_ERROR;
+        }
+
+        /* Valid ODR: 7.5Hz <= Odr <= 7.68kHz */
+        Odr = (Odr <    7.5f) ?    7.5f
+              : (Odr > 7680.0f) ? 7680.0f
+              :                       Odr;
+        break;
+      }
+
+    case LSM6DSV16X_ACC_HIGH_ACCURACY_MODE:
+      // TODO: Not implemented.
+      // NOTE: According to datasheet, section `6.5 High-accuracy ODR mode`:
+      // "... the other sensor also has to be configured in high-accuracy ODR (HAODR) mode."
+      return LSM6DSV16X_ERROR;
+
+    case LSM6DSV16X_ACC_NORMAL_MODE: {
+        if (xl_mode_set(LSM6DSV16X_XL_NORMAL_MD) != LSM6DSV16X_OK) {
+          return LSM6DSV16X_ERROR;
+        }
+
+        /* Valid ODR: 7.5Hz <= Odr <= 1.92kHz */
+        Odr = (Odr <    7.5f) ?    7.5f
+              : (Odr > 1920.0f) ? 1920.0f
+              :                       Odr;
+        break;
+      }
+
+    case LSM6DSV16X_ACC_LOW_POWER_MODE1: {
+        if (xl_mode_set(LSM6DSV16X_XL_LOW_POWER_2_AVG_MD) != LSM6DSV16X_OK) {
+          return LSM6DSV16X_ERROR;
+        }
+
+        /* Valid ODR: 1.875Hz;  15Hz <= Odr <= 240kHz */
+        Odr = (Odr ==   1.875f) ?    Odr
+              : (Odr <   15.000f) ?  15.0f
+              : (Odr >  240.000f) ? 240.0f
+              :                        Odr;
+        break;
+      }
+
+    case LSM6DSV16X_ACC_LOW_POWER_MODE2: {
+        if (xl_mode_set(LSM6DSV16X_XL_LOW_POWER_4_AVG_MD) != LSM6DSV16X_OK) {
+          return LSM6DSV16X_ERROR;
+        }
+
+        /* Valid ODR: 1.875Hz;  15Hz <= Odr <= 240kHz */
+        Odr = (Odr ==   1.875f) ?    Odr
+              : (Odr <   15.000f) ?  15.0f
+              : (Odr >  240.000f) ? 240.0f
+              :                        Odr;
+        break;
+      }
+
+    case LSM6DSV16X_ACC_LOW_POWER_MODE3: {
+        if (xl_mode_set(LSM6DSV16X_XL_LOW_POWER_8_AVG_MD) != LSM6DSV16X_OK) {
+          return LSM6DSV16X_ERROR;
+        }
+
+        /* Valid ODR: 1.875Hz;  15Hz <= Odr <= 240kHz */
+        Odr = (Odr ==   1.875f) ?    Odr
+              : (Odr <   15.000f) ?  15.0f
+              : (Odr >  240.000f) ? 240.0f
+              :                        Odr;
+        break;
+      }
+
+    default:
+      return LSM6DSV16X_ERROR;
+  }
+
+  if (acc_is_enabled == 1U) {
+    return Set_X_ODR_When_Enabled(Odr);
+  } else {
+    return Set_X_ODR_When_Disabled(Odr);
+  }
+}
+
+LSM6DSV16XStatusTypeDef LSM6DSV16X::Set_X_ODR_When_Disabled(float Odr)
+{
+  acc_odr = (Odr <=    1.875f) ? LSM6DSV16X_ODR_AT_1Hz875
+            : (Odr <=    7.5f) ? LSM6DSV16X_ODR_AT_7Hz5
+            : (Odr <=   15.0f) ? LSM6DSV16X_ODR_AT_15Hz
+            : (Odr <=   30.0f) ? LSM6DSV16X_ODR_AT_30Hz
+            : (Odr <=   60.0f) ? LSM6DSV16X_ODR_AT_60Hz
+            : (Odr <=  120.0f) ? LSM6DSV16X_ODR_AT_120Hz
+            : (Odr <=  240.0f) ? LSM6DSV16X_ODR_AT_240Hz
+            : (Odr <=  480.0f) ? LSM6DSV16X_ODR_AT_480Hz
+            : (Odr <=  960.0f) ? LSM6DSV16X_ODR_AT_960Hz
+            : (Odr <= 1920.0f) ? LSM6DSV16X_ODR_AT_1920Hz
+            : (Odr <= 3840.0f) ? LSM6DSV16X_ODR_AT_3840Hz
+            :                    LSM6DSV16X_ODR_AT_7680Hz;
+
+  return LSM6DSV16X_OK;
+}
+
+LSM6DSV16XStatusTypeDef LSM6DSV16X::Set_X_ODR_When_Enabled(float Odr)
+{
+  lsm6dsv16x_data_rate_t new_odr;
+
+  new_odr = (Odr <=    1.875f) ? LSM6DSV16X_ODR_AT_1Hz875
+            : (Odr <=    7.5f) ? LSM6DSV16X_ODR_AT_7Hz5
+            : (Odr <=   15.0f) ? LSM6DSV16X_ODR_AT_15Hz
+            : (Odr <=   30.0f) ? LSM6DSV16X_ODR_AT_30Hz
+            : (Odr <=   60.0f) ? LSM6DSV16X_ODR_AT_60Hz
+            : (Odr <=  120.0f) ? LSM6DSV16X_ODR_AT_120Hz
+            : (Odr <=  240.0f) ? LSM6DSV16X_ODR_AT_240Hz
+            : (Odr <=  480.0f) ? LSM6DSV16X_ODR_AT_480Hz
+            : (Odr <=  960.0f) ? LSM6DSV16X_ODR_AT_960Hz
+            : (Odr <= 1920.0f) ? LSM6DSV16X_ODR_AT_1920Hz
+            : (Odr <= 3840.0f) ? LSM6DSV16X_ODR_AT_3840Hz
+            :                    LSM6DSV16X_ODR_AT_7680Hz;
+
+  /* Output data rate selection. */
+  if (xl_data_rate_set(new_odr) != LSM6DSV16X_OK) {
+    return LSM6DSV16X_ERROR;
+  }
+
+  return LSM6DSV16X_OK;
+}
+
 LSM6DSV16XStatusTypeDef LSM6DSV16X::Enable_X()
 {
   /* Check if the component is already enabled */
@@ -125,6 +274,41 @@ LSM6DSV16XStatusTypeDef LSM6DSV16X::Enable_X()
 
   return LSM6DSV16X_OK;
 }
+
+LSM6DSV16XStatusTypeDef LSM6DSV16X::FIFO_Set_Mode(uint8_t Mode)
+{
+  lsm6dsv16x_fifo_mode_t newMode = LSM6DSV16X_BYPASS_MODE;
+
+  switch (Mode) {
+    case 0:
+      newMode = LSM6DSV16X_BYPASS_MODE;
+      break;
+    case 1:
+      newMode = LSM6DSV16X_FIFO_MODE;
+      break;
+    case 3:
+      newMode = LSM6DSV16X_STREAM_TO_FIFO_MODE;
+      break;
+    case 4:
+      newMode = LSM6DSV16X_BYPASS_TO_STREAM_MODE;
+      break;
+    case 6:
+      newMode = LSM6DSV16X_STREAM_MODE;
+      break;
+    case 7:
+      newMode = LSM6DSV16X_BYPASS_TO_FIFO_MODE;
+      break;
+    default:
+      return LSM6DSV16X_ERROR;
+  }
+  fifo_mode = newMode;
+  if (fifo_mode_set(fifo_mode) != LSM6DSV16X_OK) {
+    return LSM6DSV16X_ERROR;
+  }
+
+  return LSM6DSV16X_OK;
+}
+
 
 LSM6DSV16XStatusTypeDef LSM6DSV16X::Enable_G()
 {
