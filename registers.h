@@ -80,6 +80,14 @@ typedef enum {
 } lsm6dsv16x_gy_self_test_t;
 
 typedef struct {
+  uint16_t fifo_level          : 9;
+  uint8_t fifo_bdr             : 1;
+  uint8_t fifo_full            : 1;
+  uint8_t fifo_ovr             : 1;
+  uint8_t fifo_th              : 1;
+} lsm6dsv16x_fifo_status_t;
+
+typedef struct {
   uint8_t game_rotation        : 1;
   uint8_t gravity              : 1;
   uint8_t gbias                : 1;

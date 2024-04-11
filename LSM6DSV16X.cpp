@@ -109,6 +109,47 @@ LSM6DSV16XStatusTypeDef LSM6DSV16X::begin()
   return LSM6DSV16X_OK;
 }
 
+LSM6DSV16XStatusTypeDef LSM6DSV16X::FIFO_Get_Num_Samples(uint16_t *NumSamples)
+{
+  lsm6dsv16x_fifo_status_t status;
+  if (fifo_status_get(&status) != LSM6DSV16X_OK) {
+    return LSM6DSV16X_ERROR;
+  }
+  *NumSamples = status.fifo_level;
+
+  return LSM6DSV16X_OK;
+}
+
+LSM6DSV16XStatusTypeDef LSM6DSV16X::FIFO_Get_Tag(uint8_t *Tag)
+{
+  lsm6dsv16x_fifo_data_out_tag_t tag_local;
+
+  if (readRegister(LSM6DSV16X_FIFO_DATA_OUT_TAG, (uint8_t *)&tag_local, 1) != LSM6DSV16X_OK) {
+    return LSM6DSV16X_ERROR;
+  }
+
+  *Tag = (uint8_t)tag_local.tag_sensor;
+
+  return LSM6DSV16X_OK;
+}
+
+LSM6DSV16XStatusTypeDef LSM6DSV16X::FIFO_Get_Rotation_Vector(float *rvec)
+{
+  lsm6dsv16x_axis3bit16_t data_raw;
+
+  if (FIFO_Get_Data(data_raw.u8bit) != LSM6DSV16X_OK) {
+    return LSM6DSV16X_ERROR;
+  }
+  sflp2q(rvec, (uint16_t *)&data_raw.i16bit[0]);
+
+  return LSM6DSV16X_OK;
+}
+
+LSM6DSV16XStatusTypeDef LSM6DSV16X::FIFO_Get_Data(uint8_t *Data)
+{
+  return (LSM6DSV16XStatusTypeDef) readRegister(LSM6DSV16X_FIFO_DATA_OUT_X_L, Data, 6);
+}
+
 LSM6DSV16XStatusTypeDef LSM6DSV16X::Set_X_FS(int32_t FullScale)
 {
   lsm6dsv16x_xl_full_scale_t new_fs;
@@ -3419,6 +3460,30 @@ int32_t LSM6DSV16X::gy_full_scale_get(lsm6dsv16x_gy_full_scale_t *val)
       *val = LSM6DSV16X_125dps;
       break;
   }
+
+  return ret;
+}
+
+int32_t LSM6DSV16X::fifo_status_get(lsm6dsv16x_fifo_status_t *val)
+{
+  uint8_t buff[2];
+  lsm6dsv16x_fifo_status2_t status;
+  int32_t ret;
+
+  ret = readRegister(LSM6DSV16X_FIFO_STATUS1, (uint8_t *)&buff[0], 2);
+  if (ret != 0) {
+    return ret;
+  }
+
+  bytecpy((uint8_t *)&status, &buff[1]);
+
+  val->fifo_bdr = status.counter_bdr_ia;
+  val->fifo_ovr = status.fifo_ovr_ia;
+  val->fifo_full = status.fifo_full_ia;
+  val->fifo_th = status.fifo_wtm_ia;
+
+  val->fifo_level = (uint16_t)buff[1] & 0x01U;
+  val->fifo_level = (val->fifo_level * 256U) + buff[0];
 
   return ret;
 }

@@ -105,6 +105,10 @@ public:
     LSM6DSV16XStatusTypeDef Enable_Auto_Increment();
     LSM6DSV16XStatusTypeDef Disable_Auto_Increment();
     LSM6DSV16XStatusTypeDef Device_Reset(LSM6DSV16X_Reset_t flags);
+    LSM6DSV16XStatusTypeDef FIFO_Get_Num_Samples(uint16_t *NumSamples);
+    LSM6DSV16XStatusTypeDef FIFO_Get_Tag(uint8_t *Tag);
+    LSM6DSV16XStatusTypeDef FIFO_Get_Rotation_Vector(float *rvec);
+    LSM6DSV16XStatusTypeDef FIFO_Get_Data(uint8_t *Data);
     
     void set_SDO_SAO_TO_GND();
     void set_SDO_SAO_TO_VCC();
@@ -202,6 +206,7 @@ private:
     int32_t ln_pg_write(uint16_t address, uint8_t *buf, uint8_t len);
     int32_t reset_set(lsm6dsv16x_reset_t val);
     int32_t reset_get(lsm6dsv16x_reset_t *val);
+    int32_t fifo_status_get(lsm6dsv16x_fifo_status_t *val);
 };
 
 #endif // LSM6DSV16X_H
