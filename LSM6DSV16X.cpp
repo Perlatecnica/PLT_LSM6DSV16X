@@ -109,6 +109,239 @@ LSM6DSV16XStatusTypeDef LSM6DSV16X::begin()
   return LSM6DSV16X_OK;
 }
 
+LSM6DSV16XStatusTypeDef LSM6DSV16X::Enable_6D_Orientation(LSM6DSV16X_SensorIntPin_t IntPin)
+{
+  LSM6DSV16XStatusTypeDef ret = LSM6DSV16X_OK;
+  lsm6dsv16x_md1_cfg_t val1;
+  lsm6dsv16x_md2_cfg_t val2;
+  lsm6dsv16x_functions_enable_t functions_enable;
+
+  /* Output Data Rate selection */
+  if (Set_X_ODR(480.0f) != LSM6DSV16X_OK) {
+    return LSM6DSV16X_ERROR;
+  }
+
+  /* Full scale selection */
+  if (Set_X_FS(2) != LSM6DSV16X_OK) {
+    return LSM6DSV16X_ERROR;
+  }
+
+  /* 6D orientation enabled. */
+  if (Set_6D_Orientation_Threshold(2) != LSM6DSV16X_OK) {
+    return LSM6DSV16X_ERROR;
+  }
+  /* Enable 6D orientation event on either INT1 or INT2 pin */
+  switch (IntPin) {
+    case LSM6DSV16X_INT1_PIN:
+      if (readRegister(LSM6DSV16X_MD1_CFG, (uint8_t *)&val1, 1) != LSM6DSV16X_OK) {
+        return LSM6DSV16X_ERROR;
+      }
+
+      val1.int1_6d = PROPERTY_ENABLE;
+
+      if (writeRegister(LSM6DSV16X_MD1_CFG, (uint8_t *)&val1, 1) != LSM6DSV16X_OK) {
+        return LSM6DSV16X_ERROR;
+      }
+
+      if (readRegister(LSM6DSV16X_FUNCTIONS_ENABLE, (uint8_t *)&functions_enable, 1) != LSM6DSV16X_OK) {
+        return LSM6DSV16X_ERROR;
+      }
+
+      functions_enable.interrupts_enable = PROPERTY_ENABLE;
+
+      if (writeRegister(LSM6DSV16X_FUNCTIONS_ENABLE, (uint8_t *)&functions_enable, 1) != LSM6DSV16X_OK) {
+        return LSM6DSV16X_ERROR;
+      }
+      break;
+
+    case LSM6DSV16X_INT2_PIN:
+      if (readRegister(LSM6DSV16X_MD2_CFG, (uint8_t *)&val2, 1) != LSM6DSV16X_OK) {
+        return LSM6DSV16X_ERROR;
+      }
+
+      val2.int2_6d = PROPERTY_ENABLE;
+
+      if (writeRegister(LSM6DSV16X_MD2_CFG, (uint8_t *)&val2, 1) != LSM6DSV16X_OK) {
+        return LSM6DSV16X_ERROR;
+      }
+
+      if (readRegister(LSM6DSV16X_FUNCTIONS_ENABLE, (uint8_t *)&functions_enable, 1) != LSM6DSV16X_OK) {
+        return LSM6DSV16X_ERROR;
+      }
+
+      functions_enable.interrupts_enable = PROPERTY_ENABLE;
+
+      if (writeRegister(LSM6DSV16X_FUNCTIONS_ENABLE, (uint8_t *)&functions_enable, 1) != LSM6DSV16X_OK) {
+        return LSM6DSV16X_ERROR;
+      }
+      break;
+
+    default:
+      ret = LSM6DSV16X_ERROR;
+      break;
+  }
+
+  return ret;
+}
+
+
+LSM6DSV16XStatusTypeDef LSM6DSV16X::Disable_6D_Orientation()
+{
+  lsm6dsv16x_md1_cfg_t val1;
+  lsm6dsv16x_md2_cfg_t val2;
+
+  /* Reset threshold */
+  if (Set_6D_Orientation_Threshold(0) != LSM6DSV16X_OK) {
+    return LSM6DSV16X_ERROR;
+  }
+
+  /* Disable 6D orientation event on both INT1 and INT2 pins */
+  if (readRegister(LSM6DSV16X_MD1_CFG, (uint8_t *)&val1, 1) != LSM6DSV16X_OK) {
+    return LSM6DSV16X_ERROR;
+  }
+
+  val1.int1_6d = PROPERTY_DISABLE;
+
+  if (writeRegister(LSM6DSV16X_MD1_CFG, (uint8_t *)&val1, 1) != LSM6DSV16X_OK) {
+    return LSM6DSV16X_ERROR;
+  }
+
+  if (readRegister(LSM6DSV16X_MD2_CFG, (uint8_t *)&val2, 1) != LSM6DSV16X_OK) {
+    return LSM6DSV16X_ERROR;
+  }
+
+  val2.int2_6d = PROPERTY_DISABLE;
+
+  if (writeRegister(LSM6DSV16X_MD2_CFG, (uint8_t *)&val2, 1) != LSM6DSV16X_OK) {
+    return LSM6DSV16X_ERROR;
+  }
+
+  return LSM6DSV16X_OK;
+}
+
+/**
+ * @brief  Set 6D orientation threshold
+ * @param  Threshold 6D Orientation detection threshold
+ * @retval 0 in case of success, an error code otherwise
+ */
+LSM6DSV16XStatusTypeDef LSM6DSV16X::Set_6D_Orientation_Threshold(uint8_t Threshold)
+{
+  LSM6DSV16XStatusTypeDef ret = LSM6DSV16X_OK;
+  lsm6dsv16x_6d_threshold_t newThreshold = LSM6DSV16X_DEG_80;
+
+  switch (Threshold) {
+    case 0:
+      newThreshold = LSM6DSV16X_DEG_80;
+      break;
+    case 1:
+      newThreshold = LSM6DSV16X_DEG_70;
+      break;
+    case 2:
+      newThreshold = LSM6DSV16X_DEG_60;
+      break;
+    case 3:
+      newThreshold = LSM6DSV16X_DEG_50;
+      break;
+    default:
+      ret = LSM6DSV16X_ERROR;
+      break;
+  }
+
+  if (ret == LSM6DSV16X_ERROR) {
+    return LSM6DSV16X_ERROR;
+  }
+
+  if (_6d_threshold_set(newThreshold) != LSM6DSV16X_OK) {
+    return LSM6DSV16X_ERROR;
+  }
+
+  return LSM6DSV16X_OK;
+
+}
+
+
+LSM6DSV16XStatusTypeDef LSM6DSV16X::Get_6D_Orientation_XL(uint8_t *XLow)
+{
+  lsm6dsv16x_d6d_src_t data;
+
+  if (readRegister(LSM6DSV16X_D6D_SRC, (uint8_t *)&data, 1) != LSM6DSV16X_OK) {
+    return LSM6DSV16X_ERROR;
+  }
+
+  *XLow = data.xl;
+
+  return LSM6DSV16X_OK;
+}
+
+LSM6DSV16XStatusTypeDef LSM6DSV16X::Get_6D_Orientation_XH(uint8_t *XHigh)
+{
+  lsm6dsv16x_d6d_src_t data;
+
+  if (readRegister(LSM6DSV16X_D6D_SRC, (uint8_t *)&data, 1) != LSM6DSV16X_OK) {
+    return LSM6DSV16X_ERROR;
+  }
+
+  *XHigh = data.xh;
+
+  return LSM6DSV16X_OK;
+}
+
+
+LSM6DSV16XStatusTypeDef LSM6DSV16X::Get_6D_Orientation_YL(uint8_t *YLow)
+{
+  lsm6dsv16x_d6d_src_t data;
+
+  if (readRegister(LSM6DSV16X_D6D_SRC, (uint8_t *)&data, 1) != LSM6DSV16X_OK) {
+    return LSM6DSV16X_ERROR;
+  }
+
+  *YLow = data.yl;
+
+  return LSM6DSV16X_OK;
+}
+
+
+LSM6DSV16XStatusTypeDef LSM6DSV16X::Get_6D_Orientation_YH(uint8_t *YHigh)
+{
+  lsm6dsv16x_d6d_src_t data;
+
+  if (readRegister(LSM6DSV16X_D6D_SRC, (uint8_t *)&data, 1) != LSM6DSV16X_OK) {
+    return LSM6DSV16X_ERROR;
+  }
+
+  *YHigh = data.yh;
+
+  return LSM6DSV16X_OK;
+}
+
+
+LSM6DSV16XStatusTypeDef LSM6DSV16X::Get_6D_Orientation_ZL(uint8_t *ZLow)
+{
+  lsm6dsv16x_d6d_src_t data;
+
+  if (readRegister(LSM6DSV16X_D6D_SRC, (uint8_t *)&data, 1) != LSM6DSV16X_OK) {
+    return LSM6DSV16X_ERROR;
+  }
+
+  *ZLow = data.zl;
+
+  return LSM6DSV16X_OK;
+}
+
+
+LSM6DSV16XStatusTypeDef LSM6DSV16X::Get_6D_Orientation_ZH(uint8_t *ZHigh)
+{
+  lsm6dsv16x_d6d_src_t data;
+
+  if (readRegister(LSM6DSV16X_D6D_SRC, (uint8_t *)&data, 1) != LSM6DSV16X_OK) {
+    return LSM6DSV16X_ERROR;
+  }
+
+  *ZHigh = data.zh;
+
+  return LSM6DSV16X_OK;
+}
+
 LSM6DSV16XStatusTypeDef LSM6DSV16X::FIFO_Get_Num_Samples(uint16_t *NumSamples)
 {
   lsm6dsv16x_fifo_status_t status;
@@ -3484,6 +3717,20 @@ int32_t LSM6DSV16X::fifo_status_get(lsm6dsv16x_fifo_status_t *val)
 
   val->fifo_level = (uint16_t)buff[1] & 0x01U;
   val->fifo_level = (val->fifo_level * 256U) + buff[0];
+
+  return ret;
+}
+
+int32_t LSM6DSV16X::_6d_threshold_set(lsm6dsv16x_6d_threshold_t val)
+{
+  lsm6dsv16x_tap_ths_6d_t tap_ths_6d;
+  int32_t ret;
+
+  ret = readRegister(LSM6DSV16X_TAP_THS_6D, (uint8_t *)&tap_ths_6d, 1);
+  if (ret == 0) {
+    tap_ths_6d.sixd_ths = (uint8_t)val & 0x03U;
+    ret = writeRegister(LSM6DSV16X_TAP_THS_6D, (uint8_t *)&tap_ths_6d, 1);
+  }
 
   return ret;
 }

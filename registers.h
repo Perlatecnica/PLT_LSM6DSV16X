@@ -79,6 +79,18 @@ typedef enum {
   LSM6DSV16X_GY_ST_NEGATIVE = 0x2,
 } lsm6dsv16x_gy_self_test_t;
 
+typedef enum {
+  LSM6DSV16X_INT1_PIN,
+  LSM6DSV16X_INT2_PIN,
+} LSM6DSV16X_SensorIntPin_t;
+
+typedef enum {
+  LSM6DSV16X_DEG_80 = 0x0,
+  LSM6DSV16X_DEG_70 = 0x1,
+  LSM6DSV16X_DEG_60 = 0x2,
+  LSM6DSV16X_DEG_50 = 0x3,
+} lsm6dsv16x_6d_threshold_t;
+
 typedef struct {
   uint16_t fifo_level          : 9;
   uint8_t fifo_bdr             : 1;

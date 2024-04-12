@@ -109,7 +109,16 @@ public:
     LSM6DSV16XStatusTypeDef FIFO_Get_Tag(uint8_t *Tag);
     LSM6DSV16XStatusTypeDef FIFO_Get_Rotation_Vector(float *rvec);
     LSM6DSV16XStatusTypeDef FIFO_Get_Data(uint8_t *Data);
-    
+    LSM6DSV16XStatusTypeDef Get_6D_Orientation_XL(uint8_t *XLow);
+    LSM6DSV16XStatusTypeDef Get_6D_Orientation_XH(uint8_t *XHigh);
+    LSM6DSV16XStatusTypeDef Get_6D_Orientation_YL(uint8_t *YLow);
+    LSM6DSV16XStatusTypeDef Get_6D_Orientation_YH(uint8_t *YHigh);
+    LSM6DSV16XStatusTypeDef Get_6D_Orientation_ZL(uint8_t *ZLow);
+    LSM6DSV16XStatusTypeDef Get_6D_Orientation_ZH(uint8_t *ZHigh);
+    LSM6DSV16XStatusTypeDef Set_6D_Orientation_Threshold(uint8_t Threshold);
+    LSM6DSV16XStatusTypeDef Enable_6D_Orientation(LSM6DSV16X_SensorIntPin_t IntPin);
+    LSM6DSV16XStatusTypeDef Disable_6D_Orientation();
+
     void set_SDO_SAO_TO_GND();
     void set_SDO_SAO_TO_VCC();
 
@@ -207,6 +216,7 @@ private:
     int32_t reset_set(lsm6dsv16x_reset_t val);
     int32_t reset_get(lsm6dsv16x_reset_t *val);
     int32_t fifo_status_get(lsm6dsv16x_fifo_status_t *val);
+    int32_t _6d_threshold_set(lsm6dsv16x_6d_threshold_t val);
 };
 
 #endif // LSM6DSV16X_H
