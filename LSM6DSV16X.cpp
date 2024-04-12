@@ -109,6 +109,111 @@ LSM6DSV16XStatusTypeDef LSM6DSV16X::begin()
   return LSM6DSV16X_OK;
 }
 
+LSM6DSV16XStatusTypeDef LSM6DSV16X::Get_X_Event_Status(LSM6DSV16X_Event_Status_t *Status)
+{
+  lsm6dsv16x_emb_func_status_t emb_func_status;
+  lsm6dsv16x_wake_up_src_t wake_up_src;
+  lsm6dsv16x_tap_src_t tap_src;
+  lsm6dsv16x_d6d_src_t d6d_src;
+  lsm6dsv16x_emb_func_src_t func_src;
+  lsm6dsv16x_md1_cfg_t md1_cfg;
+  lsm6dsv16x_md2_cfg_t md2_cfg;
+  lsm6dsv16x_emb_func_int1_t int1_ctrl;
+  lsm6dsv16x_emb_func_int2_t int2_ctrl;
+
+
+  (void)memset((void *)Status, 0x0, sizeof(LSM6DSV16X_Event_Status_t));
+
+  if (readRegister(LSM6DSV16X_WAKE_UP_SRC, (uint8_t *)&wake_up_src, 1) != LSM6DSV16X_OK) {
+    return LSM6DSV16X_ERROR;
+  }
+
+  if (readRegister(LSM6DSV16X_TAP_SRC, (uint8_t *)&tap_src, 1) != LSM6DSV16X_OK) {
+    return LSM6DSV16X_ERROR;
+  }
+
+  if (readRegister(LSM6DSV16X_D6D_SRC, (uint8_t *)&d6d_src, 1) != LSM6DSV16X_OK) {
+    return LSM6DSV16X_ERROR;
+  }
+
+  if (mem_bank_set(LSM6DSV16X_EMBED_FUNC_MEM_BANK) != LSM6DSV16X_OK) {
+    return LSM6DSV16X_ERROR;
+  }
+
+  if (readRegister(LSM6DSV16X_EMB_FUNC_SRC, (uint8_t *)&func_src, 1) != LSM6DSV16X_OK) {
+    return LSM6DSV16X_ERROR;
+  }
+
+  if (readRegister(LSM6DSV16X_EMB_FUNC_INT1, (uint8_t *)&int1_ctrl, 1) != LSM6DSV16X_OK) {
+    return LSM6DSV16X_ERROR;
+  }
+
+  if (readRegister(LSM6DSV16X_EMB_FUNC_INT2, (uint8_t *)&int2_ctrl, 1) != LSM6DSV16X_OK) {
+    return LSM6DSV16X_ERROR;
+  }
+
+  if (readRegister(LSM6DSV16X_EMB_FUNC_STATUS, (uint8_t *)&emb_func_status, 1) != LSM6DSV16X_OK) {
+    return LSM6DSV16X_ERROR;
+  }
+
+  if (mem_bank_set(LSM6DSV16X_MAIN_MEM_BANK) != 0) {
+    return LSM6DSV16X_ERROR;
+  }
+
+  if (readRegister(LSM6DSV16X_MD1_CFG, (uint8_t *)&md1_cfg, 1) != LSM6DSV16X_OK) {
+    return LSM6DSV16X_ERROR;
+  }
+
+  if (readRegister(LSM6DSV16X_MD2_CFG, (uint8_t *)&md2_cfg, 1) != LSM6DSV16X_OK) {
+    return LSM6DSV16X_ERROR;
+  }
+
+
+  if ((md1_cfg.int1_ff == 1U) || (md2_cfg.int2_ff == 1U)) {
+    if (wake_up_src.ff_ia == 1U) {
+      Status->FreeFallStatus = 1;
+    }
+  }
+
+  if ((md1_cfg.int1_wu == 1U) || (md2_cfg.int2_wu == 1U)) {
+    if (wake_up_src.wu_ia == 1U) {
+      Status->WakeUpStatus = 1;
+    }
+  }
+
+  if ((md1_cfg.int1_single_tap == 1U) || (md2_cfg.int2_single_tap == 1U)) {
+    if (tap_src.single_tap == 1U) {
+      Status->TapStatus = 1;
+    }
+  }
+
+  if ((md1_cfg.int1_double_tap == 1U) || (md2_cfg.int2_double_tap == 1U)) {
+    if (tap_src.double_tap == 1U) {
+      Status->DoubleTapStatus = 1;
+    }
+  }
+
+  if ((md1_cfg.int1_6d == 1U) || (md2_cfg.int2_6d == 1U)) {
+    if (d6d_src.d6d_ia == 1U) {
+      Status->D6DOrientationStatus = 1;
+    }
+  }
+
+  if (int1_ctrl.int1_step_detector == 1U || int2_ctrl.int2_step_detector == 1U) {
+    if (func_src.step_detected == 1U) {
+      Status->StepStatus = 1;
+    }
+  }
+
+  if ((int1_ctrl.int1_tilt == 1U) || (int2_ctrl.int2_tilt == 1U)) {
+    if (emb_func_status.is_tilt == 1U) {
+      Status->TiltStatus = 1;
+    }
+  }
+
+  return LSM6DSV16X_OK;
+}
+
 LSM6DSV16XStatusTypeDef LSM6DSV16X::Enable_6D_Orientation(LSM6DSV16X_SensorIntPin_t IntPin)
 {
   LSM6DSV16XStatusTypeDef ret = LSM6DSV16X_OK;

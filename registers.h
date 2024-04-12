@@ -92,6 +92,17 @@ typedef enum {
 } lsm6dsv16x_6d_threshold_t;
 
 typedef struct {
+  unsigned int FreeFallStatus : 1;
+  unsigned int TapStatus : 1;
+  unsigned int DoubleTapStatus : 1;
+  unsigned int WakeUpStatus : 1;
+  unsigned int StepStatus : 1;
+  unsigned int TiltStatus : 1;
+  unsigned int D6DOrientationStatus : 1;
+  unsigned int SleepStatus : 1;
+} LSM6DSV16X_Event_Status_t;
+
+typedef struct {
   uint16_t fifo_level          : 9;
   uint8_t fifo_bdr             : 1;
   uint8_t fifo_full            : 1;

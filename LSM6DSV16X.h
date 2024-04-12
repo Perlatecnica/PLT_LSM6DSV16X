@@ -118,6 +118,7 @@ public:
     LSM6DSV16XStatusTypeDef Set_6D_Orientation_Threshold(uint8_t Threshold);
     LSM6DSV16XStatusTypeDef Enable_6D_Orientation(LSM6DSV16X_SensorIntPin_t IntPin);
     LSM6DSV16XStatusTypeDef Disable_6D_Orientation();
+    LSM6DSV16XStatusTypeDef Get_X_Event_Status(LSM6DSV16X_Event_Status_t *Status);
 
     void set_SDO_SAO_TO_GND();
     void set_SDO_SAO_TO_VCC();
