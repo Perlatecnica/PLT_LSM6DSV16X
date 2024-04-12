@@ -131,7 +131,7 @@ private:
 
     #ifdef IKS4A1
         uint8_t lsm6ds01tis_8bit_address = (0x6B << 1); // 8 bits device address
-        #define  LSM6DSV16X_INT1_PIN D6
+        #define  LSM6DSV16X_INT1_PIN D5
     #else // DEFAULT ADDRESS
         uint8_t lsm6ds01tis_8bit_address = (0x6B << 1); // 8 bits device address
     #endif
