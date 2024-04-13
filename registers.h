@@ -91,6 +91,11 @@ typedef enum {
   LSM6DSV16X_DEG_50 = 0x3,
 } lsm6dsv16x_6d_threshold_t;
 
+typedef enum {
+  LSM6DSV16X_ONLY_SINGLE        = 0x0,
+  LSM6DSV16X_BOTH_SINGLE_DOUBLE = 0x1,
+} lsm6dsv16x_tap_mode_t;
+
 typedef struct {
   unsigned int FreeFallStatus : 1;
   unsigned int TapStatus : 1;

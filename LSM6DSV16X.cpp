@@ -109,6 +109,120 @@ LSM6DSV16XStatusTypeDef LSM6DSV16X::begin()
   return LSM6DSV16X_OK;
 }
 
+LSM6DSV16XStatusTypeDef LSM6DSV16X::Enable_Single_Tap_Detection(LSM6DSV16X_SensorIntPin_t IntPin)
+{
+  LSM6DSV16XStatusTypeDef ret = LSM6DSV16X_OK;
+  lsm6dsv16x_md1_cfg_t val1;
+  lsm6dsv16x_md2_cfg_t val2;
+  lsm6dsv16x_functions_enable_t functions_enable;
+
+  lsm6dsv16x_tap_dur_t tap_dur;
+  lsm6dsv16x_tap_cfg0_t tap_cfg0;
+  lsm6dsv16x_tap_ths_6d_t tap_ths_6d;
+
+  /* Output Data Rate selection */
+  if (Set_X_ODR(480) != LSM6DSV16X_OK) {
+    return LSM6DSV16X_ERROR;
+  }
+
+  /* Full scale selection */
+  if (Set_X_FS(8) != LSM6DSV16X_OK) {
+    return LSM6DSV16X_ERROR;
+  }
+
+  /* Enable tap detection on Z-axis. */
+  if (readRegister(LSM6DSV16X_TAP_CFG0, (uint8_t *)&tap_cfg0, 1) != LSM6DSV16X_OK) {
+    return LSM6DSV16X_ERROR;
+  }
+
+  tap_cfg0.tap_z_en = 0x01U;
+
+  if (writeRegister(LSM6DSV16X_TAP_CFG0, (uint8_t *)&tap_cfg0, 1) != LSM6DSV16X_OK) {
+    return LSM6DSV16X_ERROR;
+  }
+
+  /* Set Z-axis threshold. */
+  if (readRegister(LSM6DSV16X_TAP_THS_6D, (uint8_t *)&tap_ths_6d, 1) != LSM6DSV16X_OK) {
+    return LSM6DSV16X_ERROR;
+  }
+
+  tap_ths_6d.tap_ths_z = 0x2U;
+
+  if (writeRegister(LSM6DSV16X_TAP_THS_6D, (uint8_t *)&tap_ths_6d, 1) != LSM6DSV16X_OK) {
+    return LSM6DSV16X_ERROR;
+  }
+
+  /* Set quiet and shock time windows. */
+  if (readRegister(LSM6DSV16X_TAP_DUR, (uint8_t *)&tap_dur, 1) != LSM6DSV16X_OK) {
+    return LSM6DSV16X_ERROR;
+  }
+
+  tap_dur.quiet = (uint8_t)0x02U;
+  tap_dur.shock = (uint8_t)0x01U;
+
+  if (writeRegister(LSM6DSV16X_TAP_DUR, (uint8_t *)&tap_dur, 1) != LSM6DSV16X_OK) {
+    return LSM6DSV16X_ERROR;
+  }
+
+  /* Set tap mode. */
+  if (tap_mode_set(LSM6DSV16X_ONLY_SINGLE) != LSM6DSV16X_OK) {
+    return LSM6DSV16X_ERROR;
+  }
+
+  /* Enable single tap event on either INT1 or INT2 pin */
+  switch (IntPin) {
+    case LSM6DSV16X_INT1_PIN:
+      if (readRegister(LSM6DSV16X_MD1_CFG, (uint8_t *)&val1, 1) != LSM6DSV16X_OK) {
+        return LSM6DSV16X_ERROR;
+      }
+
+      val1.int1_single_tap = PROPERTY_ENABLE;
+
+      if (writeRegister(LSM6DSV16X_MD1_CFG, (uint8_t *)&val1, 1) != LSM6DSV16X_OK) {
+        return LSM6DSV16X_ERROR;
+      }
+
+      if (readRegister(LSM6DSV16X_FUNCTIONS_ENABLE, (uint8_t *)&functions_enable, 1) != LSM6DSV16X_OK) {
+        return LSM6DSV16X_ERROR;
+      }
+
+      functions_enable.interrupts_enable = PROPERTY_ENABLE;
+
+      if (writeRegister(LSM6DSV16X_FUNCTIONS_ENABLE, (uint8_t *)&functions_enable, 1) != LSM6DSV16X_OK) {
+        return LSM6DSV16X_ERROR;
+      }
+      break;
+
+    case LSM6DSV16X_INT2_PIN:
+      if (readRegister(LSM6DSV16X_MD2_CFG, (uint8_t *)&val2, 1) != LSM6DSV16X_OK) {
+        return LSM6DSV16X_ERROR;
+      }
+
+      val2.int2_single_tap = PROPERTY_ENABLE;
+
+      if (writeRegister(LSM6DSV16X_MD2_CFG, (uint8_t *)&val2, 1) != LSM6DSV16X_OK) {
+        return LSM6DSV16X_ERROR;
+      }
+
+      if (readRegister(LSM6DSV16X_FUNCTIONS_ENABLE, (uint8_t *)&functions_enable, 1) != LSM6DSV16X_OK) {
+        return LSM6DSV16X_ERROR;
+      }
+
+      functions_enable.interrupts_enable = PROPERTY_ENABLE;
+
+      if (writeRegister(LSM6DSV16X_FUNCTIONS_ENABLE, (uint8_t *)&functions_enable, 1) != LSM6DSV16X_OK) {
+        return LSM6DSV16X_ERROR;
+      }
+      break;
+
+    default:
+      ret = LSM6DSV16X_ERROR;
+      break;
+  }
+
+  return ret;
+}
+
 LSM6DSV16XStatusTypeDef LSM6DSV16X::Get_X_Axes(int32_t *Acceleration)
 {
   lsm6dsv16x_axis3bit16_t data_raw; //
@@ -3885,4 +3999,45 @@ float LSM6DSV16X::Convert_X_Sensitivity(lsm6dsv16x_xl_full_scale_t full_scale)
       break;
   }
   return Sensitivity;
+}
+
+int32_t LSM6DSV16X::tap_mode_set(lsm6dsv16x_tap_mode_t val)
+{
+  lsm6dsv16x_wake_up_ths_t wake_up_ths;
+  int32_t ret;
+
+  ret = readRegister(LSM6DSV16X_WAKE_UP_THS, (uint8_t *)&wake_up_ths, 1);
+  if (ret == 0) {
+    wake_up_ths.single_double_tap = (uint8_t)val & 0x01U;
+    ret = writeRegister(LSM6DSV16X_WAKE_UP_THS, (uint8_t *)&wake_up_ths, 1);
+  }
+
+  return ret;
+}
+
+int32_t LSM6DSV16X::tap_mode_get(lsm6dsv16x_tap_mode_t *val)
+{
+  lsm6dsv16x_wake_up_ths_t wake_up_ths;
+  int32_t ret;
+
+  ret = readRegister(LSM6DSV16X_WAKE_UP_THS, (uint8_t *)&wake_up_ths, 1);
+  if (ret != 0) {
+    return ret;
+  }
+
+  switch (wake_up_ths.single_double_tap) {
+    case LSM6DSV16X_ONLY_SINGLE:
+      *val = LSM6DSV16X_ONLY_SINGLE;
+      break;
+
+    case LSM6DSV16X_BOTH_SINGLE_DOUBLE:
+      *val = LSM6DSV16X_BOTH_SINGLE_DOUBLE;
+      break;
+
+    default:
+      *val = LSM6DSV16X_ONLY_SINGLE;
+      break;
+  }
+
+  return ret;
 }
