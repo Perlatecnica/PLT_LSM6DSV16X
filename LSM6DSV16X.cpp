@@ -109,6 +109,29 @@ LSM6DSV16XStatusTypeDef LSM6DSV16X::begin()
   return LSM6DSV16X_OK;
 }
 
+LSM6DSV16XStatusTypeDef LSM6DSV16X::Get_X_Axes(int32_t *Acceleration)
+{
+  lsm6dsv16x_axis3bit16_t data_raw; //
+  float sensitivity = Convert_X_Sensitivity(acc_fs);
+
+  /* Read raw data values. */
+  if (acceleration_raw_get(data_raw.i16bit) != LSM6DSV16X_OK) {
+    return LSM6DSV16X_ERROR;
+  }
+
+  /* Get LSM6DSV16X actual sensitivity. */
+  if (sensitivity == 0.0f) {
+    return LSM6DSV16X_ERROR;
+  }
+
+  /* Calculate the data. */
+  Acceleration[0] = (int32_t)((float)((float)data_raw.i16bit[0] * sensitivity));
+  Acceleration[1] = (int32_t)((float)((float)data_raw.i16bit[1] * sensitivity));
+  Acceleration[2] = (int32_t)((float)((float)data_raw.i16bit[2] * sensitivity));
+
+  return LSM6DSV16X_OK;
+}
+
 LSM6DSV16XStatusTypeDef LSM6DSV16X::Get_X_Event_Status(LSM6DSV16X_Event_Status_t *Status)
 {
   lsm6dsv16x_emb_func_status_t emb_func_status;
@@ -3838,4 +3861,28 @@ int32_t LSM6DSV16X::_6d_threshold_set(lsm6dsv16x_6d_threshold_t val)
   }
 
   return ret;
+}
+
+float LSM6DSV16X::Convert_X_Sensitivity(lsm6dsv16x_xl_full_scale_t full_scale)
+{
+  float Sensitivity = 0.0f;
+  /* Store the Sensitivity based on actual full scale. */
+  switch (full_scale) {
+    case LSM6DSV16X_2g:
+      Sensitivity = LSM6DSV16X_ACC_SENSITIVITY_FS_2G;
+      break;
+
+    case LSM6DSV16X_4g:
+      Sensitivity = LSM6DSV16X_ACC_SENSITIVITY_FS_4G;
+      break;
+
+    case LSM6DSV16X_8g:
+      Sensitivity = LSM6DSV16X_ACC_SENSITIVITY_FS_8G;
+      break;
+
+    case LSM6DSV16X_16g:
+      Sensitivity = LSM6DSV16X_ACC_SENSITIVITY_FS_16G;
+      break;
+  }
+  return Sensitivity;
 }

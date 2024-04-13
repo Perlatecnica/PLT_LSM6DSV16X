@@ -51,6 +51,7 @@ public:
     LSM6DSV16XStatusTypeDef begin(void);
     LSM6DSV16XStatusTypeDef end();
     LSM6DSV16XStatusTypeDef Enable_X();
+    LSM6DSV16XStatusTypeDef Get_X_Axes(int32_t *Acceleration);
     LSM6DSV16XStatusTypeDef Set_X_FS(int32_t FullScale);
     LSM6DSV16XStatusTypeDef Get_X_ODR(float *Odr);
     LSM6DSV16XStatusTypeDef Set_X_ODR(float Odr, LSM6DSV16X_ACC_Operating_Mode_t Mode = LSM6DSV16X_ACC_HIGH_PERFORMANCE_MODE);
@@ -218,6 +219,7 @@ private:
     int32_t reset_get(lsm6dsv16x_reset_t *val);
     int32_t fifo_status_get(lsm6dsv16x_fifo_status_t *val);
     int32_t _6d_threshold_set(lsm6dsv16x_6d_threshold_t val);
+    float Convert_X_Sensitivity(lsm6dsv16x_xl_full_scale_t full_scale);
 };
 
 #endif // LSM6DSV16X_H
