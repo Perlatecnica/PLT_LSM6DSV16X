@@ -121,6 +121,12 @@ public:
     LSM6DSV16XStatusTypeDef Disable_6D_Orientation();
     LSM6DSV16XStatusTypeDef Get_X_Event_Status(LSM6DSV16X_Event_Status_t *Status);
     LSM6DSV16XStatusTypeDef Enable_Single_Tap_Detection(LSM6DSV16X_SensorIntPin_t IntPin);
+    LSM6DSV16XStatusTypeDef Enable_Double_Tap_Detection(LSM6DSV16X_SensorIntPin_t IntPin);
+    LSM6DSV16XStatusTypeDef Disable_Double_Tap_Detection();
+    LSM6DSV16XStatusTypeDef Set_Tap_Threshold(uint8_t Threshold);
+    LSM6DSV16XStatusTypeDef Set_Tap_Shock_Time(uint8_t Time);
+    LSM6DSV16XStatusTypeDef Set_Tap_Quiet_Time(uint8_t Time);
+    LSM6DSV16XStatusTypeDef Set_Tap_Duration_Time(uint8_t Time);
 
     void set_SDO_SAO_TO_GND();
     void set_SDO_SAO_TO_VCC();
