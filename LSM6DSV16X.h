@@ -127,6 +127,8 @@ public:
     LSM6DSV16XStatusTypeDef Set_Tap_Shock_Time(uint8_t Time);
     LSM6DSV16XStatusTypeDef Set_Tap_Quiet_Time(uint8_t Time);
     LSM6DSV16XStatusTypeDef Set_Tap_Duration_Time(uint8_t Time);
+    LSM6DSV16XStatusTypeDef Enable_Tilt_Detection(LSM6DSV16X_SensorIntPin_t IntPin);
+    LSM6DSV16XStatusTypeDef Disable_Tilt_Detection();
 
     void set_SDO_SAO_TO_GND();
     void set_SDO_SAO_TO_VCC();

@@ -109,6 +109,202 @@ LSM6DSV16XStatusTypeDef LSM6DSV16X::begin()
   return LSM6DSV16X_OK;
 }
 
+LSM6DSV16XStatusTypeDef LSM6DSV16X::Enable_Tilt_Detection(LSM6DSV16X_SensorIntPin_t IntPin)
+{
+  LSM6DSV16XStatusTypeDef ret = LSM6DSV16X_OK;
+  lsm6dsv16x_md1_cfg_t val1;
+  lsm6dsv16x_md2_cfg_t val2;
+  lsm6dsv16x_emb_func_en_a_t emb_func_en_a;
+  lsm6dsv16x_emb_func_int1_t emb_func_int1;
+  lsm6dsv16x_emb_func_int2_t emb_func_int2;
+
+  /* Output Data Rate selection */
+  if (Set_X_ODR(30) != LSM6DSV16X_OK) {
+    return LSM6DSV16X_ERROR;
+  }
+
+  /* Full scale selection */
+  if (Set_X_FS(2) != LSM6DSV16X_OK) {
+    return LSM6DSV16X_ERROR;
+  }
+
+  switch (IntPin) {
+    case LSM6DSV16X_INT1_PIN:
+      /* Enable access to embedded functions registers */
+      if (mem_bank_set(LSM6DSV16X_EMBED_FUNC_MEM_BANK) != LSM6DSV16X_OK) {
+        return LSM6DSV16X_ERROR;
+      }
+
+      /* Enable tilt detection */
+      if (readRegister(LSM6DSV16X_EMB_FUNC_EN_A, (uint8_t *)&emb_func_en_a, 1) != LSM6DSV16X_OK) {
+        return LSM6DSV16X_ERROR;
+      }
+
+      emb_func_en_a.tilt_en = PROPERTY_ENABLE;
+
+      if (writeRegister(LSM6DSV16X_EMB_FUNC_EN_A, (uint8_t *)&emb_func_en_a, 1) != LSM6DSV16X_OK) {
+        return LSM6DSV16X_ERROR;
+      }
+
+      /* Tilt interrupt driven to INT1 pin */
+      if (readRegister(LSM6DSV16X_EMB_FUNC_INT1, (uint8_t *)&emb_func_int1, 1) != LSM6DSV16X_OK) {
+        return LSM6DSV16X_ERROR;
+      }
+
+      emb_func_int1.int1_tilt = PROPERTY_ENABLE;
+
+      if (writeRegister(LSM6DSV16X_EMB_FUNC_INT1, (uint8_t *)&emb_func_int1, 1) != LSM6DSV16X_OK) {
+        return LSM6DSV16X_ERROR;
+      }
+
+      /* Disable access to embedded functions registers */
+      if (mem_bank_set(LSM6DSV16X_MAIN_MEM_BANK) != LSM6DSV16X_OK) {
+        return LSM6DSV16X_ERROR;
+      }
+
+      /* Enable routing the embedded functions interrupt */
+      if (readRegister(LSM6DSV16X_MD1_CFG, (uint8_t *)&val1, 1) != LSM6DSV16X_OK) {
+        return LSM6DSV16X_ERROR;
+      }
+
+      val1.int1_emb_func = PROPERTY_ENABLE;
+
+      if (writeRegister(LSM6DSV16X_MD1_CFG, (uint8_t *)&val1, 1) != LSM6DSV16X_OK) {
+        return LSM6DSV16X_ERROR;
+      }
+      break;
+
+
+    case LSM6DSV16X_INT2_PIN:
+      /* Enable access to embedded functions registers */
+      if (mem_bank_set(LSM6DSV16X_EMBED_FUNC_MEM_BANK) != LSM6DSV16X_OK) {
+        return LSM6DSV16X_ERROR;
+      }
+
+      /* Enable tilt detection */
+      if (readRegister(LSM6DSV16X_EMB_FUNC_EN_A, (uint8_t *)&emb_func_en_a, 1) != LSM6DSV16X_OK) {
+        return LSM6DSV16X_ERROR;
+      }
+
+      emb_func_en_a.tilt_en = PROPERTY_ENABLE;
+
+      if (writeRegister(LSM6DSV16X_EMB_FUNC_EN_A, (uint8_t *)&emb_func_en_a, 1) != LSM6DSV16X_OK) {
+        return LSM6DSV16X_ERROR;
+      }
+
+      /* Tilt interrupt driven to INT2 pin */
+      if (readRegister(LSM6DSV16X_EMB_FUNC_INT2, (uint8_t *)&emb_func_int2, 1) != LSM6DSV16X_OK) {
+        return LSM6DSV16X_ERROR;
+      }
+
+      emb_func_int2.int2_tilt = PROPERTY_ENABLE;
+
+      if (writeRegister(LSM6DSV16X_EMB_FUNC_INT2, (uint8_t *)&emb_func_int2, 1) != LSM6DSV16X_OK) {
+        return LSM6DSV16X_ERROR;
+      }
+
+      /* Disable access to embedded functions registers */
+      if (mem_bank_set(LSM6DSV16X_MAIN_MEM_BANK) != LSM6DSV16X_OK) {
+        return LSM6DSV16X_ERROR;
+      }
+
+      /* Enable routing the embedded functions interrupt */
+      if (readRegister(LSM6DSV16X_MD2_CFG, (uint8_t *)&val2, 1) != LSM6DSV16X_OK) {
+        return LSM6DSV16X_ERROR;
+      }
+
+      val2.int2_emb_func = PROPERTY_ENABLE;
+
+      if (writeRegister(LSM6DSV16X_MD2_CFG, (uint8_t *)&val2, 1) != LSM6DSV16X_OK) {
+        return LSM6DSV16X_ERROR;
+      }
+      break;
+
+    default:
+      ret = LSM6DSV16X_ERROR;
+      break;
+  }
+
+  return ret;
+}
+
+LSM6DSV16XStatusTypeDef LSM6DSV16X::Disable_Tilt_Detection()
+{
+  LSM6DSV16XStatusTypeDef ret = LSM6DSV16X_OK;
+  lsm6dsv16x_md1_cfg_t val1;
+  lsm6dsv16x_md2_cfg_t val2;
+
+  lsm6dsv16x_emb_func_en_a_t emb_func_en_a;
+  lsm6dsv16x_emb_func_int1_t emb_func_int1;
+  lsm6dsv16x_emb_func_int2_t emb_func_int2;
+
+  /* Disable emb func event on either INT1 or INT2 pin */
+  if (readRegister(LSM6DSV16X_MD1_CFG, (uint8_t *)&val1, 1) != LSM6DSV16X_OK) {
+    return LSM6DSV16X_ERROR;
+  }
+
+  val1.int1_emb_func = PROPERTY_DISABLE;
+
+  if (writeRegister(LSM6DSV16X_MD1_CFG, (uint8_t *)&val1, 1) != LSM6DSV16X_OK) {
+    return LSM6DSV16X_ERROR;
+  }
+
+  if (readRegister(LSM6DSV16X_MD2_CFG, (uint8_t *)&val2, 1) != LSM6DSV16X_OK) {
+    return LSM6DSV16X_ERROR;
+  }
+
+  val2.int2_emb_func = PROPERTY_DISABLE;
+
+  if (writeRegister(LSM6DSV16X_MD2_CFG, (uint8_t *)&val2, 1) != LSM6DSV16X_OK) {
+    return LSM6DSV16X_ERROR;
+  }
+
+  /* Enable access to embedded functions registers. */
+  if (mem_bank_set(LSM6DSV16X_EMBED_FUNC_MEM_BANK) != LSM6DSV16X_OK) {
+    return LSM6DSV16X_ERROR;
+  }
+
+  /* Disable tilt detection. */
+  if (readRegister(LSM6DSV16X_EMB_FUNC_EN_A, (uint8_t *)&emb_func_en_a, 1) != LSM6DSV16X_OK) {
+    return LSM6DSV16X_ERROR;
+  }
+
+  emb_func_en_a.tilt_en = PROPERTY_DISABLE;
+
+  if (writeRegister(LSM6DSV16X_EMB_FUNC_EN_A, (uint8_t *)&emb_func_en_a, 1) != LSM6DSV16X_OK) {
+    return LSM6DSV16X_ERROR;
+  }
+
+  /* Reset interrupt driven to INT1 pin. */
+  if (readRegister(LSM6DSV16X_EMB_FUNC_INT1, (uint8_t *)&emb_func_int1, 1) != LSM6DSV16X_OK) {
+    return LSM6DSV16X_ERROR;
+  }
+
+  emb_func_int1.int1_tilt = PROPERTY_DISABLE;
+
+  if (writeRegister(LSM6DSV16X_EMB_FUNC_INT1, (uint8_t *)&emb_func_int1, 1) != LSM6DSV16X_OK) {
+    return LSM6DSV16X_ERROR;
+  }
+
+  /* Reset interrupt driven to INT2 pin. */
+  if (readRegister(LSM6DSV16X_EMB_FUNC_INT2, (uint8_t *)&emb_func_int2, 1) != LSM6DSV16X_OK) {
+    return LSM6DSV16X_ERROR;
+  }
+
+  emb_func_int2.int2_tilt = PROPERTY_DISABLE;
+
+  if (writeRegister(LSM6DSV16X_EMB_FUNC_INT2, (uint8_t *)&emb_func_int2, 1) != LSM6DSV16X_OK) {
+    return LSM6DSV16X_ERROR;
+  }
+
+  /* Disable access to embedded functions registers. */
+  if (mem_bank_set(LSM6DSV16X_MAIN_MEM_BANK) != LSM6DSV16X_OK) {
+    return LSM6DSV16X_ERROR;
+  }
+
+  return ret;
+}
+
 LSM6DSV16XStatusTypeDef LSM6DSV16X::Enable_Double_Tap_Detection(LSM6DSV16X_SensorIntPin_t IntPin)
 {
   LSM6DSV16XStatusTypeDef ret = LSM6DSV16X_OK;
