@@ -129,6 +129,11 @@ public:
     LSM6DSV16XStatusTypeDef Set_Tap_Duration_Time(uint8_t Time);
     LSM6DSV16XStatusTypeDef Enable_Tilt_Detection(LSM6DSV16X_SensorIntPin_t IntPin);
     LSM6DSV16XStatusTypeDef Disable_Tilt_Detection();
+    LSM6DSV16XStatusTypeDef Enable_Pedometer(LSM6DSV16X_SensorIntPin_t IntPin);
+    LSM6DSV16XStatusTypeDef Disable_Pedometer();
+    LSM6DSV16XStatusTypeDef Get_Step_Count(uint16_t *StepCount);
+    LSM6DSV16XStatusTypeDef Step_Counter_Reset();
+    
 
     void set_SDO_SAO_TO_GND();
     void set_SDO_SAO_TO_VCC();
@@ -231,6 +236,16 @@ private:
     float Convert_X_Sensitivity(lsm6dsv16x_xl_full_scale_t full_scale);
     int32_t tap_mode_set(lsm6dsv16x_tap_mode_t val);
     int32_t tap_mode_get(lsm6dsv16x_tap_mode_t *val);
+    int32_t stpcnt_mode_get(lsm6dsv16x_stpcnt_mode_t *val);
+    int32_t stpcnt_steps_get(uint16_t *val);
+    int32_t stpcnt_rst_step_set(uint8_t val);
+    int32_t stpcnt_rst_step_get(uint8_t *val);
+    int32_t stpcnt_debounce_set(uint8_t val);
+    int32_t stpcnt_debounce_get(uint8_t *val);
+    int32_t stpcnt_period_set(uint16_t val);
+    int32_t stpcnt_period_get(uint16_t *val);
+    int32_t ln_pg_read(uint16_t address, uint8_t *buf, uint8_t len);
+    int32_t stpcnt_mode_set(lsm6dsv16x_stpcnt_mode_t val);
 };
 
 #endif // LSM6DSV16X_H

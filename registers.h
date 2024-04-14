@@ -97,6 +97,11 @@ typedef enum {
 } lsm6dsv16x_tap_mode_t;
 
 typedef struct {
+  uint8_t step_counter_enable  : 1;
+  uint8_t false_step_rej       : 1;
+} lsm6dsv16x_stpcnt_mode_t;
+
+typedef struct {
   unsigned int FreeFallStatus : 1;
   unsigned int TapStatus : 1;
   unsigned int DoubleTapStatus : 1;

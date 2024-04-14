@@ -109,6 +109,215 @@ LSM6DSV16XStatusTypeDef LSM6DSV16X::begin()
   return LSM6DSV16X_OK;
 }
 
+LSM6DSV16XStatusTypeDef LSM6DSV16X::Enable_Pedometer(LSM6DSV16X_SensorIntPin_t IntPin)
+{
+  lsm6dsv16x_stpcnt_mode_t mode;
+  lsm6dsv16x_md1_cfg_t val1;
+  lsm6dsv16x_md2_cfg_t val2;
+  lsm6dsv16x_emb_func_int1_t emb_func_int1;
+  lsm6dsv16x_emb_func_int2_t emb_func_int2;
+
+  /* Output Data Rate selection */
+  if (Set_X_ODR(30) != LSM6DSV16X_OK) {
+    return LSM6DSV16X_ERROR;
+  }
+
+  /* Full scale selection */
+  if (Set_X_FS(2) != LSM6DSV16X_OK) {
+    return LSM6DSV16X_ERROR;
+  }
+
+  if (stpcnt_mode_get(&mode) != LSM6DSV16X_OK) {
+    return LSM6DSV16X_ERROR;
+  }
+
+  /* Enable pedometer algorithm. */
+  mode.step_counter_enable = PROPERTY_ENABLE;
+  mode.false_step_rej = PROPERTY_DISABLE;
+
+  /* Turn on embedded features */
+  if (stpcnt_mode_set(mode) != LSM6DSV16X_OK) {
+    return LSM6DSV16X_ERROR;
+  }
+
+  /* Enable free fall event on either INT1 or INT2 pin */
+  switch (IntPin) {
+    case LSM6DSV16X_INT1_PIN:
+      /* Enable access to embedded functions registers. */
+      if (mem_bank_set(LSM6DSV16X_EMBED_FUNC_MEM_BANK) != LSM6DSV16X_OK) {
+        return LSM6DSV16X_ERROR;
+      }
+
+      /* Step detector interrupt driven to INT1 pin */
+      if (readRegister(LSM6DSV16X_EMB_FUNC_INT1, (uint8_t *)&emb_func_int1, 1) != LSM6DSV16X_OK) {
+        return LSM6DSV16X_ERROR;
+      }
+
+      emb_func_int1.int1_step_detector = PROPERTY_ENABLE;
+
+      if (writeRegister(LSM6DSV16X_EMB_FUNC_INT1, (uint8_t *)&emb_func_int1, 1) != LSM6DSV16X_OK) {
+        return LSM6DSV16X_ERROR;
+      }
+
+      /* Disable access to embedded functions registers */
+      if (mem_bank_set(LSM6DSV16X_MAIN_MEM_BANK) != LSM6DSV16X_OK) {
+        return LSM6DSV16X_ERROR;
+      }
+
+      if (readRegister(LSM6DSV16X_MD1_CFG, (uint8_t *)&val1, 1) != LSM6DSV16X_OK) {
+        return LSM6DSV16X_ERROR;
+      }
+
+      val1.int1_emb_func = PROPERTY_ENABLE;
+
+      if (writeRegister(LSM6DSV16X_MD1_CFG, (uint8_t *)&val1, 1) != LSM6DSV16X_OK) {
+        return LSM6DSV16X_ERROR;
+      }
+      break;
+
+    case LSM6DSV16X_INT2_PIN:
+      /* Enable access to embedded functions registers. */
+      if (mem_bank_set(LSM6DSV16X_EMBED_FUNC_MEM_BANK) != LSM6DSV16X_OK) {
+        return LSM6DSV16X_ERROR;
+      }
+
+      /* Step detector interrupt driven to INT1 pin */
+      if (readRegister(LSM6DSV16X_EMB_FUNC_INT2, (uint8_t *)&emb_func_int2, 1) != LSM6DSV16X_OK) {
+        return LSM6DSV16X_ERROR;
+      }
+
+      emb_func_int2.int2_step_detector = PROPERTY_ENABLE;
+
+      if (writeRegister(LSM6DSV16X_EMB_FUNC_INT2, (uint8_t *)&emb_func_int2, 1) != LSM6DSV16X_OK) {
+        return LSM6DSV16X_ERROR;
+      }
+
+      /* Disable access to embedded functions registers */
+      if (mem_bank_set(LSM6DSV16X_MAIN_MEM_BANK) != LSM6DSV16X_OK) {
+        return LSM6DSV16X_ERROR;
+      }
+
+      if (readRegister(LSM6DSV16X_MD2_CFG, (uint8_t *)&val2, 1) != LSM6DSV16X_OK) {
+        return LSM6DSV16X_ERROR;
+      }
+
+      val2.int2_emb_func = PROPERTY_ENABLE;
+
+      if (writeRegister(LSM6DSV16X_MD2_CFG, (uint8_t *)&val2, 1) != LSM6DSV16X_OK) {
+        return LSM6DSV16X_ERROR;
+      }
+      break;
+
+    default:
+      return LSM6DSV16X_ERROR;
+      break;
+  }
+
+  return LSM6DSV16X_OK;
+}
+
+
+LSM6DSV16XStatusTypeDef LSM6DSV16X::Disable_Pedometer()
+{
+  lsm6dsv16x_md1_cfg_t val1;
+  lsm6dsv16x_md2_cfg_t val2;
+
+  lsm6dsv16x_emb_func_int1_t emb_func_int1;
+  lsm6dsv16x_emb_func_int2_t emb_func_int2;
+
+  lsm6dsv16x_stpcnt_mode_t mode;
+
+
+  if (stpcnt_mode_get(&mode) != LSM6DSV16X_OK) {
+    return LSM6DSV16X_ERROR;
+  }
+
+  /* Enable pedometer algorithm. */
+  mode.step_counter_enable = PROPERTY_DISABLE;
+  mode.false_step_rej = PROPERTY_DISABLE;
+
+  /* Turn off embedded features */
+  if (stpcnt_mode_set(mode) != LSM6DSV16X_OK) {
+    return LSM6DSV16X_ERROR;
+  }
+
+  /* Disable emb func event on either INT1 or INT2 pin */
+  if (readRegister(LSM6DSV16X_MD1_CFG, (uint8_t *)&val1, 1) != LSM6DSV16X_OK) {
+    return LSM6DSV16X_ERROR;
+  }
+
+  val1.int1_emb_func = PROPERTY_DISABLE;
+
+  if (writeRegister(LSM6DSV16X_MD1_CFG, (uint8_t *)&val1, 1) != LSM6DSV16X_OK) {
+    return LSM6DSV16X_ERROR;
+  }
+
+  if (readRegister(LSM6DSV16X_MD2_CFG, (uint8_t *)&val2, 1) != LSM6DSV16X_OK) {
+    return LSM6DSV16X_ERROR;
+  }
+
+  val2.int2_emb_func = PROPERTY_DISABLE;
+
+  if (writeRegister(LSM6DSV16X_MD2_CFG, (uint8_t *)&val2, 1) != LSM6DSV16X_OK) {
+    return LSM6DSV16X_ERROR;
+  }
+
+  /* Enable access to embedded functions registers. */
+  if (mem_bank_set(LSM6DSV16X_EMBED_FUNC_MEM_BANK) != LSM6DSV16X_OK) {
+    return LSM6DSV16X_ERROR;
+  }
+
+  /* Reset interrupt driven to INT1 pin. */
+  if (readRegister(LSM6DSV16X_EMB_FUNC_INT1, (uint8_t *)&emb_func_int1, 1) != LSM6DSV16X_OK) {
+    return LSM6DSV16X_ERROR;
+  }
+
+  emb_func_int1.int1_step_detector = PROPERTY_DISABLE;
+
+  if (writeRegister(LSM6DSV16X_EMB_FUNC_INT1, (uint8_t *)&emb_func_int1, 1) != LSM6DSV16X_OK) {
+    return LSM6DSV16X_ERROR;
+  }
+
+  /* Reset interrupt driven to INT2 pin. */
+  if (readRegister(LSM6DSV16X_EMB_FUNC_INT2, (uint8_t *)&emb_func_int2, 1) != LSM6DSV16X_OK) {
+    return LSM6DSV16X_ERROR;
+  }
+
+  emb_func_int2.int2_step_detector = PROPERTY_DISABLE;
+
+  if (writeRegister(LSM6DSV16X_EMB_FUNC_INT2, (uint8_t *)&emb_func_int2, 1) != LSM6DSV16X_OK) {
+    return LSM6DSV16X_ERROR;
+  }
+
+  /* Disable access to embedded functions registers. */
+  if (mem_bank_set(LSM6DSV16X_MAIN_MEM_BANK) != LSM6DSV16X_OK) {
+    return LSM6DSV16X_ERROR;
+  }
+
+
+  return LSM6DSV16X_OK;
+}
+
+
+LSM6DSV16XStatusTypeDef LSM6DSV16X::Get_Step_Count(uint16_t *StepCount)
+{
+  if (stpcnt_steps_get(StepCount) != LSM6DSV16X_OK) {
+    return LSM6DSV16X_ERROR;
+  }
+
+  return LSM6DSV16X_OK;
+}
+
+
+LSM6DSV16XStatusTypeDef LSM6DSV16X::Step_Counter_Reset()
+{
+  if (stpcnt_rst_step_set(PROPERTY_ENABLE) != LSM6DSV16X_OK) {
+    return LSM6DSV16X_ERROR;
+  }
+
+  return LSM6DSV16X_OK;
+}
+
 LSM6DSV16XStatusTypeDef LSM6DSV16X::Enable_Tilt_Detection(LSM6DSV16X_SensorIntPin_t IntPin)
 {
   LSM6DSV16XStatusTypeDef ret = LSM6DSV16X_OK;
@@ -4497,6 +4706,276 @@ int32_t LSM6DSV16X::tap_mode_get(lsm6dsv16x_tap_mode_t *val)
     default:
       *val = LSM6DSV16X_ONLY_SINGLE;
       break;
+  }
+
+  return ret;
+}
+
+int32_t LSM6DSV16X::stpcnt_mode_get(lsm6dsv16x_stpcnt_mode_t *val)
+{
+  lsm6dsv16x_emb_func_en_a_t emb_func_en_a;
+  lsm6dsv16x_pedo_cmd_reg_t pedo_cmd_reg;
+  int32_t ret;
+
+  ret = mem_bank_set(LSM6DSV16X_EMBED_FUNC_MEM_BANK);
+  ret += readRegister(LSM6DSV16X_EMB_FUNC_EN_A, (uint8_t *)&emb_func_en_a, 1);
+  ret += mem_bank_set(LSM6DSV16X_MAIN_MEM_BANK);
+  if (ret != 0) {
+    return ret;
+  }
+
+  ret = ln_pg_read(LSM6DSV16X_EMB_ADV_PG_1 + LSM6DSV16X_PEDO_CMD_REG, (uint8_t *)&pedo_cmd_reg, 1);
+  if (ret != 0) {
+    return ret;
+  }
+
+  val->false_step_rej = pedo_cmd_reg.fp_rejection_en;
+  val->step_counter_enable = emb_func_en_a.pedo_en;
+
+  return ret;
+}
+
+
+int32_t LSM6DSV16X::stpcnt_steps_get(uint16_t *val)
+{
+  uint8_t buff[2];
+  int32_t ret;
+
+  ret = mem_bank_set(LSM6DSV16X_EMBED_FUNC_MEM_BANK);
+  ret += readRegister(LSM6DSV16X_STEP_COUNTER_L, &buff[0], 2);
+  ret += mem_bank_set(LSM6DSV16X_MAIN_MEM_BANK);
+  if (ret != 0) {
+    return ret;
+  }
+
+  *val = buff[1];
+  *val = (*val * 256U) + buff[0];
+
+  return ret;
+}
+
+
+int32_t LSM6DSV16X::stpcnt_rst_step_set(uint8_t val)
+{
+  lsm6dsv16x_emb_func_src_t emb_func_src;
+  int32_t ret;
+
+  ret = mem_bank_set(LSM6DSV16X_EMBED_FUNC_MEM_BANK);
+  if (ret != 0) {
+    return ret;
+  }
+
+  ret = readRegister(LSM6DSV16X_EMB_FUNC_SRC, (uint8_t *)&emb_func_src, 1);
+  if (ret != 0) {
+    goto exit;
+  }
+
+  emb_func_src.pedo_rst_step = val;
+  ret = writeRegister(LSM6DSV16X_EMB_FUNC_SRC, (uint8_t *)&emb_func_src, 1);
+
+exit:
+  ret += mem_bank_set(LSM6DSV16X_MAIN_MEM_BANK);
+
+  return ret;
+}
+
+
+int32_t LSM6DSV16X::stpcnt_rst_step_get(uint8_t *val)
+{
+  lsm6dsv16x_emb_func_src_t emb_func_src;
+  int32_t ret;
+
+  ret = mem_bank_set(LSM6DSV16X_EMBED_FUNC_MEM_BANK);
+  if (ret != 0) {
+    return ret;
+  }
+
+  ret = readRegister(LSM6DSV16X_EMB_FUNC_SRC, (uint8_t *)&emb_func_src, 1);
+  *val = emb_func_src.pedo_rst_step;
+
+  ret += mem_bank_set(LSM6DSV16X_MAIN_MEM_BANK);
+
+  return ret;
+}
+
+int32_t LSM6DSV16X::stpcnt_debounce_set(uint8_t val)
+{
+  lsm6dsv16x_pedo_deb_steps_conf_t pedo_deb_steps_conf;
+  int32_t ret;
+
+  ret = ln_pg_read(LSM6DSV16X_EMB_ADV_PG_1 + LSM6DSV16X_PEDO_DEB_STEPS_CONF, (uint8_t *)&pedo_deb_steps_conf, 1);
+  if (ret == 0) {
+    pedo_deb_steps_conf.deb_step = val;
+    ret = ln_pg_write(LSM6DSV16X_EMB_ADV_PG_1 + LSM6DSV16X_PEDO_DEB_STEPS_CONF, (uint8_t *)&pedo_deb_steps_conf, 1);
+  }
+
+  return ret;
+}
+
+int32_t LSM6DSV16X::stpcnt_debounce_get(uint8_t *val)
+{
+  lsm6dsv16x_pedo_deb_steps_conf_t pedo_deb_steps_conf;
+  int32_t ret;
+
+  ret = ln_pg_read(LSM6DSV16X_EMB_ADV_PG_1 + LSM6DSV16X_PEDO_DEB_STEPS_CONF, (uint8_t *)&pedo_deb_steps_conf, 1);
+  *val = pedo_deb_steps_conf.deb_step;
+
+  return ret;
+}
+
+
+int32_t LSM6DSV16X::stpcnt_period_set(uint16_t val)
+{
+  uint8_t buff[2];
+  int32_t ret;
+
+  buff[1] = (uint8_t)(val / 256U);
+  buff[0] = (uint8_t)(val - (buff[1] * 256U));
+  ret = ln_pg_write(LSM6DSV16X_EMB_ADV_PG_1 + LSM6DSV16X_PEDO_SC_DELTAT_L, (uint8_t *)&buff[0], 2);
+
+  return ret;
+}
+
+
+int32_t LSM6DSV16X::stpcnt_period_get(uint16_t *val)
+{
+  uint8_t buff[2];
+  int32_t ret;
+
+  ret = ln_pg_read(LSM6DSV16X_EMB_ADV_PG_1 + LSM6DSV16X_PEDO_SC_DELTAT_L, &buff[0], 2);
+  if (ret != 0) {
+    return ret;
+  }
+
+  *val = buff[1];
+  *val = (*val * 256U) + buff[0];
+
+  return ret;
+}
+
+int32_t LSM6DSV16X::ln_pg_read(uint16_t address, uint8_t *buf,
+                              uint8_t len)
+{
+  lsm6dsv16x_page_address_t  page_address;
+  lsm6dsv16x_page_sel_t page_sel;
+  lsm6dsv16x_page_rw_t page_rw;
+  uint8_t msb;
+  uint8_t lsb;
+  int32_t ret;
+  uint8_t i ;
+
+  msb = ((uint8_t)(address >> 8) & 0x0FU);
+  lsb = (uint8_t)address & 0xFFU;
+
+  ret = mem_bank_set(LSM6DSV16X_EMBED_FUNC_MEM_BANK);
+  if (ret != 0) {
+    return ret;
+  }
+
+  /* set page write */
+  ret += readRegister(LSM6DSV16X_PAGE_RW, (uint8_t *)&page_rw, 1);
+  page_rw.page_read = PROPERTY_ENABLE;
+  page_rw.page_write = PROPERTY_DISABLE;
+  ret += writeRegister(LSM6DSV16X_PAGE_RW, (uint8_t *)&page_rw, 1);
+  if (ret != 0) {
+    goto exit;
+  }
+
+  /* select page */
+  ret += readRegister(LSM6DSV16X_PAGE_SEL, (uint8_t *)&page_sel, 1);
+  page_sel.page_sel = msb;
+  page_sel.not_used0 = 1; // Default value
+  ret += writeRegister(LSM6DSV16X_PAGE_SEL, (uint8_t *)&page_sel, 1);
+  if (ret != 0) {
+    goto exit;
+  }
+
+  /* set page addr */
+  page_address.page_addr = lsb;
+  ret += writeRegister(LSM6DSV16X_PAGE_ADDRESS,
+                              (uint8_t *)&page_address, 1);
+  if (ret != 0) {
+    goto exit;
+  }
+
+  for (i = 0; ((i < len) && (ret == 0)); i++) {
+    ret += readRegister(LSM6DSV16X_PAGE_VALUE, &buf[i], 1);
+    if (ret != 0) {
+      goto exit;
+    }
+
+    lsb++;
+
+    /* Check if page wrap */
+    if (((lsb & 0xFFU) == 0x00U) && (ret == 0)) {
+      msb++;
+      ret += readRegister(LSM6DSV16X_PAGE_SEL, (uint8_t *)&page_sel, 1);
+      if (ret != 0) {
+        goto exit;
+      }
+
+      page_sel.page_sel = msb;
+      page_sel.not_used0 = 1; // Default value
+      ret += writeRegister(LSM6DSV16X_PAGE_SEL, (uint8_t *)&page_sel, 1);
+      if (ret != 0) {
+        goto exit;
+      }
+    }
+  }
+
+  page_sel.page_sel = 0;
+  page_sel.not_used0 = 1;// Default value
+  ret += writeRegister(LSM6DSV16X_PAGE_SEL, (uint8_t *)&page_sel, 1);
+  if (ret != 0) {
+    goto exit;
+  }
+
+  /* unset page write */
+  ret += readRegister(LSM6DSV16X_PAGE_RW, (uint8_t *)&page_rw, 1);
+  page_rw.page_read = PROPERTY_DISABLE;
+  page_rw.page_write = PROPERTY_DISABLE;
+  ret += writeRegister(LSM6DSV16X_PAGE_RW, (uint8_t *)&page_rw, 1);
+
+exit:
+  ret += mem_bank_set(LSM6DSV16X_MAIN_MEM_BANK);
+
+  return ret;
+}
+
+int32_t LSM6DSV16X::stpcnt_mode_set(lsm6dsv16x_stpcnt_mode_t val)
+{
+  lsm6dsv16x_emb_func_en_a_t emb_func_en_a;
+  lsm6dsv16x_emb_func_en_b_t emb_func_en_b;
+  lsm6dsv16x_pedo_cmd_reg_t pedo_cmd_reg;
+  int32_t ret;
+
+  ret = mem_bank_set(LSM6DSV16X_EMBED_FUNC_MEM_BANK);
+  if (ret != 0) {
+    return ret;
+  }
+
+  ret = readRegister(LSM6DSV16X_EMB_FUNC_EN_A, (uint8_t *)&emb_func_en_a, 1);
+  ret += readRegister(LSM6DSV16X_EMB_FUNC_EN_B, (uint8_t *)&emb_func_en_b, 1);
+  if (ret != 0) {
+    goto exit;
+  }
+
+  if ((val.false_step_rej == PROPERTY_ENABLE)
+      && ((emb_func_en_a.mlc_before_fsm_en & emb_func_en_b.mlc_en) ==
+          PROPERTY_DISABLE)) {
+    emb_func_en_a.mlc_before_fsm_en = PROPERTY_ENABLE;
+  }
+
+  emb_func_en_a.pedo_en = val.step_counter_enable;
+  ret += writeRegister(LSM6DSV16X_EMB_FUNC_EN_A, (uint8_t *)&emb_func_en_a, 1);
+
+exit:
+  ret += mem_bank_set(LSM6DSV16X_MAIN_MEM_BANK);
+
+  if (ret == 0) {
+    ret = ln_pg_read(LSM6DSV16X_EMB_ADV_PG_1 + LSM6DSV16X_PEDO_CMD_REG, (uint8_t *)&pedo_cmd_reg, 1);
+    pedo_cmd_reg.fp_rejection_en = val.false_step_rej;
+    ret += ln_pg_write(LSM6DSV16X_EMB_ADV_PG_1 + LSM6DSV16X_PEDO_CMD_REG, (uint8_t *)&pedo_cmd_reg, 1);
   }
 
   return ret;
