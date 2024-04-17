@@ -133,6 +133,11 @@ public:
     LSM6DSV16XStatusTypeDef Disable_Pedometer();
     LSM6DSV16XStatusTypeDef Get_Step_Count(uint16_t *StepCount);
     LSM6DSV16XStatusTypeDef Step_Counter_Reset();
+    LSM6DSV16XStatusTypeDef Enable_Free_Fall_Detection(LSM6DSV16X_SensorIntPin_t IntPin);
+    LSM6DSV16XStatusTypeDef Disable_Free_Fall_Detection();
+    LSM6DSV16XStatusTypeDef Set_Free_Fall_Threshold(uint8_t Threshold);
+    LSM6DSV16XStatusTypeDef Set_Free_Fall_Duration(uint8_t Duration);
+    
     
 
     void set_SDO_SAO_TO_GND();
@@ -246,6 +251,11 @@ private:
     int32_t stpcnt_period_get(uint16_t *val);
     int32_t ln_pg_read(uint16_t address, uint8_t *buf, uint8_t len);
     int32_t stpcnt_mode_set(lsm6dsv16x_stpcnt_mode_t val);
+    int32_t ff_thresholds_set(lsm6dsv16x_ff_thresholds_t val);
+    int32_t ff_thresholds_get(lsm6dsv16x_ff_thresholds_t *val);
+    int32_t ff_time_windows_set(uint8_t val);
+    int32_t ff_time_windows_get(uint8_t *val);
+    
 };
 
 #endif // LSM6DSV16X_H

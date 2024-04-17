@@ -96,6 +96,17 @@ typedef enum {
   LSM6DSV16X_BOTH_SINGLE_DOUBLE = 0x1,
 } lsm6dsv16x_tap_mode_t;
 
+typedef enum {
+  LSM6DSV16X_156_mg = 0x0,
+  LSM6DSV16X_219_mg = 0x1,
+  LSM6DSV16X_250_mg = 0x2,
+  LSM6DSV16X_312_mg = 0x3,
+  LSM6DSV16X_344_mg = 0x4,
+  LSM6DSV16X_406_mg = 0x5,
+  LSM6DSV16X_469_mg = 0x6,
+  LSM6DSV16X_500_mg = 0x7,
+} lsm6dsv16x_ff_thresholds_t;
+
 typedef struct {
   uint8_t step_counter_enable  : 1;
   uint8_t false_step_rej       : 1;
