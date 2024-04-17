@@ -137,7 +137,10 @@ public:
     LSM6DSV16XStatusTypeDef Disable_Free_Fall_Detection();
     LSM6DSV16XStatusTypeDef Set_Free_Fall_Threshold(uint8_t Threshold);
     LSM6DSV16XStatusTypeDef Set_Free_Fall_Duration(uint8_t Duration);
-    
+    LSM6DSV16XStatusTypeDef Enable_Wake_Up_Detection(LSM6DSV16X_SensorIntPin_t IntPin);
+    LSM6DSV16XStatusTypeDef Disable_Wake_Up_Detection();
+    LSM6DSV16XStatusTypeDef Set_Wake_Up_Threshold(uint32_t Threshold);
+    LSM6DSV16XStatusTypeDef Set_Wake_Up_Duration(uint8_t Duration);
     
 
     void set_SDO_SAO_TO_GND();
@@ -255,6 +258,10 @@ private:
     int32_t ff_thresholds_get(lsm6dsv16x_ff_thresholds_t *val);
     int32_t ff_time_windows_set(uint8_t val);
     int32_t ff_time_windows_get(uint8_t *val);
+    int32_t act_thresholds_get(lsm6dsv16x_act_thresholds_t *val);
+    int32_t act_wkup_time_windows_set(lsm6dsv16x_act_wkup_time_windows_t val);
+    int32_t act_wkup_time_windows_get(lsm6dsv16x_act_wkup_time_windows_t *val);
+    int32_t act_thresholds_set(lsm6dsv16x_act_thresholds_t *val);
     
 };
 

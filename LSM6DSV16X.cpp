@@ -109,6 +109,161 @@ LSM6DSV16XStatusTypeDef LSM6DSV16X::begin()
   return LSM6DSV16X_OK;
 }
 
+LSM6DSV16XStatusTypeDef LSM6DSV16X::Enable_Wake_Up_Detection(LSM6DSV16X_SensorIntPin_t IntPin)
+{
+  LSM6DSV16XStatusTypeDef ret = LSM6DSV16X_OK;
+  lsm6dsv16x_md1_cfg_t val1;
+  lsm6dsv16x_md2_cfg_t val2;
+  lsm6dsv16x_functions_enable_t functions_enable;
+
+  /* Output Data Rate selection */
+  if (Set_X_ODR(480) != LSM6DSV16X_OK) {
+    return LSM6DSV16X_ERROR;
+  }
+
+  /* Full scale selection */
+  if (Set_X_FS(2) != LSM6DSV16X_OK) {
+    return LSM6DSV16X_ERROR;
+  }
+
+  /* Set wake-up threshold */
+  if (Set_Wake_Up_Threshold(63) != LSM6DSV16X_OK) {
+    return LSM6DSV16X_ERROR;
+  }
+
+  /* Set wake-up durantion */
+  if (Set_Wake_Up_Duration(0) != LSM6DSV16X_OK) {
+    return LSM6DSV16X_ERROR;
+  }
+
+  /* Enable wake up event on either INT1 or INT2 pin */
+  switch (IntPin) {
+    case LSM6DSV16X_INT1_PIN:
+      if (readRegister(LSM6DSV16X_MD1_CFG, (uint8_t *)&val1, 1) != LSM6DSV16X_OK) {
+        return LSM6DSV16X_ERROR;
+      }
+
+      val1.int1_wu = PROPERTY_ENABLE;
+
+      if (writeRegister(LSM6DSV16X_MD1_CFG, (uint8_t *)&val1, 1) != LSM6DSV16X_OK) {
+        return LSM6DSV16X_ERROR;
+      }
+
+      if (readRegister(LSM6DSV16X_FUNCTIONS_ENABLE, (uint8_t *)&functions_enable, 1) != LSM6DSV16X_OK) {
+        return LSM6DSV16X_ERROR;
+      }
+
+      functions_enable.interrupts_enable = PROPERTY_ENABLE;
+
+      if (writeRegister(LSM6DSV16X_FUNCTIONS_ENABLE, (uint8_t *)&functions_enable, 1) != LSM6DSV16X_OK) {
+        return LSM6DSV16X_ERROR;
+      }
+      break;
+
+    case LSM6DSV16X_INT2_PIN:
+      if (readRegister(LSM6DSV16X_MD2_CFG, (uint8_t *)&val2, 1) != LSM6DSV16X_OK) {
+        return LSM6DSV16X_ERROR;
+      }
+
+      val2.int2_wu = PROPERTY_ENABLE;
+
+      if (writeRegister(LSM6DSV16X_MD2_CFG, (uint8_t *)&val2, 1) != LSM6DSV16X_OK) {
+        return LSM6DSV16X_ERROR;
+      }
+
+      if (readRegister(LSM6DSV16X_FUNCTIONS_ENABLE, (uint8_t *)&functions_enable, 1) != LSM6DSV16X_OK) {
+        return LSM6DSV16X_ERROR;
+      }
+
+      functions_enable.interrupts_enable = PROPERTY_ENABLE;
+
+      if (writeRegister(LSM6DSV16X_FUNCTIONS_ENABLE, (uint8_t *)&functions_enable, 1) != LSM6DSV16X_OK) {
+        return LSM6DSV16X_ERROR;
+      }
+      break;
+
+    default:
+      ret = LSM6DSV16X_ERROR;
+      break;
+  }
+
+  return ret;
+}
+
+LSM6DSV16XStatusTypeDef LSM6DSV16X::Disable_Wake_Up_Detection()
+{
+  lsm6dsv16x_md1_cfg_t val1;
+  lsm6dsv16x_md2_cfg_t val2;
+
+  /* Disable wake up event on both INT1 and INT2 pins */
+  if (readRegister(LSM6DSV16X_MD1_CFG, (uint8_t *)&val1, 1) != LSM6DSV16X_OK) {
+    return LSM6DSV16X_ERROR;
+  }
+
+  val1.int1_wu = PROPERTY_DISABLE;
+
+  if (writeRegister(LSM6DSV16X_MD1_CFG, (uint8_t *)&val1, 1) != LSM6DSV16X_OK) {
+    return LSM6DSV16X_ERROR;
+  }
+
+  if (readRegister(LSM6DSV16X_MD2_CFG, (uint8_t *)&val2, 1) != LSM6DSV16X_OK) {
+    return LSM6DSV16X_ERROR;
+  }
+
+  val2.int2_wu = PROPERTY_DISABLE;
+
+  if (writeRegister(LSM6DSV16X_MD2_CFG, (uint8_t *)&val2, 1) != LSM6DSV16X_OK) {
+    return LSM6DSV16X_ERROR;
+  }
+
+  /* Reset wake-up threshold */
+  if (Set_Wake_Up_Threshold(0) != LSM6DSV16X_OK) {
+    return LSM6DSV16X_ERROR;
+  }
+
+  /* Reset wake-up durantion */
+  if (Set_Wake_Up_Duration(0) != LSM6DSV16X_OK) {
+    return LSM6DSV16X_ERROR;
+  }
+
+  return LSM6DSV16X_OK;
+}
+
+LSM6DSV16XStatusTypeDef LSM6DSV16X::Set_Wake_Up_Threshold(uint32_t Threshold)
+{
+  lsm6dsv16x_act_thresholds_t wake_up_ths;
+
+  if (act_thresholds_get(&wake_up_ths) != LSM6DSV16X_OK) {
+    return LSM6DSV16X_ERROR;
+  }
+
+  wake_up_ths.threshold = Threshold;
+
+  if (act_thresholds_set(&wake_up_ths) != LSM6DSV16X_OK) {
+    return LSM6DSV16X_ERROR;
+  }
+
+  return LSM6DSV16X_OK;
+}
+
+LSM6DSV16XStatusTypeDef LSM6DSV16X::Set_Wake_Up_Duration(uint8_t Duration)
+{
+  lsm6dsv16x_act_wkup_time_windows_t dur_t;
+
+  if (act_wkup_time_windows_get(&dur_t) != LSM6DSV16X_OK) {
+    return LSM6DSV16X_ERROR;
+  }
+
+  dur_t.shock = Duration;
+
+  if (act_wkup_time_windows_set(dur_t) != LSM6DSV16X_OK) {
+    return LSM6DSV16X_ERROR;
+  }
+
+  return LSM6DSV16X_OK;
+}
+
+
 LSM6DSV16XStatusTypeDef LSM6DSV16X::Enable_Free_Fall_Detection(LSM6DSV16X_SensorIntPin_t IntPin)
 {
   LSM6DSV16XStatusTypeDef ret = LSM6DSV16X_OK;
@@ -5257,6 +5412,96 @@ int32_t LSM6DSV16X::ff_time_windows_get(uint8_t *val)
   ret += writeRegister(LSM6DSV16X_FREE_FALL, (uint8_t *)&free_fall, 1);
 
   *val = (wake_up_dur.ff_dur << 5) + free_fall.ff_dur;
+
+  return ret;
+}
+
+int32_t LSM6DSV16X::act_thresholds_get(lsm6dsv16x_act_thresholds_t *val)
+{
+  lsm6dsv16x_inactivity_dur_t inactivity_dur;
+  lsm6dsv16x_inactivity_ths_t inactivity_ths;
+  lsm6dsv16x_wake_up_ths_t wake_up_ths;
+  lsm6dsv16x_wake_up_dur_t wake_up_dur;
+  int32_t ret;
+
+  ret = readRegister(LSM6DSV16X_INACTIVITY_DUR, (uint8_t *)&inactivity_dur, 1);
+  ret += readRegister(LSM6DSV16X_INACTIVITY_THS, (uint8_t *)&inactivity_ths, 1);
+  ret += readRegister(LSM6DSV16X_WAKE_UP_THS, (uint8_t *)&wake_up_ths, 1);
+  ret += readRegister(LSM6DSV16X_WAKE_UP_DUR, (uint8_t *)&wake_up_dur, 1);
+  if (ret != 0) {
+    return ret;
+  }
+
+  val->inactivity_cfg.wu_inact_ths_w = inactivity_dur.wu_inact_ths_w;
+  val->inactivity_cfg.xl_inact_odr = inactivity_dur.xl_inact_odr;
+  val->inactivity_cfg.inact_dur = inactivity_dur.inact_dur;
+
+  val->inactivity_ths = inactivity_ths.inact_ths;
+  val->threshold = wake_up_ths.wk_ths;
+  val->duration = wake_up_dur.wake_dur;
+
+  return ret;
+}
+
+int32_t LSM6DSV16X::act_wkup_time_windows_set(lsm6dsv16x_act_wkup_time_windows_t val)
+{
+  lsm6dsv16x_wake_up_dur_t wake_up_dur;
+  int32_t ret;
+
+  ret = readRegister(LSM6DSV16X_WAKE_UP_DUR, (uint8_t *)&wake_up_dur, 1);
+  if (ret == 0) {
+    wake_up_dur.wake_dur = val.shock;
+    wake_up_dur.sleep_dur = val.quiet;
+    ret = writeRegister(LSM6DSV16X_WAKE_UP_DUR, (uint8_t *)&wake_up_dur, 1);
+  }
+
+  return ret;
+}
+
+int32_t LSM6DSV16X::act_wkup_time_windows_get(lsm6dsv16x_act_wkup_time_windows_t *val)
+{
+  lsm6dsv16x_wake_up_dur_t wake_up_dur;
+  int32_t ret;
+
+  ret = readRegister(LSM6DSV16X_WAKE_UP_DUR, (uint8_t *)&wake_up_dur, 1);
+  if (ret != 0) {
+    return ret;
+  }
+
+  val->shock = wake_up_dur.wake_dur;
+  val->quiet = wake_up_dur.sleep_dur;
+
+  return ret;
+}
+
+int32_t LSM6DSV16X::act_thresholds_set(lsm6dsv16x_act_thresholds_t *val)
+{
+  lsm6dsv16x_inactivity_ths_t inactivity_ths;
+  lsm6dsv16x_inactivity_dur_t inactivity_dur;
+  lsm6dsv16x_wake_up_ths_t wake_up_ths;
+  lsm6dsv16x_wake_up_dur_t wake_up_dur;
+  int32_t ret;
+
+  ret = readRegister(LSM6DSV16X_INACTIVITY_DUR, (uint8_t *)&inactivity_dur, 1);
+  ret += readRegister(LSM6DSV16X_INACTIVITY_THS, (uint8_t *)&inactivity_ths, 1);
+  ret += readRegister(LSM6DSV16X_WAKE_UP_THS, (uint8_t *)&wake_up_ths, 1);
+  ret += readRegister(LSM6DSV16X_WAKE_UP_DUR, (uint8_t *)&wake_up_dur, 1);
+  if (ret != 0) {
+    return ret;
+  }
+
+  inactivity_dur.wu_inact_ths_w = val->inactivity_cfg.wu_inact_ths_w;
+  inactivity_dur.xl_inact_odr = val->inactivity_cfg.xl_inact_odr;
+  inactivity_dur.inact_dur = val->inactivity_cfg.inact_dur;
+
+  inactivity_ths.inact_ths = val->inactivity_ths;
+  wake_up_ths.wk_ths = val->threshold;
+  wake_up_dur.wake_dur = val->duration;
+
+  ret += writeRegister(LSM6DSV16X_INACTIVITY_DUR, (uint8_t *)&inactivity_dur, 1);
+  ret += writeRegister(LSM6DSV16X_INACTIVITY_THS, (uint8_t *)&inactivity_ths, 1);
+  ret += writeRegister(LSM6DSV16X_WAKE_UP_THS, (uint8_t *)&wake_up_ths, 1);
+  ret += writeRegister(LSM6DSV16X_WAKE_UP_DUR, (uint8_t *)&wake_up_dur, 1);
 
   return ret;
 }

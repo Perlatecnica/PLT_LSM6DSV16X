@@ -107,6 +107,28 @@ typedef enum {
   LSM6DSV16X_500_mg = 0x7,
 } lsm6dsv16x_ff_thresholds_t;
 
+#define LSM6DSV16X_INACTIVITY_DUR              0x54U
+typedef struct {
+#if DRV_BYTE_ORDER == DRV_LITTLE_ENDIAN
+  uint8_t inact_dur            : 2;
+  uint8_t xl_inact_odr         : 2;
+  uint8_t wu_inact_ths_w       : 3;
+  uint8_t sleep_status_on_int  : 1;
+#elif DRV_BYTE_ORDER == DRV_BIG_ENDIAN
+  uint8_t sleep_status_on_int  : 1;
+  uint8_t wu_inact_ths_w       : 3;
+  uint8_t xl_inact_odr         : 2;
+  uint8_t inact_dur            : 2;
+#endif /* DRV_BYTE_ORDER */
+} lsm6dsv16x_inactivity_dur_t;
+
+typedef struct {
+  lsm6dsv16x_inactivity_dur_t inactivity_cfg;
+  uint8_t inactivity_ths;
+  uint8_t threshold;
+  uint8_t duration;
+} lsm6dsv16x_act_thresholds_t;
+
 typedef struct {
   uint8_t step_counter_enable  : 1;
   uint8_t false_step_rej       : 1;
@@ -142,6 +164,11 @@ typedef enum {
   LSM6DSV16X_XL_ST_POSITIVE = 0x1,
   LSM6DSV16X_XL_ST_NEGATIVE = 0x2,
 } lsm6dsv16x_xl_self_test_t;
+
+typedef struct {
+  uint8_t shock                : 2;
+  uint8_t quiet                : 4;
+} lsm6dsv16x_act_wkup_time_windows_t;
 
 typedef enum {
   LSM6DSV16X_XL_HIGH_PERFORMANCE_MD   = 0x0,
@@ -1287,21 +1314,6 @@ typedef struct {
   uint8_t den_xl_g             : 1;
 #endif /* DRV_BYTE_ORDER */
 } lsm6dsv16x_den_t;
-
-#define LSM6DSV16X_INACTIVITY_DUR              0x54U
-typedef struct {
-#if DRV_BYTE_ORDER == DRV_LITTLE_ENDIAN
-  uint8_t inact_dur            : 2;
-  uint8_t xl_inact_odr         : 2;
-  uint8_t wu_inact_ths_w       : 3;
-  uint8_t sleep_status_on_int  : 1;
-#elif DRV_BYTE_ORDER == DRV_BIG_ENDIAN
-  uint8_t sleep_status_on_int  : 1;
-  uint8_t wu_inact_ths_w       : 3;
-  uint8_t xl_inact_odr         : 2;
-  uint8_t inact_dur            : 2;
-#endif /* DRV_BYTE_ORDER */
-} lsm6dsv16x_inactivity_dur_t;
 
 #define LSM6DSV16X_INACTIVITY_THS              0x55U
 typedef struct {
