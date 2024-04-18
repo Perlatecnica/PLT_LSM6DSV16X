@@ -142,8 +142,8 @@ public:
     LSM6DSV16XStatusTypeDef Set_Wake_Up_Threshold(uint32_t Threshold);
     LSM6DSV16XStatusTypeDef Set_Wake_Up_Duration(uint8_t Duration);
     
-    LSM6DSV16XStatusTypeDef Read_Reg(uint8_t Reg, uint8_t *Data);
-    LSM6DSV16XStatusTypeDef Write_Reg(uint8_t Reg, uint8_t Data);
+    bool readRegister(uint8_t reg, uint8_t *value, uint16_t len);
+    bool writeRegister(uint8_t reg, const uint8_t *value, uint16_t len);
     
     void set_SDO_SAO_TO_GND();
     void set_SDO_SAO_TO_VCC();
@@ -194,8 +194,7 @@ private:
     LSM6DSV16XStatusTypeDef npy_half_to_float(uint16_t h, float *f);
     LSM6DSV16XStatusTypeDef sflp2q(float quat[4], uint16_t sflp[3]);
 
-    bool readRegister(uint8_t reg, uint8_t *value, uint16_t len);
-    bool writeRegister(uint8_t reg, const uint8_t *value, uint16_t len);
+    
     
     int32_t auto_increment_set(uint8_t val);
     int32_t block_data_update_set(uint8_t val);
