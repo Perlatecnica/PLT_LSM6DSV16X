@@ -142,7 +142,9 @@ public:
     LSM6DSV16XStatusTypeDef Set_Wake_Up_Threshold(uint32_t Threshold);
     LSM6DSV16XStatusTypeDef Set_Wake_Up_Duration(uint8_t Duration);
     
-
+    LSM6DSV16XStatusTypeDef Read_Reg(uint8_t Reg, uint8_t *Data);
+    LSM6DSV16XStatusTypeDef Write_Reg(uint8_t Reg, uint8_t Data);
+    
     void set_SDO_SAO_TO_GND();
     void set_SDO_SAO_TO_VCC();
 
