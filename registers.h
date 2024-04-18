@@ -159,11 +159,6 @@ typedef struct {
   uint8_t gbias                : 1;
 } lsm6dsv16x_fifo_sflp_raw_t;
 
-typedef struct {
-  uint8_t address;
-  uint8_t data;
-} ucf_line_t;
-
 typedef enum {
   LSM6DSV16X_XL_ST_DISABLE  = 0x0,
   LSM6DSV16X_XL_ST_POSITIVE = 0x1,
