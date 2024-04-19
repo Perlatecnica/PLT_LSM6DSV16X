@@ -57,7 +57,6 @@ public:
     LSM6DSV16XStatusTypeDef Set_X_ODR(float Odr, LSM6DSV16X_ACC_Operating_Mode_t Mode = LSM6DSV16X_ACC_HIGH_PERFORMANCE_MODE);
     LSM6DSV16XStatusTypeDef Set_X_ODR_When_Enabled(float Odr);
     LSM6DSV16XStatusTypeDef Set_X_ODR_When_Disabled(float Odr);
-    LSM6DSV16XStatusTypeDef FIFO_Set_Mode(uint8_t Mode);
     LSM6DSV16XStatusTypeDef Disable_X();
     LSM6DSV16XStatusTypeDef Enable_G();
     LSM6DSV16XStatusTypeDef Disable_G();
@@ -106,10 +105,6 @@ public:
     LSM6DSV16XStatusTypeDef Enable_Auto_Increment();
     LSM6DSV16XStatusTypeDef Disable_Auto_Increment();
     LSM6DSV16XStatusTypeDef Device_Reset(LSM6DSV16X_Reset_t flags);
-    LSM6DSV16XStatusTypeDef FIFO_Get_Num_Samples(uint16_t *NumSamples);
-    LSM6DSV16XStatusTypeDef FIFO_Get_Tag(uint8_t *Tag);
-    LSM6DSV16XStatusTypeDef FIFO_Get_Rotation_Vector(float *rvec);
-    LSM6DSV16XStatusTypeDef FIFO_Get_Data(uint8_t *Data);
     LSM6DSV16XStatusTypeDef Get_6D_Orientation_XL(uint8_t *XLow);
     LSM6DSV16XStatusTypeDef Get_6D_Orientation_XH(uint8_t *XHigh);
     LSM6DSV16XStatusTypeDef Get_6D_Orientation_YL(uint8_t *YLow);
@@ -141,6 +136,28 @@ public:
     LSM6DSV16XStatusTypeDef Disable_Wake_Up_Detection();
     LSM6DSV16XStatusTypeDef Set_Wake_Up_Threshold(uint32_t Threshold);
     LSM6DSV16XStatusTypeDef Set_Wake_Up_Duration(uint8_t Duration);
+    LSM6DSV16XStatusTypeDef FIFO_Reset();
+    LSM6DSV16XStatusTypeDef FIFO_Get_Num_Samples(uint16_t *NumSamples);
+    LSM6DSV16XStatusTypeDef FIFO_Get_Tag(uint8_t *Tag);
+    LSM6DSV16XStatusTypeDef FIFO_Get_Rotation_Vector(float *rvec);
+    LSM6DSV16XStatusTypeDef FIFO_Get_Data(uint8_t *Data);
+    LSM6DSV16XStatusTypeDef FIFO_Get_Full_Status(uint8_t *Status);
+    LSM6DSV16XStatusTypeDef FIFO_Set_INT1_FIFO_Full(uint8_t Status);
+    LSM6DSV16XStatusTypeDef FIFO_Set_INT2_FIFO_Full(uint8_t Status);
+    LSM6DSV16XStatusTypeDef FIFO_Set_Watermark_Level(uint8_t Watermark);
+    LSM6DSV16XStatusTypeDef FIFO_Set_Stop_On_Fth(uint8_t Status);
+    LSM6DSV16XStatusTypeDef FIFO_Set_Mode(uint8_t Mode);
+    LSM6DSV16XStatusTypeDef FIFO_Get_X_Axes(int32_t *Acceleration);
+    LSM6DSV16XStatusTypeDef FIFO_Set_X_BDR(float Bdr);
+    LSM6DSV16XStatusTypeDef FIFO_Get_G_Axes(int32_t *AngularVelocity);
+    LSM6DSV16XStatusTypeDef FIFO_Set_G_BDR(float Bdr);
+    LSM6DSV16XStatusTypeDef FIFO_Get_Status(lsm6dsv16x_fifo_status_t *Status);
+    LSM6DSV16XStatusTypeDef FIFO_Get_Gravity_Vector(float *gvec);
+    LSM6DSV16XStatusTypeDef FIFO_Get_Gyroscope_Bias(float *gbias);
+    LSM6DSV16XStatusTypeDef FIFO_Enable_Timestamp();
+    LSM6DSV16XStatusTypeDef FIFO_Disable_Timestamp();
+    LSM6DSV16XStatusTypeDef FIFO_Set_Timestamp_Decimation(uint8_t decimation);
+    LSM6DSV16XStatusTypeDef FIFO_Get_Timestamp(uint32_t *timestamp);
     
     bool readRegister(uint8_t reg, uint8_t *value, uint16_t len);
     bool writeRegister(uint8_t reg, const uint8_t *value, uint16_t len);
@@ -198,9 +215,6 @@ private:
     
     int32_t auto_increment_set(uint8_t val);
     int32_t block_data_update_set(uint8_t val);
-    int32_t fifo_mode_set(lsm6dsv16x_fifo_mode_t val);
-    int32_t fifo_sflp_batch_set(lsm6dsv16x_fifo_sflp_raw_t val);
-    int32_t fifo_sflp_batch_get(lsm6dsv16x_fifo_sflp_raw_t *val);
     int32_t xl_data_rate_set(lsm6dsv16x_data_rate_t val);   
     int32_t xl_data_rate_get(lsm6dsv16x_data_rate_t *val);
     int32_t xl_self_test_set(lsm6dsv16x_xl_self_test_t val);
@@ -263,6 +277,16 @@ private:
     int32_t act_wkup_time_windows_set(lsm6dsv16x_act_wkup_time_windows_t val);
     int32_t act_wkup_time_windows_get(lsm6dsv16x_act_wkup_time_windows_t *val);
     int32_t act_thresholds_set(lsm6dsv16x_act_thresholds_t *val);
+    int32_t fifo_watermark_set(uint8_t val);
+    int32_t fifo_mode_set(lsm6dsv16x_fifo_mode_t val);
+    int32_t fifo_sflp_batch_set(lsm6dsv16x_fifo_sflp_raw_t val);
+    int32_t fifo_sflp_batch_get(lsm6dsv16x_fifo_sflp_raw_t *val);
+    int32_t fifo_stop_on_wtm_set(uint8_t val);
+    int32_t fifo_xl_batch_set(lsm6dsv16x_fifo_xl_batch_t val);
+    int32_t fifo_gy_batch_set(lsm6dsv16x_fifo_gy_batch_t val);
+    int32_t timestamp_set(uint8_t val);
+    int32_t fifo_timestamp_batch_set(lsm6dsv16x_fifo_timestamp_batch_t val);
+
     
 };
 

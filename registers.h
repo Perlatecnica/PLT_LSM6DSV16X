@@ -122,6 +122,13 @@ typedef struct {
 #endif /* DRV_BYTE_ORDER */
 } lsm6dsv16x_inactivity_dur_t;
 
+typedef enum {
+  LSM6DSV16X_TMSTMP_NOT_BATCHED = 0x0,
+  LSM6DSV16X_TMSTMP_DEC_1       = 0x1,
+  LSM6DSV16X_TMSTMP_DEC_8       = 0x2,
+  LSM6DSV16X_TMSTMP_DEC_32      = 0x3,
+} lsm6dsv16x_fifo_timestamp_batch_t;
+
 typedef struct {
   lsm6dsv16x_inactivity_dur_t inactivity_cfg;
   uint8_t inactivity_ths;
@@ -169,6 +176,38 @@ typedef struct {
   uint8_t shock                : 2;
   uint8_t quiet                : 4;
 } lsm6dsv16x_act_wkup_time_windows_t;
+
+typedef enum {
+  LSM6DSV16X_GY_NOT_BATCHED       = 0x0,
+  LSM6DSV16X_GY_BATCHED_AT_1Hz875 = 0x1,
+  LSM6DSV16X_GY_BATCHED_AT_7Hz5   = 0x2,
+  LSM6DSV16X_GY_BATCHED_AT_15Hz   = 0x3,
+  LSM6DSV16X_GY_BATCHED_AT_30Hz   = 0x4,
+  LSM6DSV16X_GY_BATCHED_AT_60Hz   = 0x5,
+  LSM6DSV16X_GY_BATCHED_AT_120Hz  = 0x6,
+  LSM6DSV16X_GY_BATCHED_AT_240Hz  = 0x7,
+  LSM6DSV16X_GY_BATCHED_AT_480Hz  = 0x8,
+  LSM6DSV16X_GY_BATCHED_AT_960Hz  = 0x9,
+  LSM6DSV16X_GY_BATCHED_AT_1920Hz = 0xa,
+  LSM6DSV16X_GY_BATCHED_AT_3840Hz = 0xb,
+  LSM6DSV16X_GY_BATCHED_AT_7680Hz = 0xc,
+} lsm6dsv16x_fifo_gy_batch_t;
+
+typedef enum {
+  LSM6DSV16X_XL_NOT_BATCHED       = 0x0,
+  LSM6DSV16X_XL_BATCHED_AT_1Hz875 = 0x1,
+  LSM6DSV16X_XL_BATCHED_AT_7Hz5   = 0x2,
+  LSM6DSV16X_XL_BATCHED_AT_15Hz   = 0x3,
+  LSM6DSV16X_XL_BATCHED_AT_30Hz   = 0x4,
+  LSM6DSV16X_XL_BATCHED_AT_60Hz   = 0x5,
+  LSM6DSV16X_XL_BATCHED_AT_120Hz  = 0x6,
+  LSM6DSV16X_XL_BATCHED_AT_240Hz  = 0x7,
+  LSM6DSV16X_XL_BATCHED_AT_480Hz  = 0x8,
+  LSM6DSV16X_XL_BATCHED_AT_960Hz  = 0x9,
+  LSM6DSV16X_XL_BATCHED_AT_1920Hz = 0xa,
+  LSM6DSV16X_XL_BATCHED_AT_3840Hz = 0xb,
+  LSM6DSV16X_XL_BATCHED_AT_7680Hz = 0xc,
+} lsm6dsv16x_fifo_xl_batch_t;
 
 typedef enum {
   LSM6DSV16X_XL_HIGH_PERFORMANCE_MD   = 0x0,

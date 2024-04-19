@@ -109,6 +109,261 @@ LSM6DSV16XStatusTypeDef LSM6DSV16X::begin()
   return LSM6DSV16X_OK;
 }
 
+LSM6DSV16XStatusTypeDef LSM6DSV16X::FIFO_Reset()
+{
+  if (fifo_mode_set(LSM6DSV16X_BYPASS_MODE) != LSM6DSV16X_OK) {
+    return LSM6DSV16X_ERROR;
+  }
+
+  if (fifo_mode_set(fifo_mode) != LSM6DSV16X_OK) {
+    return LSM6DSV16X_ERROR;
+  }
+  return LSM6DSV16X_OK;
+}
+
+LSM6DSV16XStatusTypeDef LSM6DSV16X::FIFO_Get_Full_Status(uint8_t *Status)
+{
+  lsm6dsv16x_fifo_status2_t val;
+
+  if (readRegister(LSM6DSV16X_FIFO_STATUS2, (uint8_t *)&val, 1) != LSM6DSV16X_OK) {
+    return LSM6DSV16X_ERROR;
+  }
+
+  *Status = val.fifo_full_ia;
+
+  return LSM6DSV16X_OK;
+}
+
+LSM6DSV16XStatusTypeDef LSM6DSV16X::FIFO_Set_INT1_FIFO_Full(uint8_t Status)
+{
+  lsm6dsv16x_int1_ctrl_t reg;
+
+  if (readRegister(LSM6DSV16X_INT1_CTRL, (uint8_t *)&reg, 1) != LSM6DSV16X_OK) {
+    return LSM6DSV16X_ERROR;
+  }
+
+  reg.int1_fifo_full = Status;
+
+  if (writeRegister(LSM6DSV16X_INT1_CTRL, (uint8_t *)&reg, 1) != LSM6DSV16X_OK) {
+    return LSM6DSV16X_ERROR;
+  }
+
+  return LSM6DSV16X_OK;
+}
+
+LSM6DSV16XStatusTypeDef LSM6DSV16X::FIFO_Set_INT2_FIFO_Full(uint8_t Status)
+{
+  lsm6dsv16x_int2_ctrl_t reg;
+
+  if (readRegister(LSM6DSV16X_INT2_CTRL, (uint8_t *)&reg, 1) != LSM6DSV16X_OK) {
+    return LSM6DSV16X_ERROR;
+  }
+
+  reg.int2_fifo_full = Status;
+
+  if (writeRegister(LSM6DSV16X_INT2_CTRL, (uint8_t *)&reg, 1) != LSM6DSV16X_OK) {
+    return LSM6DSV16X_ERROR;
+  }
+
+  return LSM6DSV16X_OK;
+}
+
+LSM6DSV16XStatusTypeDef LSM6DSV16X::FIFO_Set_Watermark_Level(uint8_t Watermark)
+{
+  return (LSM6DSV16XStatusTypeDef) fifo_watermark_set(Watermark);
+}
+
+LSM6DSV16XStatusTypeDef LSM6DSV16X::FIFO_Set_Stop_On_Fth(uint8_t Status)
+{
+  return (LSM6DSV16XStatusTypeDef) fifo_stop_on_wtm_set(Status);
+}
+
+LSM6DSV16XStatusTypeDef LSM6DSV16X::FIFO_Set_Mode(uint8_t Mode)
+{
+  lsm6dsv16x_fifo_mode_t newMode = LSM6DSV16X_BYPASS_MODE;
+
+  switch (Mode) {
+    case 0:
+      newMode = LSM6DSV16X_BYPASS_MODE;
+      break;
+    case 1:
+      newMode = LSM6DSV16X_FIFO_MODE;
+      break;
+    case 3:
+      newMode = LSM6DSV16X_STREAM_TO_FIFO_MODE;
+      break;
+    case 4:
+      newMode = LSM6DSV16X_BYPASS_TO_STREAM_MODE;
+      break;
+    case 6:
+      newMode = LSM6DSV16X_STREAM_MODE;
+      break;
+    case 7:
+      newMode = LSM6DSV16X_BYPASS_TO_FIFO_MODE;
+      break;
+    default:
+      return LSM6DSV16X_ERROR;
+  }
+  fifo_mode = newMode;
+  if (fifo_mode_set(fifo_mode) != LSM6DSV16X_OK) {
+    return LSM6DSV16X_ERROR;
+  }
+
+  return LSM6DSV16X_OK;
+}
+
+LSM6DSV16XStatusTypeDef LSM6DSV16X::FIFO_Get_X_Axes(int32_t *Acceleration)
+{
+  lsm6dsv16x_axis3bit16_t data_raw;
+  float sensitivity = Convert_X_Sensitivity(acc_fs);
+  float acceleration_float[3];
+
+  if (FIFO_Get_Data(data_raw.u8bit) != LSM6DSV16X_OK) {
+    return LSM6DSV16X_ERROR;
+  }
+
+  if (sensitivity == 0.0f) {
+    return LSM6DSV16X_ERROR;
+  }
+  acceleration_float[0] = (float)data_raw.i16bit[0] * sensitivity;
+  acceleration_float[1] = (float)data_raw.i16bit[1] * sensitivity;
+  acceleration_float[2] = (float)data_raw.i16bit[2] * sensitivity;
+
+  Acceleration[0] = (int32_t)acceleration_float[0];
+  Acceleration[1]  = (int32_t)acceleration_float[1];
+  Acceleration[2]  = (int32_t)acceleration_float[2];
+
+  return LSM6DSV16X_OK;
+
+}
+
+LSM6DSV16XStatusTypeDef LSM6DSV16X::FIFO_Set_X_BDR(float Bdr)
+{
+  lsm6dsv16x_fifo_xl_batch_t new_bdr;
+
+  new_bdr = (Bdr <=    0.0f) ? LSM6DSV16X_XL_NOT_BATCHED
+            : (Bdr <=    1.8f) ? LSM6DSV16X_XL_BATCHED_AT_1Hz875
+            : (Bdr <=    7.5f) ? LSM6DSV16X_XL_BATCHED_AT_7Hz5
+            : (Bdr <=   15.0f) ? LSM6DSV16X_XL_BATCHED_AT_15Hz
+            : (Bdr <=   30.0f) ? LSM6DSV16X_XL_BATCHED_AT_30Hz
+            : (Bdr <=   60.0f) ? LSM6DSV16X_XL_BATCHED_AT_60Hz
+            : (Bdr <=  120.0f) ? LSM6DSV16X_XL_BATCHED_AT_120Hz
+            : (Bdr <=  240.0f) ? LSM6DSV16X_XL_BATCHED_AT_240Hz
+            : (Bdr <=  480.0f) ? LSM6DSV16X_XL_BATCHED_AT_480Hz
+            : (Bdr <=  960.0f) ? LSM6DSV16X_XL_BATCHED_AT_960Hz
+            : (Bdr <=  1920.0f) ? LSM6DSV16X_XL_BATCHED_AT_1920Hz
+            : (Bdr <= 3840.0f) ? LSM6DSV16X_XL_BATCHED_AT_3840Hz
+            :                    LSM6DSV16X_XL_BATCHED_AT_7680Hz;
+
+  return (LSM6DSV16XStatusTypeDef) fifo_xl_batch_set(new_bdr);
+}
+
+LSM6DSV16XStatusTypeDef LSM6DSV16X::FIFO_Get_G_Axes(int32_t *AngularVelocity)
+{
+  lsm6dsv16x_axis3bit16_t data_raw;
+  float sensitivity = Convert_G_Sensitivity(gyro_fs);
+  float angular_velocity_float[3];
+
+  if (FIFO_Get_Data(data_raw.u8bit) != LSM6DSV16X_OK) {
+    return LSM6DSV16X_ERROR;
+  }
+
+  if (sensitivity == 0.0f) {
+    return LSM6DSV16X_ERROR;
+  }
+
+  angular_velocity_float[0] = (float)data_raw.i16bit[0] * sensitivity;
+  angular_velocity_float[1] = (float)data_raw.i16bit[1] * sensitivity;
+  angular_velocity_float[2] = (float)data_raw.i16bit[2] * sensitivity;
+
+  AngularVelocity[0] = (int32_t)angular_velocity_float[0];
+  AngularVelocity[1] = (int32_t)angular_velocity_float[1];
+  AngularVelocity[2] = (int32_t)angular_velocity_float[2];
+
+  return LSM6DSV16X_OK;
+}
+
+LSM6DSV16XStatusTypeDef LSM6DSV16X::FIFO_Set_G_BDR(float Bdr)
+{
+  lsm6dsv16x_fifo_gy_batch_t new_bdr;
+
+  new_bdr = (Bdr <=    0.0f) ? LSM6DSV16X_GY_NOT_BATCHED
+            : (Bdr <=    1.8f) ? LSM6DSV16X_GY_BATCHED_AT_1Hz875
+            : (Bdr <=    7.5f) ? LSM6DSV16X_GY_BATCHED_AT_7Hz5
+            : (Bdr <=   15.0f) ? LSM6DSV16X_GY_BATCHED_AT_15Hz
+            : (Bdr <=   30.0f) ? LSM6DSV16X_GY_BATCHED_AT_30Hz
+            : (Bdr <=   60.0f) ? LSM6DSV16X_GY_BATCHED_AT_60Hz
+            : (Bdr <=  120.0f) ? LSM6DSV16X_GY_BATCHED_AT_120Hz
+            : (Bdr <=  240.0f) ? LSM6DSV16X_GY_BATCHED_AT_240Hz
+            : (Bdr <=  480.0f) ? LSM6DSV16X_GY_BATCHED_AT_480Hz
+            : (Bdr <=  960.0f) ? LSM6DSV16X_GY_BATCHED_AT_960Hz
+            : (Bdr <=  1920.0f) ? LSM6DSV16X_GY_BATCHED_AT_1920Hz
+            : (Bdr <= 3840.0f) ? LSM6DSV16X_GY_BATCHED_AT_3840Hz
+            :                    LSM6DSV16X_GY_BATCHED_AT_7680Hz;
+
+  return (LSM6DSV16XStatusTypeDef) fifo_gy_batch_set(new_bdr);
+}
+
+LSM6DSV16XStatusTypeDef LSM6DSV16X::FIFO_Get_Status(lsm6dsv16x_fifo_status_t *Status)
+{
+  return (LSM6DSV16XStatusTypeDef)fifo_status_get(Status);
+}
+
+LSM6DSV16XStatusTypeDef LSM6DSV16X::FIFO_Get_Gravity_Vector(float *gvec)
+{
+  lsm6dsv16x_axis3bit16_t data_raw;
+
+  if (FIFO_Get_Data(data_raw.u8bit) != LSM6DSV16X_OK) {
+    return LSM6DSV16X_ERROR;
+  }
+
+  gvec[0] = from_sflp_to_mg(data_raw.i16bit[0]);
+  gvec[1] = from_sflp_to_mg(data_raw.i16bit[1]);
+  gvec[2] = from_sflp_to_mg(data_raw.i16bit[2]);
+
+  return LSM6DSV16X_OK;
+}
+
+LSM6DSV16XStatusTypeDef LSM6DSV16X::FIFO_Get_Gyroscope_Bias(float *gbias)
+{
+  lsm6dsv16x_axis3bit16_t data_raw;
+
+  if (FIFO_Get_Data(data_raw.u8bit) != LSM6DSV16X_OK) {
+    return LSM6DSV16X_ERROR;
+  }
+
+  gbias[0] = from_fs125_to_mdps(data_raw.i16bit[0]);
+  gbias[1] = from_fs125_to_mdps(data_raw.i16bit[1]);
+  gbias[2] = from_fs125_to_mdps(data_raw.i16bit[2]);
+
+  return LSM6DSV16X_OK;
+}
+
+LSM6DSV16XStatusTypeDef LSM6DSV16X::FIFO_Enable_Timestamp()
+{
+  return (LSM6DSV16XStatusTypeDef)timestamp_set(PROPERTY_ENABLE);
+}
+
+LSM6DSV16XStatusTypeDef LSM6DSV16X::FIFO_Disable_Timestamp()
+{
+  return (LSM6DSV16XStatusTypeDef)timestamp_set(PROPERTY_DISABLE);
+}
+
+LSM6DSV16XStatusTypeDef LSM6DSV16X::FIFO_Set_Timestamp_Decimation(uint8_t decimation)
+{
+  return (LSM6DSV16XStatusTypeDef)fifo_timestamp_batch_set((lsm6dsv16x_fifo_timestamp_batch_t)decimation);
+}
+
+LSM6DSV16XStatusTypeDef LSM6DSV16X::FIFO_Get_Timestamp(uint32_t *timestamp)
+{
+  uint32_t raw_data[2]; //first is timestamp second is half full of meta data
+  if (FIFO_Get_Data((uint8_t *)raw_data) != LSM6DSV16X_OK) {
+    return LSM6DSV16X_ERROR;
+  }
+  *timestamp = raw_data[0];
+  return LSM6DSV16X_OK;
+}
+
 LSM6DSV16XStatusTypeDef LSM6DSV16X::Enable_Wake_Up_Detection(LSM6DSV16X_SensorIntPin_t IntPin)
 {
   LSM6DSV16XStatusTypeDef ret = LSM6DSV16X_OK;
@@ -1790,40 +2045,6 @@ LSM6DSV16XStatusTypeDef LSM6DSV16X::Enable_X()
   }
 
   acc_is_enabled = 1U;
-
-  return LSM6DSV16X_OK;
-}
-
-LSM6DSV16XStatusTypeDef LSM6DSV16X::FIFO_Set_Mode(uint8_t Mode)
-{
-  lsm6dsv16x_fifo_mode_t newMode = LSM6DSV16X_BYPASS_MODE;
-
-  switch (Mode) {
-    case 0:
-      newMode = LSM6DSV16X_BYPASS_MODE;
-      break;
-    case 1:
-      newMode = LSM6DSV16X_FIFO_MODE;
-      break;
-    case 3:
-      newMode = LSM6DSV16X_STREAM_TO_FIFO_MODE;
-      break;
-    case 4:
-      newMode = LSM6DSV16X_BYPASS_TO_STREAM_MODE;
-      break;
-    case 6:
-      newMode = LSM6DSV16X_STREAM_MODE;
-      break;
-    case 7:
-      newMode = LSM6DSV16X_BYPASS_TO_FIFO_MODE;
-      break;
-    default:
-      return LSM6DSV16X_ERROR;
-  }
-  fifo_mode = newMode;
-  if (fifo_mode_set(fifo_mode) != LSM6DSV16X_OK) {
-    return LSM6DSV16X_ERROR;
-  }
 
   return LSM6DSV16X_OK;
 }
@@ -5502,6 +5723,91 @@ int32_t LSM6DSV16X::act_thresholds_set(lsm6dsv16x_act_thresholds_t *val)
   ret += writeRegister(LSM6DSV16X_INACTIVITY_THS, (uint8_t *)&inactivity_ths, 1);
   ret += writeRegister(LSM6DSV16X_WAKE_UP_THS, (uint8_t *)&wake_up_ths, 1);
   ret += writeRegister(LSM6DSV16X_WAKE_UP_DUR, (uint8_t *)&wake_up_dur, 1);
+
+  return ret;
+}
+
+int32_t LSM6DSV16X::fifo_watermark_set(uint8_t val)
+{
+  lsm6dsv16x_fifo_ctrl1_t fifo_ctrl1;
+  int32_t ret;
+
+  ret = readRegister(LSM6DSV16X_FIFO_CTRL1, (uint8_t *)&fifo_ctrl1, 1);
+
+  if (ret == 0) {
+    fifo_ctrl1.wtm = val;
+    ret = writeRegister(LSM6DSV16X_FIFO_CTRL1, (uint8_t *)&fifo_ctrl1, 1);
+  }
+
+  return ret;
+}
+
+int32_t LSM6DSV16X::fifo_stop_on_wtm_set(uint8_t val)
+{
+  lsm6dsv16x_fifo_ctrl2_t fifo_ctrl2;
+  int32_t ret;
+
+  ret = readRegister(LSM6DSV16X_FIFO_CTRL2, (uint8_t *)&fifo_ctrl2, 1);
+  if (ret == 0) {
+    fifo_ctrl2.stop_on_wtm = val;
+    ret = writeRegister(LSM6DSV16X_FIFO_CTRL2, (uint8_t *)&fifo_ctrl2, 1);
+  }
+
+  return ret;
+}
+
+int32_t LSM6DSV16X::fifo_xl_batch_set(lsm6dsv16x_fifo_xl_batch_t val)
+{
+  lsm6dsv16x_fifo_ctrl3_t fifo_ctrl3;
+  int32_t ret;
+
+  ret = readRegister(LSM6DSV16X_FIFO_CTRL3, (uint8_t *)&fifo_ctrl3, 1);
+  if (ret == 0) {
+    fifo_ctrl3.bdr_xl = (uint8_t)val & 0xFu;
+    ret = writeRegister(LSM6DSV16X_FIFO_CTRL3, (uint8_t *)&fifo_ctrl3, 1);
+  }
+
+  return ret;
+}
+
+int32_t LSM6DSV16X::fifo_gy_batch_set(lsm6dsv16x_fifo_gy_batch_t val)
+{
+  lsm6dsv16x_fifo_ctrl3_t fifo_ctrl3;
+  int32_t ret;
+
+  ret = readRegister(LSM6DSV16X_FIFO_CTRL3, (uint8_t *)&fifo_ctrl3, 1);
+  if (ret == 0) {
+    fifo_ctrl3.bdr_gy = (uint8_t)val & 0x0Fu;
+    ret = writeRegister(LSM6DSV16X_FIFO_CTRL3, (uint8_t *)&fifo_ctrl3, 1);
+  }
+
+  return ret;
+}
+
+int32_t LSM6DSV16X::timestamp_set(uint8_t val)
+{
+  lsm6dsv16x_functions_enable_t functions_enable;
+  int32_t ret;
+
+  ret = readRegister(LSM6DSV16X_FUNCTIONS_ENABLE, (uint8_t *)&functions_enable, 1);
+  if (ret == 0) {
+    functions_enable.timestamp_en = val;
+    ret = writeRegister(LSM6DSV16X_FUNCTIONS_ENABLE, (uint8_t *)&functions_enable, 1);
+  }
+
+  return ret;
+}
+
+int32_t LSM6DSV16X::fifo_timestamp_batch_set(lsm6dsv16x_fifo_timestamp_batch_t val)
+{
+  lsm6dsv16x_fifo_ctrl4_t fifo_ctrl4;
+  int32_t ret;
+
+  ret = readRegister(LSM6DSV16X_FIFO_CTRL4, (uint8_t *)&fifo_ctrl4, 1);
+  if (ret == 0) {
+    fifo_ctrl4.dec_ts_batch = (uint8_t)val & 0x03U;
+    ret = writeRegister(LSM6DSV16X_FIFO_CTRL4, (uint8_t *)&fifo_ctrl4, 1);
+  }
 
   return ret;
 }
