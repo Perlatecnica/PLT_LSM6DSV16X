@@ -82,6 +82,37 @@ void LSM6DSV16X::initialize() {
 }
 
 /**
+ * @brief Get the X-axis acceleration in milli-g.
+ * 
+ * @param[out] Acceleration Pointer to an array where the X, Y, and Z axis acceleration values will be stored.
+ *                          The values are in milli-g (1 g = 9.81 m/s^2).
+ *                          The array should have space for at least 3 elements.
+ * @return LSM6DSV16XStatusTypeDef Status of the operation.
+ */
+LSM6DSV16XStatusTypeDef LSM6DSV16X::Get_X_Axes(int32_t *Acceleration)
+{
+  lsm6dsv16x_axis3bit16_t data_raw;
+  float sensitivity = Convert_X_Sensitivity(acc_fs);
+
+  /* Read raw data values. */
+  if (acceleration_raw_get(data_raw.i16bit) != LSM6DSV16X_OK) {
+    return LSM6DSV16X_ERROR;
+  }
+
+  /* Get LSM6DSV16X actual sensitivity. */
+  if (sensitivity == 0.0f) {
+    return LSM6DSV16X_ERROR;
+  }
+
+  /* Calculate the data. */
+  Acceleration[0] = (int32_t)((float)((float)data_raw.i16bit[0] * sensitivity));
+  Acceleration[1] = (int32_t)((float)((float)data_raw.i16bit[1] * sensitivity));
+  Acceleration[2] = (int32_t)((float)((float)data_raw.i16bit[2] * sensitivity));
+
+  return LSM6DSV16X_OK;
+} 
+
+/**
  * @brief Set the gyroscope output data rate (ODR) when the gyroscope is disabled.
  * 
  * This method sets the gyroscope output data rate (ODR) to the specified value when the gyroscope is disabled.
