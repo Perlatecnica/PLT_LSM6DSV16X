@@ -28,32 +28,203 @@ SOFTWARE.
 #include <cstdint>
 #include "mbed.h"
 
+/**
+ * @brief Constructor for the LSM6DSV16X class.
+ * 
+ * Initializes the LSM6DSV16X object with the specified I2C pins.
+ * 
+ * @param sda PinName of the data line for I2C communication.
+ * @param scl PinName of the clock line for I2C communication.
+ */
 LSM6DSV16X::LSM6DSV16X(PinName sda, PinName scl) {
     i2c = new I2C(sda, scl);
     initialize();
 }
 
+/**
+ * @brief Constructor for the LSM6DSV16X class.
+ * 
+ * Initializes the LSM6DSV16X object with the specified SPI pins.
+ * 
+ * @param mosi PinName of the Master Out Slave In (MOSI) line for SPI communication.
+ * @param miso PinName of the Master In Slave Out (MISO) line for SPI communication.
+ * @param sck PinName of the Serial Clock (SCK) line for SPI communication.
+ * @param cs PinName of the Chip Select (CS) line for SPI communication.
+ */
 LSM6DSV16X::LSM6DSV16X(PinName mosi, PinName miso, PinName sck, PinName cs) {
     // Inizializzazione del sensore tramite SPI
     initialize();
 }
 
+/**
+ * @brief Destructor for the LSM6DSV16X class.
+ * 
+ * Cleans up resources allocated for I2C and SPI communication.
+ */
 LSM6DSV16X::~LSM6DSV16X() {
-    // Pulizia delle risorse, se necessario
-    delete i2c;
-    delete spi;
-    delete cs_pin;
+    delete i2c; // Deallocate memory for I2C communication
+    delete spi; // Deallocate memory for SPI communication
+    delete cs_pin; // Deallocate memory for the Chip Select pin
 }
 
+/**
+ * @brief Initialize the LSM6DSV16X device.
+ * 
+ * Configures communication settings based on the selected interface (I2C or SPI).
+ */
 void LSM6DSV16X::initialize() {
     if (i2c) {
         i2c->frequency(400000); // Set I2C frequency to 400kHz
     } else if (spi) {
-        cs_pin->write(0); 
-        cs_pin->write(1); 
+        cs_pin->write(0); // Set Chip Select pin low to enable communication
+        cs_pin->write(1); // Set Chip Select pin high to disable communication
     }
 }
 
+/**
+ * @brief Set the gyroscope output data rate (ODR) when the gyroscope is disabled.
+ * 
+ * This method sets the gyroscope output data rate (ODR) to the specified value when the gyroscope is disabled.
+ * 
+ * @param Odr The desired gyroscope output data rate (ODR) in Hz.
+ * @return LSM6DSV16XStatusTypeDef Indicates whether the operation was successful or encountered an error.
+ */
+LSM6DSV16XStatusTypeDef LSM6DSV16X::Set_G_ODR_When_Disabled(float Odr)
+{
+  gyro_odr = (Odr <=    7.5f) ? LSM6DSV16X_ODR_AT_7Hz5
+             : (Odr <=   15.0f) ? LSM6DSV16X_ODR_AT_15Hz
+             : (Odr <=   30.0f) ? LSM6DSV16X_ODR_AT_30Hz
+             : (Odr <=   60.0f) ? LSM6DSV16X_ODR_AT_60Hz
+             : (Odr <=  120.0f) ? LSM6DSV16X_ODR_AT_120Hz
+             : (Odr <=  240.0f) ? LSM6DSV16X_ODR_AT_240Hz
+             : (Odr <=  480.0f) ? LSM6DSV16X_ODR_AT_480Hz
+             : (Odr <=  960.0f) ? LSM6DSV16X_ODR_AT_960Hz
+             : (Odr <= 1920.0f) ? LSM6DSV16X_ODR_AT_1920Hz
+             : (Odr <= 3840.0f) ? LSM6DSV16X_ODR_AT_3840Hz
+             :                    LSM6DSV16X_ODR_AT_7680Hz;
+
+  return LSM6DSV16X_OK;
+}
+
+/**
+ * @brief Get the gyroscope raw data when data is available.
+ * 
+ * This method waits until gyroscope data is available before retrieving the raw data.
+ * 
+ * @param Value Pointer to an array to store the raw gyroscope data.
+ * @return LSM6DSV16XStatusTypeDef Indicates whether the operation was successful or encountered an error.
+ */
+LSM6DSV16XStatusTypeDef LSM6DSV16X::Get_G_AxesRaw_When_Aval(int16_t *Value)
+{
+  lsm6dsv16x_data_ready_t drdy;
+  do {
+    if (flag_data_ready_get(&drdy) != LSM6DSV16X_OK) {
+      return LSM6DSV16X_ERROR;
+    }
+  } while (!drdy.drdy_gy);
+
+  if (Get_G_AxesRaw(Value) != LSM6DSV16X_OK) {
+    return LSM6DSV16X_ERROR;
+  }
+  return LSM6DSV16X_OK;
+}
+
+/**
+ * @brief Set the gyroscope output data rate (ODR) when the gyroscope is enabled.
+ * 
+ * @param Odr The desired output data rate (ODR) in Hz.
+ * @return LSM6DSV16XStatusTypeDef Indicates whether the operation was successful or encountered an error.
+ */
+LSM6DSV16XStatusTypeDef LSM6DSV16X::Set_G_ODR_When_Enabled(float Odr)
+{
+  lsm6dsv16x_data_rate_t new_odr;
+
+  new_odr = (Odr <=    7.5f) ? LSM6DSV16X_ODR_AT_7Hz5
+            : (Odr <=   15.0f) ? LSM6DSV16X_ODR_AT_15Hz
+            : (Odr <=   30.0f) ? LSM6DSV16X_ODR_AT_30Hz
+            : (Odr <=   60.0f) ? LSM6DSV16X_ODR_AT_60Hz
+            : (Odr <=  120.0f) ? LSM6DSV16X_ODR_AT_120Hz
+            : (Odr <=  240.0f) ? LSM6DSV16X_ODR_AT_240Hz
+            : (Odr <=  480.0f) ? LSM6DSV16X_ODR_AT_480Hz
+            : (Odr <=  960.0f) ? LSM6DSV16X_ODR_AT_960Hz
+            : (Odr <= 1920.0f) ? LSM6DSV16X_ODR_AT_1920Hz
+            : (Odr <= 3840.0f) ? LSM6DSV16X_ODR_AT_3840Hz
+            :                    LSM6DSV16X_ODR_AT_7680Hz;
+
+  return (LSM6DSV16XStatusTypeDef) gy_data_rate_set(new_odr);
+}
+
+/**
+ * @brief Convert the gyroscope full-scale sensitivity to a floating-point value.
+ * 
+ * @param full_scale The full-scale range of the gyroscope.
+ * @return float The sensitivity value corresponding to the given full-scale range.
+ */
+float LSM6DSV16X::Convert_G_Sensitivity(lsm6dsv16x_gy_full_scale_t full_scale)
+{
+  float Sensitivity = 0.0f;
+  /* Store the sensitivity based on actual full scale. */
+  switch (full_scale) {
+    case LSM6DSV16X_125dps:
+      Sensitivity = LSM6DSV16X_GYRO_SENSITIVITY_FS_125DPS;
+      break;
+
+    case LSM6DSV16X_250dps:
+      Sensitivity = LSM6DSV16X_GYRO_SENSITIVITY_FS_250DPS;
+      break;
+
+    case LSM6DSV16X_500dps:
+      Sensitivity = LSM6DSV16X_GYRO_SENSITIVITY_FS_500DPS;
+      break;
+
+    case LSM6DSV16X_1000dps:
+      Sensitivity = LSM6DSV16X_GYRO_SENSITIVITY_FS_1000DPS;
+      break;
+
+    case LSM6DSV16X_2000dps:
+      Sensitivity = LSM6DSV16X_GYRO_SENSITIVITY_FS_2000DPS;
+      break;
+
+    case LSM6DSV16X_4000dps:
+      Sensitivity = LSM6DSV16X_GYRO_SENSITIVITY_FS_4000DPS;
+      break;
+  }
+  return Sensitivity;
+}
+
+
+/**
+ * @brief Get the raw accelerometer data along the X, Y, and Z axes.
+ * 
+ * @param Value Pointer to an array to store the raw data values [X, Y, Z].
+ * @return LSM6DSV16XStatusTypeDef Status of the operation.
+ */
+LSM6DSV16XStatusTypeDef LSM6DSV16X::Get_X_AxesRaw(int16_t *Value)
+{
+  lsm6dsv16x_axis3bit16_t data_raw;
+
+  /* Read raw data values. */
+  if (acceleration_raw_get(data_raw.i16bit) != LSM6DSV16X_OK) {
+    return LSM6DSV16X_ERROR;
+  }
+
+  /* Format the data. */
+  Value[0] = data_raw.i16bit[0];
+  Value[1] = data_raw.i16bit[1];
+  Value[2] = data_raw.i16bit[2];
+
+  return LSM6DSV16X_OK;
+}
+
+/**
+ * @brief Initialize the LSM6DSV16X device.
+ * 
+ * Configures various settings of the LSM6DSV16X sensor upon startup.
+ * 
+ * @return Status of the initialization process.
+ *         - LSM6DSV16X_OK if initialization is successful.
+ *         - LSM6DSV16X_ERROR if initialization fails.
+ */
 LSM6DSV16XStatusTypeDef LSM6DSV16X::begin()
 {
   if (spi) {
@@ -62,44 +233,43 @@ LSM6DSV16XStatusTypeDef LSM6DSV16X::begin()
     //digitalWrite(cs_pin, HIGH);
   }
 
-  /* Enable register address automatically incremented during a multiple byte
-  access with a serial interface. */
+  /* Enable register address auto-increment during multiple byte access with a serial interface. */
   if (auto_increment_set(PROPERTY_ENABLE) != LSM6DSV16X_OK) {
     return LSM6DSV16X_ERROR;
   }
 
-  /* Enable BDU */
+  /* Enable Block Data Update (BDU). */
   if (Enable_Block_Data_Update() != LSM6DSV16X_OK) {
     return LSM6DSV16X_ERROR;
   }
 
-  /* FIFO mode selection */
+  /* FIFO mode selection. */
   if (fifo_mode_set(LSM6DSV16X_BYPASS_MODE) != LSM6DSV16X_OK) {
     return LSM6DSV16X_ERROR;
   }
 
-  /* Select default output data rate. */
+  /* Select default output data rate for accelerometer. */
   acc_odr = LSM6DSV16X_ODR_AT_120Hz;
 
-  /* Output data rate selection - power down. */
+  /* Output data rate selection for accelerometer - power down. */
   if (xl_data_rate_set(LSM6DSV16X_ODR_OFF) != LSM6DSV16X_OK) {
     return LSM6DSV16X_ERROR;
   }
 
-  /* Full scale selection. */
+  /* Full scale selection for accelerometer. */
   if (xl_full_scale_set(LSM6DSV16X_2g) != LSM6DSV16X_OK) {
     return LSM6DSV16X_ERROR;
   }
 
-  /* Select default output data rate. */
+  /* Select default output data rate for gyroscope. */
   gyro_odr = LSM6DSV16X_ODR_AT_120Hz;
 
-  /* Output data rate selection - power down. */
+  /* Output data rate selection for gyroscope - power down. */
   if (gy_data_rate_set(LSM6DSV16X_ODR_OFF) != LSM6DSV16X_OK) {
     return LSM6DSV16X_ERROR;
   }
 
-  /* Full scale selection. */
+  /* Full scale selection for gyroscope. */
   if (gy_full_scale_set(LSM6DSV16X_2000dps) != LSM6DSV16X_OK) {
     return LSM6DSV16X_ERROR;
   }
@@ -109,6 +279,16 @@ LSM6DSV16XStatusTypeDef LSM6DSV16X::begin()
   return LSM6DSV16X_OK;
 }
 
+
+/**
+ * @brief Reset the FIFO of the LSM6DSV16X device.
+ * 
+ * Resets the FIFO and sets the FIFO mode to the specified mode.
+ * 
+ * @return Status of the FIFO reset operation.
+ *         - LSM6DSV16X_OK if the FIFO reset is successful.
+ *         - LSM6DSV16X_ERROR if the FIFO reset fails.
+ */
 LSM6DSV16XStatusTypeDef LSM6DSV16X::FIFO_Reset()
 {
   if (fifo_mode_set(LSM6DSV16X_BYPASS_MODE) != LSM6DSV16X_OK) {
@@ -121,6 +301,20 @@ LSM6DSV16XStatusTypeDef LSM6DSV16X::FIFO_Reset()
   return LSM6DSV16X_OK;
 }
 
+
+/**
+ * @brief Get the full status of the FIFO in the LSM6DSV16X device.
+ * 
+ * Retrieves the full status of the FIFO and stores it in the provided variable.
+ * 
+ * @param[out] Status Pointer to a variable where the full status of the FIFO will be stored.
+ *                    - 0x00 if FIFO is not full.
+ *                    - 0x01 if FIFO is full.
+ * 
+ * @return Status of the FIFO full status retrieval operation.
+ *         - LSM6DSV16X_OK if the operation is successful.
+ *         - LSM6DSV16X_ERROR if the operation fails.
+ */
 LSM6DSV16XStatusTypeDef LSM6DSV16X::FIFO_Get_Full_Status(uint8_t *Status)
 {
   lsm6dsv16x_fifo_status2_t val;
@@ -134,6 +328,20 @@ LSM6DSV16XStatusTypeDef LSM6DSV16X::FIFO_Get_Full_Status(uint8_t *Status)
   return LSM6DSV16X_OK;
 }
 
+
+/**
+ * @brief Set the interrupt configuration for FIFO full on INT1 pin.
+ * 
+ * Configures the interrupt settings for FIFO full on the INT1 pin of the LSM6DSV16X device.
+ * 
+ * @param Status Status to set for FIFO full interrupt on INT1 pin.
+ *               - 0x00 to disable FIFO full interrupt on INT1 pin.
+ *               - 0x01 to enable FIFO full interrupt on INT1 pin.
+ * 
+ * @return Status of the interrupt configuration setting operation.
+ *         - LSM6DSV16X_OK if the operation is successful.
+ *         - LSM6DSV16X_ERROR if the operation fails.
+ */
 LSM6DSV16XStatusTypeDef LSM6DSV16X::FIFO_Set_INT1_FIFO_Full(uint8_t Status)
 {
   lsm6dsv16x_int1_ctrl_t reg;
@@ -151,6 +359,20 @@ LSM6DSV16XStatusTypeDef LSM6DSV16X::FIFO_Set_INT1_FIFO_Full(uint8_t Status)
   return LSM6DSV16X_OK;
 }
 
+
+/**
+ * @brief Set the interrupt configuration for FIFO full on INT2 pin.
+ * 
+ * Configures the interrupt settings for FIFO full on the INT2 pin of the LSM6DSV16X device.
+ * 
+ * @param Status Status to set for FIFO full interrupt on INT2 pin.
+ *               - 0x00 to disable FIFO full interrupt on INT2 pin.
+ *               - 0x01 to enable FIFO full interrupt on INT2 pin.
+ * 
+ * @return Status of the interrupt configuration setting operation.
+ *         - LSM6DSV16X_OK if the operation is successful.
+ *         - LSM6DSV16X_ERROR if the operation fails.
+ */
 LSM6DSV16XStatusTypeDef LSM6DSV16X::FIFO_Set_INT2_FIFO_Full(uint8_t Status)
 {
   lsm6dsv16x_int2_ctrl_t reg;
@@ -168,16 +390,58 @@ LSM6DSV16XStatusTypeDef LSM6DSV16X::FIFO_Set_INT2_FIFO_Full(uint8_t Status)
   return LSM6DSV16X_OK;
 }
 
+/**
+ * @brief Set the watermark level for the FIFO.
+ * 
+ * Sets the watermark level for the FIFO of the LSM6DSV16X device.
+ * 
+ * @param Watermark Watermark level to set for the FIFO.
+ * 
+ * @return Status of the watermark level setting operation.
+ *         - LSM6DSV16X_OK if the operation is successful.
+ *         - LSM6DSV16X_ERROR if the operation fails.
+ */
 LSM6DSV16XStatusTypeDef LSM6DSV16X::FIFO_Set_Watermark_Level(uint8_t Watermark)
 {
   return (LSM6DSV16XStatusTypeDef) fifo_watermark_set(Watermark);
 }
 
+/**
+ * @brief Set the stop on FIFO threshold status.
+ * 
+ * Configures whether to stop collecting data when the FIFO threshold is reached.
+ * 
+ * @param Status Status to set for stop on FIFO threshold.
+ *               - 0x00 to disable stop on FIFO threshold.
+ *               - 0x01 to enable stop on FIFO threshold.
+ * 
+ * @return Status of the stop on FIFO threshold setting operation.
+ *         - LSM6DSV16X_OK if the operation is successful.
+ *         - LSM6DSV16X_ERROR if the operation fails.
+ */
 LSM6DSV16XStatusTypeDef LSM6DSV16X::FIFO_Set_Stop_On_Fth(uint8_t Status)
 {
   return (LSM6DSV16XStatusTypeDef) fifo_stop_on_wtm_set(Status);
 }
 
+
+/**
+ * @brief Set the FIFO mode.
+ * 
+ * Sets the mode of the FIFO in the LSM6DSV16X device.
+ * 
+ * @param Mode Mode to set for the FIFO.
+ *             - 0: Bypass mode
+ *             - 1: FIFO mode
+ *             - 3: Stream-to-FIFO mode
+ *             - 4: Bypass-to-stream mode
+ *             - 6: Stream mode
+ *             - 7: Bypass-to-FIFO mode
+ * 
+ * @return Status of the FIFO mode setting operation.
+ *         - LSM6DSV16X_OK if the operation is successful.
+ *         - LSM6DSV16X_ERROR if the operation fails.
+ */
 LSM6DSV16XStatusTypeDef LSM6DSV16X::FIFO_Set_Mode(uint8_t Mode)
 {
   lsm6dsv16x_fifo_mode_t newMode = LSM6DSV16X_BYPASS_MODE;
@@ -212,6 +476,17 @@ LSM6DSV16XStatusTypeDef LSM6DSV16X::FIFO_Set_Mode(uint8_t Mode)
   return LSM6DSV16X_OK;
 }
 
+/**
+ * @brief Get the X-axis acceleration data from FIFO.
+ * 
+ * Retrieves the X-axis acceleration data from the FIFO of the LSM6DSV16X device.
+ * 
+ * @param[out] Acceleration Pointer to an array where the X-axis acceleration data will be stored.
+ * 
+ * @return Status of the X-axis acceleration data retrieval operation.
+ *         - LSM6DSV16X_OK if the operation is successful.
+ *         - LSM6DSV16X_ERROR if the operation fails.
+ */
 LSM6DSV16XStatusTypeDef LSM6DSV16X::FIFO_Get_X_Axes(int32_t *Acceleration)
 {
   lsm6dsv16x_axis3bit16_t data_raw;
@@ -230,34 +505,56 @@ LSM6DSV16XStatusTypeDef LSM6DSV16X::FIFO_Get_X_Axes(int32_t *Acceleration)
   acceleration_float[2] = (float)data_raw.i16bit[2] * sensitivity;
 
   Acceleration[0] = (int32_t)acceleration_float[0];
-  Acceleration[1]  = (int32_t)acceleration_float[1];
-  Acceleration[2]  = (int32_t)acceleration_float[2];
+  Acceleration[1] = (int32_t)acceleration_float[1];
+  Acceleration[2] = (int32_t)acceleration_float[2];
 
   return LSM6DSV16X_OK;
-
 }
 
+
+/**
+ * @brief Set the batch data rate for X-axis acceleration in FIFO.
+ * 
+ * Sets the batch data rate for X-axis acceleration data in the FIFO of the LSM6DSV16X device.
+ * 
+ * @param Bdr Batch data rate to set for X-axis acceleration.
+ * 
+ * @return Status of the batch data rate setting operation.
+ *         - LSM6DSV16X_OK if the operation is successful.
+ *         - LSM6DSV16X_ERROR if the operation fails.
+ */
 LSM6DSV16XStatusTypeDef LSM6DSV16X::FIFO_Set_X_BDR(float Bdr)
 {
   lsm6dsv16x_fifo_xl_batch_t new_bdr;
 
-  new_bdr = (Bdr <=    0.0f) ? LSM6DSV16X_XL_NOT_BATCHED
-            : (Bdr <=    1.8f) ? LSM6DSV16X_XL_BATCHED_AT_1Hz875
-            : (Bdr <=    7.5f) ? LSM6DSV16X_XL_BATCHED_AT_7Hz5
-            : (Bdr <=   15.0f) ? LSM6DSV16X_XL_BATCHED_AT_15Hz
-            : (Bdr <=   30.0f) ? LSM6DSV16X_XL_BATCHED_AT_30Hz
-            : (Bdr <=   60.0f) ? LSM6DSV16X_XL_BATCHED_AT_60Hz
-            : (Bdr <=  120.0f) ? LSM6DSV16X_XL_BATCHED_AT_120Hz
-            : (Bdr <=  240.0f) ? LSM6DSV16X_XL_BATCHED_AT_240Hz
-            : (Bdr <=  480.0f) ? LSM6DSV16X_XL_BATCHED_AT_480Hz
-            : (Bdr <=  960.0f) ? LSM6DSV16X_XL_BATCHED_AT_960Hz
-            : (Bdr <=  1920.0f) ? LSM6DSV16X_XL_BATCHED_AT_1920Hz
+  new_bdr = (Bdr <= 0.0f) ? LSM6DSV16X_XL_NOT_BATCHED
+            : (Bdr <= 1.8f) ? LSM6DSV16X_XL_BATCHED_AT_1Hz875
+            : (Bdr <= 7.5f) ? LSM6DSV16X_XL_BATCHED_AT_7Hz5
+            : (Bdr <= 15.0f) ? LSM6DSV16X_XL_BATCHED_AT_15Hz
+            : (Bdr <= 30.0f) ? LSM6DSV16X_XL_BATCHED_AT_30Hz
+            : (Bdr <= 60.0f) ? LSM6DSV16X_XL_BATCHED_AT_60Hz
+            : (Bdr <= 120.0f) ? LSM6DSV16X_XL_BATCHED_AT_120Hz
+            : (Bdr <= 240.0f) ? LSM6DSV16X_XL_BATCHED_AT_240Hz
+            : (Bdr <= 480.0f) ? LSM6DSV16X_XL_BATCHED_AT_480Hz
+            : (Bdr <= 960.0f) ? LSM6DSV16X_XL_BATCHED_AT_960Hz
+            : (Bdr <= 1920.0f) ? LSM6DSV16X_XL_BATCHED_AT_1920Hz
             : (Bdr <= 3840.0f) ? LSM6DSV16X_XL_BATCHED_AT_3840Hz
-            :                    LSM6DSV16X_XL_BATCHED_AT_7680Hz;
+            : LSM6DSV16X_XL_BATCHED_AT_7680Hz;
 
   return (LSM6DSV16XStatusTypeDef) fifo_xl_batch_set(new_bdr);
 }
 
+/**
+ * @brief Get the gyroscope data from FIFO.
+ * 
+ * Retrieves the gyroscope data from the FIFO of the LSM6DSV16X device.
+ * 
+ * @param[out] AngularVelocity Pointer to an array where the gyroscope data will be stored.
+ * 
+ * @return Status of the gyroscope data retrieval operation.
+ *         - LSM6DSV16X_OK if the operation is successful.
+ *         - LSM6DSV16X_ERROR if the operation fails.
+ */
 LSM6DSV16XStatusTypeDef LSM6DSV16X::FIFO_Get_G_Axes(int32_t *AngularVelocity)
 {
   lsm6dsv16x_axis3bit16_t data_raw;
@@ -283,32 +580,66 @@ LSM6DSV16XStatusTypeDef LSM6DSV16X::FIFO_Get_G_Axes(int32_t *AngularVelocity)
   return LSM6DSV16X_OK;
 }
 
+/**
+ * @brief Set the batch data rate for gyroscope in FIFO.
+ * 
+ * Sets the batch data rate for gyroscope data in the FIFO of the LSM6DSV16X device.
+ * 
+ * @param Bdr Batch data rate to set for gyroscope.
+ * 
+ * @return Status of the batch data rate setting operation.
+ *         - LSM6DSV16X_OK if the operation is successful.
+ *         - LSM6DSV16X_ERROR if the operation fails.
+ */
 LSM6DSV16XStatusTypeDef LSM6DSV16X::FIFO_Set_G_BDR(float Bdr)
 {
   lsm6dsv16x_fifo_gy_batch_t new_bdr;
 
-  new_bdr = (Bdr <=    0.0f) ? LSM6DSV16X_GY_NOT_BATCHED
-            : (Bdr <=    1.8f) ? LSM6DSV16X_GY_BATCHED_AT_1Hz875
-            : (Bdr <=    7.5f) ? LSM6DSV16X_GY_BATCHED_AT_7Hz5
-            : (Bdr <=   15.0f) ? LSM6DSV16X_GY_BATCHED_AT_15Hz
-            : (Bdr <=   30.0f) ? LSM6DSV16X_GY_BATCHED_AT_30Hz
-            : (Bdr <=   60.0f) ? LSM6DSV16X_GY_BATCHED_AT_60Hz
-            : (Bdr <=  120.0f) ? LSM6DSV16X_GY_BATCHED_AT_120Hz
-            : (Bdr <=  240.0f) ? LSM6DSV16X_GY_BATCHED_AT_240Hz
-            : (Bdr <=  480.0f) ? LSM6DSV16X_GY_BATCHED_AT_480Hz
-            : (Bdr <=  960.0f) ? LSM6DSV16X_GY_BATCHED_AT_960Hz
-            : (Bdr <=  1920.0f) ? LSM6DSV16X_GY_BATCHED_AT_1920Hz
+  new_bdr = (Bdr <= 0.0f) ? LSM6DSV16X_GY_NOT_BATCHED
+            : (Bdr <= 1.8f) ? LSM6DSV16X_GY_BATCHED_AT_1Hz875
+            : (Bdr <= 7.5f) ? LSM6DSV16X_GY_BATCHED_AT_7Hz5
+            : (Bdr <= 15.0f) ? LSM6DSV16X_GY_BATCHED_AT_15Hz
+            : (Bdr <= 30.0f) ? LSM6DSV16X_GY_BATCHED_AT_30Hz
+            : (Bdr <= 60.0f) ? LSM6DSV16X_GY_BATCHED_AT_60Hz
+            : (Bdr <= 120.0f) ? LSM6DSV16X_GY_BATCHED_AT_120Hz
+            : (Bdr <= 240.0f) ? LSM6DSV16X_GY_BATCHED_AT_240Hz
+            : (Bdr <= 480.0f) ? LSM6DSV16X_GY_BATCHED_AT_480Hz
+            : (Bdr <= 960.0f) ? LSM6DSV16X_GY_BATCHED_AT_960Hz
+            : (Bdr <= 1920.0f) ? LSM6DSV16X_GY_BATCHED_AT_1920Hz
             : (Bdr <= 3840.0f) ? LSM6DSV16X_GY_BATCHED_AT_3840Hz
-            :                    LSM6DSV16X_GY_BATCHED_AT_7680Hz;
+            : LSM6DSV16X_GY_BATCHED_AT_7680Hz;
 
   return (LSM6DSV16XStatusTypeDef) fifo_gy_batch_set(new_bdr);
 }
 
+
+/**
+ * @brief Get the status of the FIFO.
+ * 
+ * Retrieves the status of the FIFO in the LSM6DSV16X device.
+ * 
+ * @param[out] Status Pointer to a structure where the FIFO status will be stored.
+ * 
+ * @return Status of the FIFO status retrieval operation.
+ *         - LSM6DSV16X_OK if the operation is successful.
+ *         - LSM6DSV16X_ERROR if the operation fails.
+ */
 LSM6DSV16XStatusTypeDef LSM6DSV16X::FIFO_Get_Status(lsm6dsv16x_fifo_status_t *Status)
 {
   return (LSM6DSV16XStatusTypeDef)fifo_status_get(Status);
 }
 
+/**
+ * @brief Get the gravity vector data from FIFO.
+ * 
+ * Retrieves the gravity vector data from the FIFO of the LSM6DSV16X device.
+ * 
+ * @param[out] gvec Pointer to an array where the gravity vector data will be stored.
+ * 
+ * @return Status of the gravity vector data retrieval operation.
+ *         - LSM6DSV16X_OK if the operation is successful.
+ *         - LSM6DSV16X_ERROR if the operation fails.
+ */
 LSM6DSV16XStatusTypeDef LSM6DSV16X::FIFO_Get_Gravity_Vector(float *gvec)
 {
   lsm6dsv16x_axis3bit16_t data_raw;
@@ -324,6 +655,17 @@ LSM6DSV16XStatusTypeDef LSM6DSV16X::FIFO_Get_Gravity_Vector(float *gvec)
   return LSM6DSV16X_OK;
 }
 
+/**
+ * @brief Get the gyroscope bias data from FIFO.
+ * 
+ * Retrieves the gyroscope bias data from the FIFO of the LSM6DSV16X device.
+ * 
+ * @param[out] gbias Pointer to an array where the gyroscope bias data will be stored.
+ * 
+ * @return Status of the gyroscope bias data retrieval operation.
+ *         - LSM6DSV16X_OK if the operation is successful.
+ *         - LSM6DSV16X_ERROR if the operation fails.
+ */
 LSM6DSV16XStatusTypeDef LSM6DSV16X::FIFO_Get_Gyroscope_Bias(float *gbias)
 {
   lsm6dsv16x_axis3bit16_t data_raw;
@@ -339,21 +681,61 @@ LSM6DSV16XStatusTypeDef LSM6DSV16X::FIFO_Get_Gyroscope_Bias(float *gbias)
   return LSM6DSV16X_OK;
 }
 
+/**
+ * @brief Enable timestamp in FIFO.
+ * 
+ * Enables the timestamp feature in the FIFO of the LSM6DSV16X device.
+ * 
+ * @return Status of the timestamp enabling operation.
+ *         - LSM6DSV16X_OK if the operation is successful.
+ *         - LSM6DSV16X_ERROR if the operation fails.
+ */
 LSM6DSV16XStatusTypeDef LSM6DSV16X::FIFO_Enable_Timestamp()
 {
   return (LSM6DSV16XStatusTypeDef)timestamp_set(PROPERTY_ENABLE);
 }
 
+/**
+ * @brief Disable timestamp in FIFO.
+ * 
+ * Disables the timestamp feature in the FIFO of the LSM6DSV16X device.
+ * 
+ * @return Status of the timestamp disabling operation.
+ *         - LSM6DSV16X_OK if the operation is successful.
+ *         - LSM6DSV16X_ERROR if the operation fails.
+ */
 LSM6DSV16XStatusTypeDef LSM6DSV16X::FIFO_Disable_Timestamp()
 {
   return (LSM6DSV16XStatusTypeDef)timestamp_set(PROPERTY_DISABLE);
 }
 
+/**
+ * @brief Set the timestamp decimation in FIFO.
+ * 
+ * Sets the decimation factor for the timestamp in the FIFO of the LSM6DSV16X device.
+ * 
+ * @param decimation Decimation factor to set for the timestamp.
+ * 
+ * @return Status of the timestamp decimation setting operation.
+ *         - LSM6DSV16X_OK if the operation is successful.
+ *         - LSM6DSV16X_ERROR if the operation fails.
+ */
 LSM6DSV16XStatusTypeDef LSM6DSV16X::FIFO_Set_Timestamp_Decimation(uint8_t decimation)
 {
   return (LSM6DSV16XStatusTypeDef)fifo_timestamp_batch_set((lsm6dsv16x_fifo_timestamp_batch_t)decimation);
 }
 
+/**
+ * @brief Get the timestamp from FIFO.
+ * 
+ * Retrieves the timestamp data from the FIFO of the LSM6DSV16X device.
+ * 
+ * @param[out] timestamp Pointer to a variable where the timestamp will be stored.
+ * 
+ * @return Status of the timestamp data retrieval operation.
+ *         - LSM6DSV16X_OK if the operation is successful.
+ *         - LSM6DSV16X_ERROR if the operation fails.
+ */
 LSM6DSV16XStatusTypeDef LSM6DSV16X::FIFO_Get_Timestamp(uint32_t *timestamp)
 {
   uint32_t raw_data[2]; //first is timestamp second is half full of meta data
@@ -364,6 +746,17 @@ LSM6DSV16XStatusTypeDef LSM6DSV16X::FIFO_Get_Timestamp(uint32_t *timestamp)
   return LSM6DSV16X_OK;
 }
 
+/**
+ * @brief Enable Wake-Up Detection.
+ * 
+ * Enables the wake-up detection feature in the LSM6DSV16X device.
+ * 
+ * @param IntPin Selects the interrupt pin for wake-up event.
+ * 
+ * @return Status of the wake-up detection enabling operation.
+ *         - LSM6DSV16X_OK if the operation is successful.
+ *         - LSM6DSV16X_ERROR if the operation fails.
+ */
 LSM6DSV16XStatusTypeDef LSM6DSV16X::Enable_Wake_Up_Detection(LSM6DSV16X_SensorIntPin_t IntPin)
 {
   LSM6DSV16XStatusTypeDef ret = LSM6DSV16X_OK;
@@ -386,12 +779,12 @@ LSM6DSV16XStatusTypeDef LSM6DSV16X::Enable_Wake_Up_Detection(LSM6DSV16X_SensorIn
     return LSM6DSV16X_ERROR;
   }
 
-  /* Set wake-up durantion */
+  /* Set wake-up duration */
   if (Set_Wake_Up_Duration(0) != LSM6DSV16X_OK) {
     return LSM6DSV16X_ERROR;
   }
 
-  /* Enable wake up event on either INT1 or INT2 pin */
+  /* Enable wake-up event on either INT1 or INT2 pin */
   switch (IntPin) {
     case LSM6DSV16X_INT1_PIN:
       if (readRegister(LSM6DSV16X_MD1_CFG, (uint8_t *)&val1, 1) != LSM6DSV16X_OK) {
@@ -445,12 +838,21 @@ LSM6DSV16XStatusTypeDef LSM6DSV16X::Enable_Wake_Up_Detection(LSM6DSV16X_SensorIn
   return ret;
 }
 
+/**
+ * @brief Disable Wake-Up Detection.
+ * 
+ * Disables the wake-up detection feature in the LSM6DSV16X device.
+ * 
+ * @return Status of the wake-up detection disabling operation.
+ *         - LSM6DSV16X_OK if the operation is successful.
+ *         - LSM6DSV16X_ERROR if the operation fails.
+ */
 LSM6DSV16XStatusTypeDef LSM6DSV16X::Disable_Wake_Up_Detection()
 {
   lsm6dsv16x_md1_cfg_t val1;
   lsm6dsv16x_md2_cfg_t val2;
 
-  /* Disable wake up event on both INT1 and INT2 pins */
+  /* Disable wake-up event on both INT1 and INT2 pins */
   if (readRegister(LSM6DSV16X_MD1_CFG, (uint8_t *)&val1, 1) != LSM6DSV16X_OK) {
     return LSM6DSV16X_ERROR;
   }
@@ -476,7 +878,7 @@ LSM6DSV16XStatusTypeDef LSM6DSV16X::Disable_Wake_Up_Detection()
     return LSM6DSV16X_ERROR;
   }
 
-  /* Reset wake-up durantion */
+  /* Reset wake-up duration */
   if (Set_Wake_Up_Duration(0) != LSM6DSV16X_OK) {
     return LSM6DSV16X_ERROR;
   }
@@ -484,6 +886,17 @@ LSM6DSV16XStatusTypeDef LSM6DSV16X::Disable_Wake_Up_Detection()
   return LSM6DSV16X_OK;
 }
 
+/**
+ * @brief Set Wake-Up Threshold.
+ * 
+ * Sets the wake-up threshold value for the LSM6DSV16X device.
+ * 
+ * @param Threshold Wake-up threshold value to be set.
+ * 
+ * @return Status of the wake-up threshold setting operation.
+ *         - LSM6DSV16X_OK if the operation is successful.
+ *         - LSM6DSV16X_ERROR if the operation fails.
+ */
 LSM6DSV16XStatusTypeDef LSM6DSV16X::Set_Wake_Up_Threshold(uint32_t Threshold)
 {
   lsm6dsv16x_act_thresholds_t wake_up_ths;
@@ -501,6 +914,17 @@ LSM6DSV16XStatusTypeDef LSM6DSV16X::Set_Wake_Up_Threshold(uint32_t Threshold)
   return LSM6DSV16X_OK;
 }
 
+/**
+ * @brief Set Wake-Up Duration.
+ * 
+ * Sets the wake-up duration value for the LSM6DSV16X device.
+ * 
+ * @param Duration Wake-up duration value to be set.
+ * 
+ * @return Status of the wake-up duration setting operation.
+ *         - LSM6DSV16X_OK if the operation is successful.
+ *         - LSM6DSV16X_ERROR if the operation fails.
+ */
 LSM6DSV16XStatusTypeDef LSM6DSV16X::Set_Wake_Up_Duration(uint8_t Duration)
 {
   lsm6dsv16x_act_wkup_time_windows_t dur_t;
@@ -519,6 +943,18 @@ LSM6DSV16XStatusTypeDef LSM6DSV16X::Set_Wake_Up_Duration(uint8_t Duration)
 }
 
 
+
+/**
+ * @brief Enable Free Fall Detection.
+ * 
+ * Enables the free fall detection feature in the LSM6DSV16X device.
+ * 
+ * @param IntPin Specifies the interrupt pin for free fall detection.
+ * 
+ * @return Status of the free fall detection enabling operation.
+ *         - LSM6DSV16X_OK if the operation is successful.
+ *         - LSM6DSV16X_ERROR if the operation fails.
+ */
 LSM6DSV16XStatusTypeDef LSM6DSV16X::Enable_Free_Fall_Detection(LSM6DSV16X_SensorIntPin_t IntPin)
 {
   LSM6DSV16XStatusTypeDef ret = LSM6DSV16X_OK;
@@ -536,12 +972,12 @@ LSM6DSV16XStatusTypeDef LSM6DSV16X::Enable_Free_Fall_Detection(LSM6DSV16X_Sensor
     return LSM6DSV16X_ERROR;
   }
 
-  /*  Set free fall duration.*/
+  /* Set free fall duration */
   if (Set_Free_Fall_Duration(3) != LSM6DSV16X_OK) {
     return LSM6DSV16X_ERROR;
   }
 
-  /* Set free fall threshold. */
+  /* Set free fall threshold */
   if (Set_Free_Fall_Threshold(3) != LSM6DSV16X_OK) {
     return LSM6DSV16X_ERROR;
   }
@@ -600,7 +1036,15 @@ LSM6DSV16XStatusTypeDef LSM6DSV16X::Enable_Free_Fall_Detection(LSM6DSV16X_Sensor
   return ret;
 }
 
-
+/**
+ * @brief Disable Free Fall Detection.
+ * 
+ * Disables the free fall detection feature in the LSM6DSV16X device.
+ * 
+ * @return Status of the free fall detection disabling operation.
+ *         - LSM6DSV16X_OK if the operation is successful.
+ *         - LSM6DSV16X_ERROR if the operation fails.
+ */
 LSM6DSV16XStatusTypeDef LSM6DSV16X::Disable_Free_Fall_Detection()
 {
   lsm6dsv16x_md1_cfg_t val1;
@@ -627,7 +1071,7 @@ LSM6DSV16XStatusTypeDef LSM6DSV16X::Disable_Free_Fall_Detection()
     return LSM6DSV16X_ERROR;
   }
 
-  /* Reset free fall threshold. */
+  /* Reset free fall threshold */
   if (Set_Free_Fall_Threshold(0) != LSM6DSV16X_OK) {
     return LSM6DSV16X_ERROR;
   }
@@ -640,6 +1084,26 @@ LSM6DSV16XStatusTypeDef LSM6DSV16X::Disable_Free_Fall_Detection()
   return LSM6DSV16X_OK;
 }
 
+
+/**
+ * @brief Set Free Fall Threshold.
+ * 
+ * Sets the threshold for free fall detection in the LSM6DSV16X device.
+ * 
+ * @param Threshold The threshold value to be set. It should be one of the predefined threshold values:
+ *                  - LSM6DSV16X_156_mg
+ *                  - LSM6DSV16X_219_mg
+ *                  - LSM6DSV16X_250_mg
+ *                  - LSM6DSV16X_312_mg
+ *                  - LSM6DSV16X_344_mg
+ *                  - LSM6DSV16X_406_mg
+ *                  - LSM6DSV16X_469_mg
+ *                  - LSM6DSV16X_500_mg
+ * 
+ * @return Status of the free fall threshold setting operation.
+ *         - LSM6DSV16X_OK if the operation is successful.
+ *         - LSM6DSV16X_ERROR if the operation fails.
+ */
 LSM6DSV16XStatusTypeDef LSM6DSV16X::Set_Free_Fall_Threshold(uint8_t Threshold)
 {
   lsm6dsv16x_ff_thresholds_t val;
@@ -689,6 +1153,17 @@ LSM6DSV16XStatusTypeDef LSM6DSV16X::Set_Free_Fall_Threshold(uint8_t Threshold)
   return LSM6DSV16X_OK;
 }
 
+/**
+ * @brief Set Free Fall Duration.
+ * 
+ * Sets the duration for free fall detection in the LSM6DSV16X device.
+ * 
+ * @param Duration The duration value to be set, in number of samples.
+ * 
+ * @return Status of the free fall duration setting operation.
+ *         - LSM6DSV16X_OK if the operation is successful.
+ *         - LSM6DSV16X_ERROR if the operation fails.
+ */
 LSM6DSV16XStatusTypeDef LSM6DSV16X::Set_Free_Fall_Duration(uint8_t Duration)
 {
   if (ff_time_windows_set(Duration) != LSM6DSV16X_OK) {
@@ -698,6 +1173,17 @@ LSM6DSV16XStatusTypeDef LSM6DSV16X::Set_Free_Fall_Duration(uint8_t Duration)
   return LSM6DSV16X_OK;
 }
 
+/**
+ * @brief Enable Pedometer.
+ * 
+ * Enables the pedometer algorithm in the LSM6DSV16X device.
+ * 
+ * @param IntPin The interrupt pin to which the pedometer interrupt will be routed.
+ * 
+ * @return Status of the pedometer enabling operation.
+ *         - LSM6DSV16X_OK if the operation is successful.
+ *         - LSM6DSV16X_ERROR if the operation fails.
+ */
 LSM6DSV16XStatusTypeDef LSM6DSV16X::Enable_Pedometer(LSM6DSV16X_SensorIntPin_t IntPin)
 {
   lsm6dsv16x_stpcnt_mode_t mode;
@@ -729,7 +1215,7 @@ LSM6DSV16XStatusTypeDef LSM6DSV16X::Enable_Pedometer(LSM6DSV16X_SensorIntPin_t I
     return LSM6DSV16X_ERROR;
   }
 
-  /* Enable free fall event on either INT1 or INT2 pin */
+  /* Enable pedometer event on either INT1 or INT2 pin */
   switch (IntPin) {
     case LSM6DSV16X_INT1_PIN:
       /* Enable access to embedded functions registers. */
@@ -805,108 +1291,17 @@ LSM6DSV16XStatusTypeDef LSM6DSV16X::Enable_Pedometer(LSM6DSV16X_SensorIntPin_t I
   return LSM6DSV16X_OK;
 }
 
-
-LSM6DSV16XStatusTypeDef LSM6DSV16X::Disable_Pedometer()
-{
-  lsm6dsv16x_md1_cfg_t val1;
-  lsm6dsv16x_md2_cfg_t val2;
-
-  lsm6dsv16x_emb_func_int1_t emb_func_int1;
-  lsm6dsv16x_emb_func_int2_t emb_func_int2;
-
-  lsm6dsv16x_stpcnt_mode_t mode;
-
-
-  if (stpcnt_mode_get(&mode) != LSM6DSV16X_OK) {
-    return LSM6DSV16X_ERROR;
-  }
-
-  /* Enable pedometer algorithm. */
-  mode.step_counter_enable = PROPERTY_DISABLE;
-  mode.false_step_rej = PROPERTY_DISABLE;
-
-  /* Turn off embedded features */
-  if (stpcnt_mode_set(mode) != LSM6DSV16X_OK) {
-    return LSM6DSV16X_ERROR;
-  }
-
-  /* Disable emb func event on either INT1 or INT2 pin */
-  if (readRegister(LSM6DSV16X_MD1_CFG, (uint8_t *)&val1, 1) != LSM6DSV16X_OK) {
-    return LSM6DSV16X_ERROR;
-  }
-
-  val1.int1_emb_func = PROPERTY_DISABLE;
-
-  if (writeRegister(LSM6DSV16X_MD1_CFG, (uint8_t *)&val1, 1) != LSM6DSV16X_OK) {
-    return LSM6DSV16X_ERROR;
-  }
-
-  if (readRegister(LSM6DSV16X_MD2_CFG, (uint8_t *)&val2, 1) != LSM6DSV16X_OK) {
-    return LSM6DSV16X_ERROR;
-  }
-
-  val2.int2_emb_func = PROPERTY_DISABLE;
-
-  if (writeRegister(LSM6DSV16X_MD2_CFG, (uint8_t *)&val2, 1) != LSM6DSV16X_OK) {
-    return LSM6DSV16X_ERROR;
-  }
-
-  /* Enable access to embedded functions registers. */
-  if (mem_bank_set(LSM6DSV16X_EMBED_FUNC_MEM_BANK) != LSM6DSV16X_OK) {
-    return LSM6DSV16X_ERROR;
-  }
-
-  /* Reset interrupt driven to INT1 pin. */
-  if (readRegister(LSM6DSV16X_EMB_FUNC_INT1, (uint8_t *)&emb_func_int1, 1) != LSM6DSV16X_OK) {
-    return LSM6DSV16X_ERROR;
-  }
-
-  emb_func_int1.int1_step_detector = PROPERTY_DISABLE;
-
-  if (writeRegister(LSM6DSV16X_EMB_FUNC_INT1, (uint8_t *)&emb_func_int1, 1) != LSM6DSV16X_OK) {
-    return LSM6DSV16X_ERROR;
-  }
-
-  /* Reset interrupt driven to INT2 pin. */
-  if (readRegister(LSM6DSV16X_EMB_FUNC_INT2, (uint8_t *)&emb_func_int2, 1) != LSM6DSV16X_OK) {
-    return LSM6DSV16X_ERROR;
-  }
-
-  emb_func_int2.int2_step_detector = PROPERTY_DISABLE;
-
-  if (writeRegister(LSM6DSV16X_EMB_FUNC_INT2, (uint8_t *)&emb_func_int2, 1) != LSM6DSV16X_OK) {
-    return LSM6DSV16X_ERROR;
-  }
-
-  /* Disable access to embedded functions registers. */
-  if (mem_bank_set(LSM6DSV16X_MAIN_MEM_BANK) != LSM6DSV16X_OK) {
-    return LSM6DSV16X_ERROR;
-  }
-
-
-  return LSM6DSV16X_OK;
-}
-
-
-LSM6DSV16XStatusTypeDef LSM6DSV16X::Get_Step_Count(uint16_t *StepCount)
-{
-  if (stpcnt_steps_get(StepCount) != LSM6DSV16X_OK) {
-    return LSM6DSV16X_ERROR;
-  }
-
-  return LSM6DSV16X_OK;
-}
-
-
-LSM6DSV16XStatusTypeDef LSM6DSV16X::Step_Counter_Reset()
-{
-  if (stpcnt_rst_step_set(PROPERTY_ENABLE) != LSM6DSV16X_OK) {
-    return LSM6DSV16X_ERROR;
-  }
-
-  return LSM6DSV16X_OK;
-}
-
+/**
+ * @brief Enable Tilt Detection.
+ * 
+ * Enables tilt detection in the LSM6DSV16X device.
+ * 
+ * @param IntPin The interrupt pin to which the tilt interrupt will be routed.
+ * 
+ * @return Status of the tilt detection enabling operation.
+ *         - LSM6DSV16X_OK if the operation is successful.
+ *         - LSM6DSV16X_ERROR if the operation fails.
+ */
 LSM6DSV16XStatusTypeDef LSM6DSV16X::Enable_Tilt_Detection(LSM6DSV16X_SensorIntPin_t IntPin)
 {
   LSM6DSV16XStatusTypeDef ret = LSM6DSV16X_OK;
@@ -972,7 +1367,6 @@ LSM6DSV16XStatusTypeDef LSM6DSV16X::Enable_Tilt_Detection(LSM6DSV16X_SensorIntPi
       }
       break;
 
-
     case LSM6DSV16X_INT2_PIN:
       /* Enable access to embedded functions registers */
       if (mem_bank_set(LSM6DSV16X_EMBED_FUNC_MEM_BANK) != LSM6DSV16X_OK) {
@@ -1026,6 +1420,15 @@ LSM6DSV16XStatusTypeDef LSM6DSV16X::Enable_Tilt_Detection(LSM6DSV16X_SensorIntPi
   return ret;
 }
 
+/**
+ * @brief Disable Tilt Detection.
+ * 
+ * Disables tilt detection in the LSM6DSV16X device.
+ * 
+ * @return Status of the tilt detection disabling operation.
+ *         - LSM6DSV16X_OK if the operation is successful.
+ *         - LSM6DSV16X_ERROR if the operation fails.
+ */
 LSM6DSV16XStatusTypeDef LSM6DSV16X::Disable_Tilt_Detection()
 {
   LSM6DSV16XStatusTypeDef ret = LSM6DSV16X_OK;
@@ -1103,6 +1506,17 @@ LSM6DSV16XStatusTypeDef LSM6DSV16X::Disable_Tilt_Detection()
   return ret;
 }
 
+/**
+ * @brief Enable Double Tap Detection.
+ * 
+ * Enables double tap detection on the LSM6DSV16X device.
+ * 
+ * @param IntPin The interrupt pin to which the double tap interrupt will be routed.
+ * 
+ * @return Status of the double tap detection enabling operation.
+ *         - LSM6DSV16X_OK if the operation is successful.
+ *         - LSM6DSV16X_ERROR if the operation fails.
+ */
 LSM6DSV16XStatusTypeDef LSM6DSV16X::Enable_Double_Tap_Detection(LSM6DSV16X_SensorIntPin_t IntPin)
 {
   LSM6DSV16XStatusTypeDef ret = LSM6DSV16X_OK;
@@ -1113,7 +1527,6 @@ LSM6DSV16XStatusTypeDef LSM6DSV16X::Enable_Double_Tap_Detection(LSM6DSV16X_Senso
   lsm6dsv16x_tap_dur_t tap_dur;
   lsm6dsv16x_tap_cfg0_t tap_cfg0;
   lsm6dsv16x_tap_ths_6d_t tap_ths_6d;
-
 
   /* Enable tap detection on Z-axis. */
   if (readRegister(LSM6DSV16X_TAP_CFG0, (uint8_t *)&tap_cfg0, 1) != LSM6DSV16X_OK) {
@@ -1220,6 +1633,15 @@ LSM6DSV16XStatusTypeDef LSM6DSV16X::Enable_Double_Tap_Detection(LSM6DSV16X_Senso
 }
 
 
+/**
+ * @brief Disable Double Tap Detection.
+ * 
+ * Disables double tap detection on the LSM6DSV16X device.
+ * 
+ * @return Status of the double tap detection disabling operation.
+ *         - LSM6DSV16X_OK if the operation is successful.
+ *         - LSM6DSV16X_ERROR if the operation fails.
+ */
 LSM6DSV16XStatusTypeDef LSM6DSV16X::Disable_Double_Tap_Detection()
 {
   lsm6dsv16x_md1_cfg_t val1;
@@ -1272,7 +1694,7 @@ LSM6DSV16XStatusTypeDef LSM6DSV16X::Disable_Double_Tap_Detection()
     return LSM6DSV16X_ERROR;
   }
 
-  /* Reset quiet shock and duratio. */
+  /* Reset quiet shock and duration. */
   if (readRegister(LSM6DSV16X_TAP_DUR, (uint8_t *)&tap_dur, 1) != LSM6DSV16X_OK) {
     return LSM6DSV16X_ERROR;
   }
@@ -1290,83 +1712,20 @@ LSM6DSV16XStatusTypeDef LSM6DSV16X::Disable_Double_Tap_Detection()
     return LSM6DSV16X_ERROR;
   }
 
-
   return LSM6DSV16X_OK;
 }
 
-LSM6DSV16XStatusTypeDef LSM6DSV16X::Set_Tap_Threshold(uint8_t Threshold)
-{
-  lsm6dsv16x_tap_ths_6d_t tap_ths_6d;
-
-  /* Set Z-axis threshold */
-  if (readRegister(LSM6DSV16X_TAP_THS_6D, (uint8_t *)&tap_ths_6d, 1) != LSM6DSV16X_OK) {
-    return LSM6DSV16X_ERROR;
-  }
-
-  tap_ths_6d.tap_ths_z = Threshold;
-
-  if (writeRegister(LSM6DSV16X_TAP_THS_6D, (uint8_t *)&tap_ths_6d, 1) != LSM6DSV16X_OK) {
-    return LSM6DSV16X_ERROR;
-  }
-
-  return LSM6DSV16X_OK;
-}
-
-
-LSM6DSV16XStatusTypeDef LSM6DSV16X::Set_Tap_Shock_Time(uint8_t Time)
-{
-  lsm6dsv16x_tap_dur_t tap_dur;
-
-  /* Set shock time */
-  if (readRegister(LSM6DSV16X_TAP_DUR, (uint8_t *)&tap_dur, 1) != LSM6DSV16X_OK) {
-    return LSM6DSV16X_ERROR;
-  }
-
-  tap_dur.shock = Time;
-
-  if (writeRegister(LSM6DSV16X_TAP_DUR, (uint8_t *)&tap_dur, 1) != LSM6DSV16X_OK) {
-    return LSM6DSV16X_ERROR;
-  }
-
-  return LSM6DSV16X_OK;
-}
-
-
-LSM6DSV16XStatusTypeDef LSM6DSV16X::Set_Tap_Quiet_Time(uint8_t Time)
-{
-  lsm6dsv16x_tap_dur_t tap_dur;
-
-  /* Set quiet time */
-  if (readRegister(LSM6DSV16X_TAP_DUR, (uint8_t *)&tap_dur, 1) != LSM6DSV16X_OK) {
-    return LSM6DSV16X_ERROR;
-  }
-
-  tap_dur.quiet = Time;
-
-  if (writeRegister(LSM6DSV16X_TAP_DUR, (uint8_t *)&tap_dur, 1) != LSM6DSV16X_OK) {
-    return LSM6DSV16X_ERROR;
-  }
-  return LSM6DSV16X_OK;
-}
-
-
-LSM6DSV16XStatusTypeDef LSM6DSV16X::Set_Tap_Duration_Time(uint8_t Time)
-{
-  lsm6dsv16x_tap_dur_t tap_dur;
-
-  /* Set duration time */
-  if (readRegister(LSM6DSV16X_TAP_DUR, (uint8_t *)&tap_dur, 1) != LSM6DSV16X_OK) {
-    return LSM6DSV16X_ERROR;
-  }
-
-  tap_dur.dur = Time;
-
-  if (writeRegister(LSM6DSV16X_TAP_DUR, (uint8_t *)&tap_dur, 1) != LSM6DSV16X_OK) {
-    return LSM6DSV16X_ERROR;
-  }
-  return LSM6DSV16X_OK;
-}
-
+/**
+ * @brief Enable Single Tap Detection.
+ * 
+ * Enables single tap detection on the LSM6DSV16X device.
+ * 
+ * @param IntPin The interrupt pin to which the single tap event will be mapped.
+ * 
+ * @return Status of the single tap detection enabling operation.
+ *         - LSM6DSV16X_OK if the operation is successful.
+ *         - LSM6DSV16X_ERROR if the operation fails.
+ */
 LSM6DSV16XStatusTypeDef LSM6DSV16X::Enable_Single_Tap_Detection(LSM6DSV16X_SensorIntPin_t IntPin)
 {
   LSM6DSV16XStatusTypeDef ret = LSM6DSV16X_OK;
@@ -1481,29 +1840,19 @@ LSM6DSV16XStatusTypeDef LSM6DSV16X::Enable_Single_Tap_Detection(LSM6DSV16X_Senso
   return ret;
 }
 
-LSM6DSV16XStatusTypeDef LSM6DSV16X::Get_X_Axes(int32_t *Acceleration)
-{
-  lsm6dsv16x_axis3bit16_t data_raw; //
-  float sensitivity = Convert_X_Sensitivity(acc_fs);
 
-  /* Read raw data values. */
-  if (acceleration_raw_get(data_raw.i16bit) != LSM6DSV16X_OK) {
-    return LSM6DSV16X_ERROR;
-  }
-
-  /* Get LSM6DSV16X actual sensitivity. */
-  if (sensitivity == 0.0f) {
-    return LSM6DSV16X_ERROR;
-  }
-
-  /* Calculate the data. */
-  Acceleration[0] = (int32_t)((float)((float)data_raw.i16bit[0] * sensitivity));
-  Acceleration[1] = (int32_t)((float)((float)data_raw.i16bit[1] * sensitivity));
-  Acceleration[2] = (int32_t)((float)((float)data_raw.i16bit[2] * sensitivity));
-
-  return LSM6DSV16X_OK;
-}
-
+/**
+ * @brief Get the event status of the LSM6DSV16X sensor.
+ * 
+ * This function retrieves various event statuses from the LSM6DSV16X sensor
+ * and populates the provided LSM6DSV16X_Event_Status_t structure with the obtained information.
+ * 
+ * @param Status Pointer to the structure where the event statuses will be stored.
+ * 
+ * @return Status of the operation.
+ *         - LSM6DSV16X_OK if the operation is successful.
+ *         - LSM6DSV16X_ERROR if the operation fails.
+ */
 LSM6DSV16XStatusTypeDef LSM6DSV16X::Get_X_Event_Status(LSM6DSV16X_Event_Status_t *Status)
 {
   lsm6dsv16x_emb_func_status_t emb_func_status;
@@ -1516,9 +1865,10 @@ LSM6DSV16XStatusTypeDef LSM6DSV16X::Get_X_Event_Status(LSM6DSV16X_Event_Status_t
   lsm6dsv16x_emb_func_int1_t int1_ctrl;
   lsm6dsv16x_emb_func_int2_t int2_ctrl;
 
-
+  // Initialize Status structure
   (void)memset((void *)Status, 0x0, sizeof(LSM6DSV16X_Event_Status_t));
 
+  // Read various registers related to event statuses
   if (readRegister(LSM6DSV16X_WAKE_UP_SRC, (uint8_t *)&wake_up_src, 1) != LSM6DSV16X_OK) {
     return LSM6DSV16X_ERROR;
   }
@@ -1563,7 +1913,7 @@ LSM6DSV16XStatusTypeDef LSM6DSV16X::Get_X_Event_Status(LSM6DSV16X_Event_Status_t
     return LSM6DSV16X_ERROR;
   }
 
-
+  // Check configuration of interrupts for different event types
   if ((md1_cfg.int1_ff == 1U) || (md2_cfg.int2_ff == 1U)) {
     if (wake_up_src.ff_ia == 1U) {
       Status->FreeFallStatus = 1;
@@ -1609,6 +1959,18 @@ LSM6DSV16XStatusTypeDef LSM6DSV16X::Get_X_Event_Status(LSM6DSV16X_Event_Status_t
   return LSM6DSV16X_OK;
 }
 
+/**
+ * @brief Enables 6D orientation detection on the LSM6DSV16X sensor.
+ * 
+ * This function configures the sensor to enable 6D orientation detection
+ * and sets the corresponding interrupt pin.
+ * 
+ * @param IntPin Selects the interrupt pin to which the 6D orientation event will be routed.
+ * 
+ * @return Status of the operation.
+ *         - LSM6DSV16X_OK if the operation is successful.
+ *         - LSM6DSV16X_ERROR if the operation fails.
+ */
 LSM6DSV16XStatusTypeDef LSM6DSV16X::Enable_6D_Orientation(LSM6DSV16X_SensorIntPin_t IntPin)
 {
   LSM6DSV16XStatusTypeDef ret = LSM6DSV16X_OK;
@@ -1616,21 +1978,22 @@ LSM6DSV16XStatusTypeDef LSM6DSV16X::Enable_6D_Orientation(LSM6DSV16X_SensorIntPi
   lsm6dsv16x_md2_cfg_t val2;
   lsm6dsv16x_functions_enable_t functions_enable;
 
-  /* Output Data Rate selection */
+  // Set output data rate
   if (Set_X_ODR(480.0f) != LSM6DSV16X_OK) {
     return LSM6DSV16X_ERROR;
   }
 
-  /* Full scale selection */
+  // Set full scale
   if (Set_X_FS(2) != LSM6DSV16X_OK) {
     return LSM6DSV16X_ERROR;
   }
 
-  /* 6D orientation enabled. */
+  // Enable 6D orientation detection
   if (Set_6D_Orientation_Threshold(2) != LSM6DSV16X_OK) {
     return LSM6DSV16X_ERROR;
   }
-  /* Enable 6D orientation event on either INT1 or INT2 pin */
+
+  // Enable 6D orientation event on the selected interrupt pin
   switch (IntPin) {
     case LSM6DSV16X_INT1_PIN:
       if (readRegister(LSM6DSV16X_MD1_CFG, (uint8_t *)&val1, 1) != LSM6DSV16X_OK) {
@@ -1684,18 +2047,26 @@ LSM6DSV16XStatusTypeDef LSM6DSV16X::Enable_6D_Orientation(LSM6DSV16X_SensorIntPi
   return ret;
 }
 
-
+/**
+ * @brief Disables 6D orientation detection on the LSM6DSV16X sensor.
+ * 
+ * This function disables 6D orientation detection and clears the corresponding interrupt pins.
+ * 
+ * @return Status of the operation.
+ *         - LSM6DSV16X_OK if the operation is successful.
+ *         - LSM6DSV16X_ERROR if the operation fails.
+ */
 LSM6DSV16XStatusTypeDef LSM6DSV16X::Disable_6D_Orientation()
 {
   lsm6dsv16x_md1_cfg_t val1;
   lsm6dsv16x_md2_cfg_t val2;
 
-  /* Reset threshold */
+  // Reset threshold
   if (Set_6D_Orientation_Threshold(0) != LSM6DSV16X_OK) {
     return LSM6DSV16X_ERROR;
   }
 
-  /* Disable 6D orientation event on both INT1 and INT2 pins */
+  // Disable 6D orientation event on both INT1 and INT2 pins
   if (readRegister(LSM6DSV16X_MD1_CFG, (uint8_t *)&val1, 1) != LSM6DSV16X_OK) {
     return LSM6DSV16X_ERROR;
   }
@@ -1719,10 +2090,22 @@ LSM6DSV16XStatusTypeDef LSM6DSV16X::Disable_6D_Orientation()
   return LSM6DSV16X_OK;
 }
 
+
 /**
- * @brief  Set 6D orientation threshold
- * @param  Threshold 6D Orientation detection threshold
- * @retval 0 in case of success, an error code otherwise
+ * @brief Sets the threshold for 6D orientation detection on the LSM6DSV16X sensor.
+ * 
+ * This function sets the threshold for 6D orientation detection based on the provided
+ * threshold value.
+ * 
+ * @param Threshold The threshold value to set. It should be one of the following:
+ *                  - 0: 80 degrees.
+ *                  - 1: 70 degrees.
+ *                  - 2: 60 degrees.
+ *                  - 3: 50 degrees.
+ * 
+ * @return Status of the operation.
+ *         - LSM6DSV16X_OK if the operation is successful.
+ *         - LSM6DSV16X_ERROR if the operation fails.
  */
 LSM6DSV16XStatusTypeDef LSM6DSV16X::Set_6D_Orientation_Threshold(uint8_t Threshold)
 {
@@ -1756,10 +2139,19 @@ LSM6DSV16XStatusTypeDef LSM6DSV16X::Set_6D_Orientation_Threshold(uint8_t Thresho
   }
 
   return LSM6DSV16X_OK;
-
 }
 
-
+/**
+ * @brief Get the low byte of the X axis from the 6D orientation source register.
+ * 
+ * This function reads the low byte of the X axis from the 6D orientation source register.
+ * 
+ * @param XLow Pointer to store the low byte of the X axis.
+ * 
+ * @return Status of the operation.
+ *         - LSM6DSV16X_OK if the operation is successful.
+ *         - LSM6DSV16X_ERROR if the operation fails.
+ */
 LSM6DSV16XStatusTypeDef LSM6DSV16X::Get_6D_Orientation_XL(uint8_t *XLow)
 {
   lsm6dsv16x_d6d_src_t data;
@@ -1773,6 +2165,17 @@ LSM6DSV16XStatusTypeDef LSM6DSV16X::Get_6D_Orientation_XL(uint8_t *XLow)
   return LSM6DSV16X_OK;
 }
 
+/**
+ * @brief Get the high byte of the X axis from the 6D orientation source register.
+ * 
+ * This function reads the high byte of the X axis from the 6D orientation source register.
+ * 
+ * @param XHigh Pointer to store the high byte of the X axis.
+ * 
+ * @return Status of the operation.
+ *         - LSM6DSV16X_OK if the operation is successful.
+ *         - LSM6DSV16X_ERROR if the operation fails.
+ */
 LSM6DSV16XStatusTypeDef LSM6DSV16X::Get_6D_Orientation_XH(uint8_t *XHigh)
 {
   lsm6dsv16x_d6d_src_t data;
@@ -1786,7 +2189,17 @@ LSM6DSV16XStatusTypeDef LSM6DSV16X::Get_6D_Orientation_XH(uint8_t *XHigh)
   return LSM6DSV16X_OK;
 }
 
-
+/**
+ * @brief Get the low byte of the Y axis from the 6D orientation source register.
+ * 
+ * This function reads the low byte of the Y axis from the 6D orientation source register.
+ * 
+ * @param YLow Pointer to store the low byte of the Y axis.
+ * 
+ * @return Status of the operation.
+ *         - LSM6DSV16X_OK if the operation is successful.
+ *         - LSM6DSV16X_ERROR if the operation fails.
+ */
 LSM6DSV16XStatusTypeDef LSM6DSV16X::Get_6D_Orientation_YL(uint8_t *YLow)
 {
   lsm6dsv16x_d6d_src_t data;
@@ -1800,7 +2213,17 @@ LSM6DSV16XStatusTypeDef LSM6DSV16X::Get_6D_Orientation_YL(uint8_t *YLow)
   return LSM6DSV16X_OK;
 }
 
-
+/**
+ * @brief Get the high byte of the Y axis from the 6D orientation source register.
+ * 
+ * This function reads the high byte of the Y axis from the 6D orientation source register.
+ * 
+ * @param YHigh Pointer to store the high byte of the Y axis.
+ * 
+ * @return Status of the operation.
+ *         - LSM6DSV16X_OK if the operation is successful.
+ *         - LSM6DSV16X_ERROR if the operation fails.
+ */
 LSM6DSV16XStatusTypeDef LSM6DSV16X::Get_6D_Orientation_YH(uint8_t *YHigh)
 {
   lsm6dsv16x_d6d_src_t data;
@@ -1814,7 +2237,17 @@ LSM6DSV16XStatusTypeDef LSM6DSV16X::Get_6D_Orientation_YH(uint8_t *YHigh)
   return LSM6DSV16X_OK;
 }
 
-
+/**
+ * @brief Get the low byte of the Z axis from the 6D orientation source register.
+ * 
+ * This function reads the low byte of the Z axis from the 6D orientation source register.
+ * 
+ * @param ZLow Pointer to store the low byte of the Z axis.
+ * 
+ * @return Status of the operation.
+ *         - LSM6DSV16X_OK if the operation is successful.
+ *         - LSM6DSV16X_ERROR if the operation fails.
+ */
 LSM6DSV16XStatusTypeDef LSM6DSV16X::Get_6D_Orientation_ZL(uint8_t *ZLow)
 {
   lsm6dsv16x_d6d_src_t data;
@@ -1828,7 +2261,17 @@ LSM6DSV16XStatusTypeDef LSM6DSV16X::Get_6D_Orientation_ZL(uint8_t *ZLow)
   return LSM6DSV16X_OK;
 }
 
-
+/**
+ * @brief Get the high byte of the Z axis from the 6D orientation source register.
+ * 
+ * This function reads the high byte of the Z axis from the 6D orientation source register.
+ * 
+ * @param ZHigh Pointer to store the high byte of the Z axis.
+ * 
+ * @return Status of the operation.
+ *         - LSM6DSV16X_OK if the operation is successful.
+ *         - LSM6DSV16X_ERROR if the operation fails.
+ */
 LSM6DSV16XStatusTypeDef LSM6DSV16X::Get_6D_Orientation_ZH(uint8_t *ZHigh)
 {
   lsm6dsv16x_d6d_src_t data;
@@ -1842,6 +2285,17 @@ LSM6DSV16XStatusTypeDef LSM6DSV16X::Get_6D_Orientation_ZH(uint8_t *ZHigh)
   return LSM6DSV16X_OK;
 }
 
+/**
+ * @brief Get the number of samples stored in the FIFO.
+ * 
+ * This function retrieves the number of samples currently stored in the FIFO buffer.
+ * 
+ * @param NumSamples Pointer to store the number of samples.
+ * 
+ * @return Status of the operation.
+ *         - LSM6DSV16X_OK if the operation is successful.
+ *         - LSM6DSV16X_ERROR if the operation fails.
+ */
 LSM6DSV16XStatusTypeDef LSM6DSV16X::FIFO_Get_Num_Samples(uint16_t *NumSamples)
 {
   lsm6dsv16x_fifo_status_t status;
@@ -1853,6 +2307,17 @@ LSM6DSV16XStatusTypeDef LSM6DSV16X::FIFO_Get_Num_Samples(uint16_t *NumSamples)
   return LSM6DSV16X_OK;
 }
 
+/**
+ * @brief Get the tag of the next data set stored in the FIFO.
+ * 
+ * This function retrieves the tag of the next data set stored in the FIFO buffer.
+ * 
+ * @param Tag Pointer to store the tag value.
+ * 
+ * @return Status of the operation.
+ *         - LSM6DSV16X_OK if the operation is successful.
+ *         - LSM6DSV16X_ERROR if the operation fails.
+ */
 LSM6DSV16XStatusTypeDef LSM6DSV16X::FIFO_Get_Tag(uint8_t *Tag)
 {
   lsm6dsv16x_fifo_data_out_tag_t tag_local;
@@ -1866,6 +2331,17 @@ LSM6DSV16XStatusTypeDef LSM6DSV16X::FIFO_Get_Tag(uint8_t *Tag)
   return LSM6DSV16X_OK;
 }
 
+/**
+ * @brief Get the rotation vector data from the FIFO.
+ * 
+ * This function retrieves the rotation vector data from the FIFO buffer.
+ * 
+ * @param rvec Pointer to an array to store the rotation vector data.
+ * 
+ * @return Status of the operation.
+ *         - LSM6DSV16X_OK if the operation is successful.
+ *         - LSM6DSV16X_ERROR if the operation fails.
+ */
 LSM6DSV16XStatusTypeDef LSM6DSV16X::FIFO_Get_Rotation_Vector(float *rvec)
 {
   lsm6dsv16x_axis3bit16_t data_raw;
@@ -1878,17 +2354,41 @@ LSM6DSV16XStatusTypeDef LSM6DSV16X::FIFO_Get_Rotation_Vector(float *rvec)
   return LSM6DSV16X_OK;
 }
 
+/**
+ * @brief Get data from the FIFO buffer.
+ * 
+ * This function retrieves data from the FIFO buffer.
+ * 
+ * @param Data Pointer to an array to store the retrieved data.
+ * 
+ * @return Status of the operation.
+ *         - LSM6DSV16X_OK if the operation is successful.
+ *         - LSM6DSV16X_ERROR if the operation fails.
+ */
 LSM6DSV16XStatusTypeDef LSM6DSV16X::FIFO_Get_Data(uint8_t *Data)
 {
   return (LSM6DSV16XStatusTypeDef) readRegister(LSM6DSV16X_FIFO_DATA_OUT_X_L, Data, 6);
 }
 
+/**
+ * @brief Set the full-scale range for the X axis.
+ * 
+ * This function sets the full-scale range for the X axis accelerometer.
+ * 
+ * @param FullScale Full-scale range to set for the X axis. Valid values are:
+ *                  - 2: ±2g
+ *                  - 4: ±4g
+ *                  - 8: ±8g
+ *                  - 16: ±16g
+ * 
+ * @return Status of the operation.
+ *         - LSM6DSV16X_OK if the operation is successful.
+ *         - LSM6DSV16X_ERROR if the operation fails.
+ */
 LSM6DSV16XStatusTypeDef LSM6DSV16X::Set_X_FS(int32_t FullScale)
 {
   lsm6dsv16x_xl_full_scale_t new_fs;
 
-  /* Seems like MISRA C-2012 rule 14.3a violation but only from single file statical analysis point of view because
-     the parameter passed to the function is not known at the moment of analysis */
   new_fs = (FullScale <= 2) ? LSM6DSV16X_2g
            : (FullScale <= 4) ? LSM6DSV16X_4g
            : (FullScale <= 8) ? LSM6DSV16X_8g
@@ -1906,6 +2406,18 @@ LSM6DSV16XStatusTypeDef LSM6DSV16X::Set_X_FS(int32_t FullScale)
   return LSM6DSV16X_OK;
 }
 
+/**
+ * @brief Set the output data rate (ODR) for the X axis accelerometer.
+ * 
+ * This function sets the output data rate (ODR) for the X axis accelerometer based on the specified mode.
+ * 
+ * @param Odr Output data rate to set.
+ * @param Mode Operating mode for the accelerometer.
+ * 
+ * @return Status of the operation.
+ *         - LSM6DSV16X_OK if the operation is successful.
+ *         - LSM6DSV16X_ERROR if the operation fails.
+ */
 LSM6DSV16XStatusTypeDef LSM6DSV16X::Set_X_ODR(float Odr, LSM6DSV16X_ACC_Operating_Mode_t Mode)
 {
   switch (Mode) {
@@ -1922,9 +2434,7 @@ LSM6DSV16XStatusTypeDef LSM6DSV16X::Set_X_ODR(float Odr, LSM6DSV16X_ACC_Operatin
       }
 
     case LSM6DSV16X_ACC_HIGH_ACCURACY_MODE:
-      // TODO: Not implemented.
-      // NOTE: According to datasheet, section `6.5 High-accuracy ODR mode`:
-      // "... the other sensor also has to be configured in high-accuracy ODR (HAODR) mode."
+      // Not implemented.
       return LSM6DSV16X_ERROR;
 
     case LSM6DSV16X_ACC_NORMAL_MODE: {
@@ -1989,6 +2499,17 @@ LSM6DSV16XStatusTypeDef LSM6DSV16X::Set_X_ODR(float Odr, LSM6DSV16X_ACC_Operatin
   }
 }
 
+/**
+ * @brief Set the output data rate (ODR) for the X axis accelerometer when disabled.
+ * 
+ * This function sets the output data rate (ODR) for the X axis accelerometer when it is disabled.
+ * 
+ * @param Odr Output data rate to set.
+ * 
+ * @return Status of the operation.
+ *         - LSM6DSV16X_OK if the operation is successful.
+ *         - LSM6DSV16X_ERROR if the operation fails.
+ */
 LSM6DSV16XStatusTypeDef LSM6DSV16X::Set_X_ODR_When_Disabled(float Odr)
 {
   acc_odr = (Odr <=    1.875f) ? LSM6DSV16X_ODR_AT_1Hz875
@@ -2007,6 +2528,17 @@ LSM6DSV16XStatusTypeDef LSM6DSV16X::Set_X_ODR_When_Disabled(float Odr)
   return LSM6DSV16X_OK;
 }
 
+/**
+ * @brief Set the output data rate (ODR) for the X axis accelerometer when enabled.
+ * 
+ * This function sets the output data rate (ODR) for the X axis accelerometer when it is enabled.
+ * 
+ * @param Odr Output data rate to set.
+ * 
+ * @return Status of the operation.
+ *         - LSM6DSV16X_OK if the operation is successful.
+ *         - LSM6DSV16X_ERROR if the operation fails.
+ */
 LSM6DSV16XStatusTypeDef LSM6DSV16X::Set_X_ODR_When_Enabled(float Odr)
 {
   lsm6dsv16x_data_rate_t new_odr;
@@ -2032,6 +2564,15 @@ LSM6DSV16XStatusTypeDef LSM6DSV16X::Set_X_ODR_When_Enabled(float Odr)
   return LSM6DSV16X_OK;
 }
 
+/**
+ * @brief Enable the X-axis accelerometer.
+ * 
+ * This function enables the X-axis accelerometer.
+ * 
+ * @return Status of the operation.
+ *         - LSM6DSV16X_OK if the operation is successful.
+ *         - LSM6DSV16X_ERROR if the operation fails.
+ */
 LSM6DSV16XStatusTypeDef LSM6DSV16X::Enable_X()
 {
   /* Check if the component is already enabled */
@@ -2049,7 +2590,15 @@ LSM6DSV16XStatusTypeDef LSM6DSV16X::Enable_X()
   return LSM6DSV16X_OK;
 }
 
-
+/**
+ * @brief Enable the gyroscope.
+ * 
+ * This function enables the gyroscope.
+ * 
+ * @return Status of the operation.
+ *         - LSM6DSV16X_OK if the operation is successful.
+ *         - LSM6DSV16X_ERROR if the operation fails.
+ */
 LSM6DSV16XStatusTypeDef LSM6DSV16X::Enable_G()
 {
   /* Check if the component is already enabled */
@@ -2067,6 +2616,16 @@ LSM6DSV16XStatusTypeDef LSM6DSV16X::Enable_G()
   return LSM6DSV16X_OK;
 }
 
+/**
+ * @brief Disable the LSM6DSV16X sensor.
+ * 
+ * This function disables both the accelerometer and the gyroscope, resets the output data rate,
+ * and resets the initialization flag.
+ * 
+ * @return Status of the operation.
+ *         - LSM6DSV16X_OK if the operation is successful.
+ *         - LSM6DSV16X_ERROR if the operation fails.
+ */
 LSM6DSV16XStatusTypeDef LSM6DSV16X::end()
 {
   /* Disable the component */
@@ -2087,7 +2646,15 @@ LSM6DSV16XStatusTypeDef LSM6DSV16X::end()
   return LSM6DSV16X_OK;
 }
 
-
+/**
+ * @brief Disable the X-axis accelerometer.
+ * 
+ * This function disables the X-axis accelerometer.
+ * 
+ * @return Status of the operation.
+ *         - LSM6DSV16X_OK if the operation is successful.
+ *         - LSM6DSV16X_ERROR if the operation fails.
+ */
 LSM6DSV16XStatusTypeDef LSM6DSV16X::Disable_X()
 {
   /* Check if the component is already disabled */
@@ -2110,6 +2677,15 @@ LSM6DSV16XStatusTypeDef LSM6DSV16X::Disable_X()
   return LSM6DSV16X_OK;
 }
 
+/**
+ * @brief Disable the gyroscope.
+ * 
+ * This function disables the gyroscope.
+ * 
+ * @return Status of the operation.
+ *         - LSM6DSV16X_OK if the operation is successful.
+ *         - LSM6DSV16X_ERROR if the operation fails.
+ */
 LSM6DSV16XStatusTypeDef LSM6DSV16X::Disable_G()
 {
   /* Check if the component is already disabled */
@@ -2132,7 +2708,17 @@ LSM6DSV16XStatusTypeDef LSM6DSV16X::Disable_G()
   return LSM6DSV16X_OK;
 }
 
-
+/**
+ * @brief Get the sensitivity of the gyroscope.
+ * 
+ * This function retrieves the sensitivity of the gyroscope based on the current full scale selection.
+ * 
+ * @param[out] Sensitivity Pointer to store the sensitivity value.
+ * 
+ * @return Status of the operation.
+ *         - LSM6DSV16X_OK if the operation is successful.
+ *         - LSM6DSV16X_ERROR if the operation fails.
+ */
 LSM6DSV16XStatusTypeDef LSM6DSV16X::Get_G_Sensitivity(float *Sensitivity)
 {
   lsm6dsv16x_gy_full_scale_t full_scale;
@@ -2149,38 +2735,17 @@ LSM6DSV16XStatusTypeDef LSM6DSV16X::Get_G_Sensitivity(float *Sensitivity)
   return LSM6DSV16X_OK;
 }
 
-float LSM6DSV16X::Convert_G_Sensitivity(lsm6dsv16x_gy_full_scale_t full_scale)
-{
-  float Sensitivity = 0.0f;
-  /* Store the sensitivity based on actual full scale. */
-  switch (full_scale) {
-    case LSM6DSV16X_125dps:
-      Sensitivity = LSM6DSV16X_GYRO_SENSITIVITY_FS_125DPS;
-      break;
-
-    case LSM6DSV16X_250dps:
-      Sensitivity = LSM6DSV16X_GYRO_SENSITIVITY_FS_250DPS;
-      break;
-
-    case LSM6DSV16X_500dps:
-      Sensitivity = LSM6DSV16X_GYRO_SENSITIVITY_FS_500DPS;
-      break;
-
-    case LSM6DSV16X_1000dps:
-      Sensitivity = LSM6DSV16X_GYRO_SENSITIVITY_FS_1000DPS;
-      break;
-
-    case LSM6DSV16X_2000dps:
-      Sensitivity = LSM6DSV16X_GYRO_SENSITIVITY_FS_2000DPS;
-      break;
-
-    case LSM6DSV16X_4000dps:
-      Sensitivity = LSM6DSV16X_GYRO_SENSITIVITY_FS_4000DPS;
-      break;
-  }
-  return Sensitivity;
-}
-
+/**
+ * @brief Get the output data rate (ODR) of the gyroscope.
+ * 
+ * This function retrieves the output data rate (ODR) of the gyroscope.
+ * 
+ * @param[out] Odr Pointer to store the output data rate (ODR) value in Hz.
+ * 
+ * @return Status of the operation.
+ *         - LSM6DSV16X_OK if the operation is successful.
+ *         - LSM6DSV16X_ERROR if the operation fails.
+ */
 LSM6DSV16XStatusTypeDef LSM6DSV16X::Get_G_ODR(float *Odr)
 {
   LSM6DSV16XStatusTypeDef ret = LSM6DSV16X_OK;
@@ -2248,6 +2813,18 @@ LSM6DSV16XStatusTypeDef LSM6DSV16X::Get_G_ODR(float *Odr)
   return ret;
 }
 
+/**
+ * @brief Set the output data rate (ODR) of the gyroscope.
+ * 
+ * This function sets the output data rate (ODR) of the gyroscope according to the specified mode.
+ * 
+ * @param[in] Odr Desired output data rate (ODR) value in Hz.
+ * @param[in] Mode Operating mode of the gyroscope.
+ * 
+ * @return Status of the operation.
+ *         - LSM6DSV16X_OK if the operation is successful.
+ *         - LSM6DSV16X_ERROR if the operation fails.
+ */
 LSM6DSV16XStatusTypeDef LSM6DSV16X::Set_G_ODR(float Odr, LSM6DSV16X_GYRO_Operating_Mode_t Mode)
 {
   switch (Mode) {
@@ -2297,44 +2874,18 @@ LSM6DSV16XStatusTypeDef LSM6DSV16X::Set_G_ODR(float Odr, LSM6DSV16X_GYRO_Operati
   }
 }
 
-LSM6DSV16XStatusTypeDef LSM6DSV16X::Set_G_ODR_When_Enabled(float Odr)
-{
-  lsm6dsv16x_data_rate_t new_odr;
-
-  new_odr = (Odr <=    7.5f) ? LSM6DSV16X_ODR_AT_7Hz5
-            : (Odr <=   15.0f) ? LSM6DSV16X_ODR_AT_15Hz
-            : (Odr <=   30.0f) ? LSM6DSV16X_ODR_AT_30Hz
-            : (Odr <=   60.0f) ? LSM6DSV16X_ODR_AT_60Hz
-            : (Odr <=  120.0f) ? LSM6DSV16X_ODR_AT_120Hz
-            : (Odr <=  240.0f) ? LSM6DSV16X_ODR_AT_240Hz
-            : (Odr <=  480.0f) ? LSM6DSV16X_ODR_AT_480Hz
-            : (Odr <=  960.0f) ? LSM6DSV16X_ODR_AT_960Hz
-            : (Odr <= 1920.0f) ? LSM6DSV16X_ODR_AT_1920Hz
-            : (Odr <= 3840.0f) ? LSM6DSV16X_ODR_AT_3840Hz
-            :                    LSM6DSV16X_ODR_AT_7680Hz;
-
-  return (LSM6DSV16XStatusTypeDef) gy_data_rate_set(new_odr);
-}
-
-
-LSM6DSV16XStatusTypeDef LSM6DSV16X::Set_G_ODR_When_Disabled(float Odr)
-{
-  gyro_odr = (Odr <=    7.5f) ? LSM6DSV16X_ODR_AT_7Hz5
-             : (Odr <=   15.0f) ? LSM6DSV16X_ODR_AT_15Hz
-             : (Odr <=   30.0f) ? LSM6DSV16X_ODR_AT_30Hz
-             : (Odr <=   60.0f) ? LSM6DSV16X_ODR_AT_60Hz
-             : (Odr <=  120.0f) ? LSM6DSV16X_ODR_AT_120Hz
-             : (Odr <=  240.0f) ? LSM6DSV16X_ODR_AT_240Hz
-             : (Odr <=  480.0f) ? LSM6DSV16X_ODR_AT_480Hz
-             : (Odr <=  960.0f) ? LSM6DSV16X_ODR_AT_960Hz
-             : (Odr <= 1920.0f) ? LSM6DSV16X_ODR_AT_1920Hz
-             : (Odr <= 3840.0f) ? LSM6DSV16X_ODR_AT_3840Hz
-             :                    LSM6DSV16X_ODR_AT_7680Hz;
-
-  return LSM6DSV16X_OK;
-}
-
-LSM6DSV16XStatusTypeDef LSM6DSV16X::Get_G_FS(int32_t  *FullScale)
+/**
+ * @brief Get the full-scale range (FS) of the gyroscope.
+ * 
+ * This function retrieves the current full-scale range (FS) of the gyroscope.
+ * 
+ * @param[out] FullScale Pointer to store the full-scale range (FS) value in dps.
+ * 
+ * @return Status of the operation.
+ *         - LSM6DSV16X_OK if the operation is successful.
+ *         - LSM6DSV16X_ERROR if the operation fails.
+ */
+LSM6DSV16XStatusTypeDef LSM6DSV16X::Get_G_FS(int32_t *FullScale)
 {
   LSM6DSV16XStatusTypeDef ret = LSM6DSV16X_OK;
   lsm6dsv16x_gy_full_scale_t fs_low_level;
@@ -2377,6 +2928,17 @@ LSM6DSV16XStatusTypeDef LSM6DSV16X::Get_G_FS(int32_t  *FullScale)
   return ret;
 }
 
+/**
+ * @brief Set the full-scale range (FS) of the gyroscope.
+ * 
+ * This function sets the full-scale range (FS) of the gyroscope to the specified value.
+ * 
+ * @param[in] FullScale Desired full-scale range (FS) value in dps.
+ * 
+ * @return Status of the operation.
+ *         - LSM6DSV16X_OK if the operation is successful.
+ *         - LSM6DSV16X_ERROR if the operation fails.
+ */
 LSM6DSV16XStatusTypeDef LSM6DSV16X::Set_G_FS(int32_t FullScale)
 {
   lsm6dsv16x_gy_full_scale_t new_fs;
@@ -2396,6 +2958,17 @@ LSM6DSV16XStatusTypeDef LSM6DSV16X::Set_G_FS(int32_t FullScale)
   return (LSM6DSV16XStatusTypeDef) gy_full_scale_set(gyro_fs);
 }
 
+/**
+ * @brief Get the raw angular rate values from the gyroscope.
+ * 
+ * This function retrieves the raw angular rate values from the gyroscope without any scaling applied.
+ * 
+ * @param[out] Value Pointer to store the raw angular rate values [X, Y, Z].
+ * 
+ * @return Status of the operation.
+ *         - LSM6DSV16X_OK if the operation is successful.
+ *         - LSM6DSV16X_ERROR if the operation fails.
+ */
 LSM6DSV16XStatusTypeDef LSM6DSV16X::Get_G_AxesRaw(int16_t *Value)
 {
   lsm6dsv16x_axis3bit16_t data_raw;
@@ -2413,7 +2986,17 @@ LSM6DSV16XStatusTypeDef LSM6DSV16X::Get_G_AxesRaw(int16_t *Value)
   return LSM6DSV16X_OK;
 }
 
-
+/**
+ * @brief Get the angular rate values from the gyroscope.
+ * 
+ * This function retrieves the angular rate values from the gyroscope, scaled according to the selected full-scale range (FS).
+ * 
+ * @param[out] AngularRate Pointer to store the angular rate values [X, Y, Z] in dps (degrees per second).
+ * 
+ * @return Status of the operation.
+ *         - LSM6DSV16X_OK if the operation is successful.
+ *         - LSM6DSV16X_ERROR if the operation fails.
+ */
 LSM6DSV16XStatusTypeDef LSM6DSV16X::Get_G_Axes(int32_t *AngularRate)
 {
   lsm6dsv16x_axis3bit16_t data_raw;
@@ -2437,7 +3020,17 @@ LSM6DSV16XStatusTypeDef LSM6DSV16X::Get_G_Axes(int32_t *AngularRate)
   return LSM6DSV16X_OK;
 }
 
-
+/**
+ * @brief Get the gyroscope data ready (DRDY) status.
+ * 
+ * This function retrieves the gyroscope data ready (DRDY) status.
+ * 
+ * @param[out] Status Pointer to store the gyroscope DRDY status.
+ * 
+ * @return Status of the operation.
+ *         - LSM6DSV16X_OK if the operation is successful.
+ *         - LSM6DSV16X_ERROR if the operation fails.
+ */
 LSM6DSV16XStatusTypeDef LSM6DSV16X::Get_G_DRDY_Status(uint8_t *Status)
 {
   lsm6dsv16x_all_sources_t val;
@@ -2450,7 +3043,17 @@ LSM6DSV16XStatusTypeDef LSM6DSV16X::Get_G_DRDY_Status(uint8_t *Status)
   return LSM6DSV16X_OK;
 }
 
-
+/**
+ * @brief Set the gyroscope power mode.
+ * 
+ * This function sets the power mode of the gyroscope.
+ * 
+ * @param[in] PowerMode Power mode to set for the gyroscope.
+ * 
+ * @return Status of the operation.
+ *         - LSM6DSV16X_OK if the operation is successful.
+ *         - LSM6DSV16X_ERROR if the operation fails.
+ */
 LSM6DSV16XStatusTypeDef LSM6DSV16X::Set_G_Power_Mode(uint8_t PowerMode)
 {
   if (gy_mode_set((lsm6dsv16x_gy_mode_t)PowerMode) != LSM6DSV16X_OK) {
@@ -2459,11 +3062,22 @@ LSM6DSV16XStatusTypeDef LSM6DSV16X::Set_G_Power_Mode(uint8_t PowerMode)
   return LSM6DSV16X_OK;
 }
 
-
+/**
+ * @brief Set the gyroscope filter mode.
+ * 
+ * This function sets the filter mode of the gyroscope.
+ * 
+ * @param[in] LowHighPassFlag Flag to select low-pass or high-pass filter mode.
+ * @param[in] FilterMode Filter mode to set for the gyroscope.
+ * 
+ * @return Status of the operation.
+ *         - LSM6DSV16X_OK if the operation is successful.
+ *         - LSM6DSV16X_ERROR if the operation fails.
+ */
 LSM6DSV16XStatusTypeDef LSM6DSV16X::Set_G_Filter_Mode(uint8_t LowHighPassFlag, uint8_t FilterMode)
 {
   if (LowHighPassFlag == 0) {
-    /*Set gyroscope low_pass 1 filter-mode*/
+    /* Set gyroscope low_pass 1 filter-mode */
     /* Enable low-pass filter */
     if (gy_lp1_set(1) != LSM6DSV16X_OK) {
       return LSM6DSV16X_ERROR;
@@ -2472,7 +3086,7 @@ LSM6DSV16XStatusTypeDef LSM6DSV16X::Set_G_Filter_Mode(uint8_t LowHighPassFlag, u
       return LSM6DSV16X_ERROR;
     }
   } else {
-    /*Set gyroscope high_pass filter-mode*/
+    /* Set gyroscope high_pass filter-mode */
     /* Enable high-pass filter */
     if (gy_lp1_set(0) != LSM6DSV16X_OK) {
       return LSM6DSV16X_ERROR;
@@ -2484,7 +3098,17 @@ LSM6DSV16XStatusTypeDef LSM6DSV16X::Set_G_Filter_Mode(uint8_t LowHighPassFlag, u
   return LSM6DSV16X_OK;
 }
 
-
+/**
+ * @brief Get the temperature output data rate (ODR).
+ * 
+ * This function retrieves the output data rate (ODR) for the temperature sensor.
+ * 
+ * @param[out] Odr Pointer to store the temperature output data rate (ODR) in Hz.
+ * 
+ * @return Status of the operation.
+ *         - LSM6DSV16X_OK if the operation is successful.
+ *         - LSM6DSV16X_ERROR if the operation fails.
+ */
 LSM6DSV16XStatusTypeDef LSM6DSV16X::Get_Temp_ODR(float *Odr)
 {
   lsm6dsv16x_fifo_ctrl4_t ctrl4;
@@ -2513,6 +3137,17 @@ LSM6DSV16XStatusTypeDef LSM6DSV16X::Get_Temp_ODR(float *Odr)
   return LSM6DSV16X_OK;
 }
 
+/**
+ * @brief Set the temperature output data rate (ODR).
+ * 
+ * This function sets the output data rate (ODR) for the temperature sensor.
+ * 
+ * @param[in] Odr Temperature output data rate (ODR) to set in Hz.
+ * 
+ * @return Status of the operation.
+ *         - LSM6DSV16X_OK if the operation is successful.
+ *         - LSM6DSV16X_ERROR if the operation fails.
+ */
 LSM6DSV16XStatusTypeDef LSM6DSV16X::Set_Temp_ODR(float Odr)
 {
   lsm6dsv16x_fifo_ctrl4_t ctrl4;
@@ -2537,11 +3172,35 @@ LSM6DSV16XStatusTypeDef LSM6DSV16X::Set_Temp_ODR(float Odr)
            1);
 }
 
+/**
+ * @brief Get the raw temperature value.
+ * 
+ * This function retrieves the raw temperature value from the sensor.
+ * 
+ * @param[out] value Pointer to store the raw temperature value.
+ * 
+ * @return Status of the operation.
+ *         - LSM6DSV16X_OK if the operation is successful.
+ *         - LSM6DSV16X_ERROR if the operation fails.
+ */
 LSM6DSV16XStatusTypeDef LSM6DSV16X::Get_Temp_Raw(int16_t *value)
 {
   return (LSM6DSV16XStatusTypeDef)temperature_raw_get(value);
 }
 
+/**
+ * @brief Test the IMU functionality.
+ * 
+ * This function tests the functionality of the IMU by performing X-axis and
+ * gyroscope tests.
+ * 
+ * @param[in] XTestType Type of X-axis test to perform.
+ * @param[in] GTestType Type of gyroscope test to perform.
+ * 
+ * @return Status of the operation.
+ *         - LSM6DSV16X_OK if the IMU test is successful.
+ *         - LSM6DSV16X_ERROR if the IMU test fails.
+ */
 LSM6DSV16XStatusTypeDef LSM6DSV16X::Test_IMU(uint8_t XTestType, uint8_t GTestType)
 {
   uint8_t whoamI;
@@ -2564,15 +3223,37 @@ LSM6DSV16XStatusTypeDef LSM6DSV16X::Test_IMU(uint8_t XTestType, uint8_t GTestTyp
   return LSM6DSV16X_OK;
 }
 
+/**
+ * @brief Read the device ID.
+ * 
+ * This function reads the device ID of the LSM6DSV16X sensor.
+ * 
+ * @param[out] val Pointer to store the device ID.
+ * 
+ * @return Status of the operation.
+ *         - LSM6DSV16X_OK if the operation is successful.
+ *         - LSM6DSV16X_ERROR if the operation fails.
+ */
 LSM6DSV16XStatusTypeDef LSM6DSV16X::ReadID(uint8_t *val)
 {
   LSM6DSV16XStatusTypeDef ret = LSM6DSV16X_OK;
-  if(!readRegister( LSM6DSV16X_WHO_AM_I, (uint8_t *)val, 1)){
-        ret = LSM6DSV16X_ERROR;
+  if (!readRegister(LSM6DSV16X_WHO_AM_I, (uint8_t *)val, 1)) {
+    ret = LSM6DSV16X_ERROR;
   }
   return ret;
 }
 
+/**
+ * @brief Perform X-axis accelerometer self-test.
+ * 
+ * This function performs the X-axis accelerometer self-test.
+ * 
+ * @param[in] TestType Type of self-test to perform.
+ * 
+ * @return Status of the self-test.
+ *         - LSM6DSV16X_OK if the self-test passes.
+ *         - LSM6DSV16X_ERROR if the self-test fails.
+ */
 LSM6DSV16XStatusTypeDef LSM6DSV16X::Test_X_IMU(uint8_t TestType)
 {
   int16_t data_raw[3];
@@ -2602,7 +3283,7 @@ LSM6DSV16XStatusTypeDef LSM6DSV16X::Test_X_IMU(uint8_t TestType)
   memset(val_st_off, 0x00, 3 * sizeof(float));
   memset(val_st_on, 0x00, 3 * sizeof(float));
 
-  /*Ignore First Data*/
+  /* Ignore First Data */
   if (Get_X_AxesRaw_When_Aval(data_raw) != LSM6DSV16X_OK) {
     return LSM6DSV16X_ERROR;
   }
@@ -2612,7 +3293,7 @@ LSM6DSV16XStatusTypeDef LSM6DSV16X::Test_X_IMU(uint8_t TestType)
       return LSM6DSV16X_ERROR;
     }
 
-    /*Average the data in each axis*/
+    /* Average the data in each axis */
     for (uint8_t j = 0; j < 3; j++) {
       val_st_off[j] += from_fs4_to_mg(data_raw[j]);
     }
@@ -2628,7 +3309,7 @@ LSM6DSV16XStatusTypeDef LSM6DSV16X::Test_X_IMU(uint8_t TestType)
   }
   thread_sleep_for(100);
 
-  /*Ignore First Data*/
+  /* Ignore First Data */
   if (Get_X_AxesRaw_When_Aval(data_raw) != LSM6DSV16X_OK) {
     return LSM6DSV16X_ERROR;
   }
@@ -2638,7 +3319,7 @@ LSM6DSV16XStatusTypeDef LSM6DSV16X::Test_X_IMU(uint8_t TestType)
       return LSM6DSV16X_ERROR;
     }
 
-    /*Average the data in each axis*/
+    /* Average the data in each axis */
     for (uint8_t j = 0; j < 3; j++) {
       val_st_on[j] += from_fs4_to_mg(data_raw[j]);
     }
@@ -2670,6 +3351,18 @@ LSM6DSV16XStatusTypeDef LSM6DSV16X::Test_X_IMU(uint8_t TestType)
   return LSM6DSV16X_OK;
 }
 
+
+/**
+ * @brief Get the raw accelerometer data when available.
+ * 
+ * This function retrieves the raw accelerometer data when available.
+ * 
+ * @param[out] Value Pointer to store the raw accelerometer data.
+ * 
+ * @return Status of the operation.
+ *         - LSM6DSV16X_OK if the operation is successful.
+ *         - LSM6DSV16X_ERROR if the operation fails.
+ */
 LSM6DSV16XStatusTypeDef LSM6DSV16X::Get_X_AxesRaw_When_Aval(int16_t *Value)
 {
   lsm6dsv16x_data_ready_t drdy;
@@ -2685,24 +3378,18 @@ LSM6DSV16XStatusTypeDef LSM6DSV16X::Get_X_AxesRaw_When_Aval(int16_t *Value)
   return LSM6DSV16X_OK;
 }
 
-LSM6DSV16XStatusTypeDef LSM6DSV16X::Get_X_AxesRaw(int16_t *Value)
-{
-  lsm6dsv16x_axis3bit16_t data_raw;
-
-  /* Read raw data values. */
-  if (acceleration_raw_get(data_raw.i16bit) != LSM6DSV16X_OK) {
-    return LSM6DSV16X_ERROR;
-  }
-
-  /* Format the data. */
-  Value[0] = data_raw.i16bit[0];
-  Value[1] = data_raw.i16bit[1];
-  Value[2] = data_raw.i16bit[2];
-
-  return LSM6DSV16X_OK;
-}
-
-LSM6DSV16XStatusTypeDef LSM6DSV16X::Test_G_IMU(uint8_t TestType) // = LSM6DSV16X_GY_ST_POSITIVE)
+/**
+ * @brief Perform gyroscope self-test.
+ * 
+ * This function performs the gyroscope self-test.
+ * 
+ * @param[in] TestType Type of self-test to perform.
+ * 
+ * @return Status of the self-test.
+ *         - LSM6DSV16X_OK if the self-test passes.
+ *         - LSM6DSV16X_ERROR if the self-test fails.
+ */
+LSM6DSV16XStatusTypeDef LSM6DSV16X::Test_G_IMU(uint8_t TestType)
 {
   int16_t data_raw[3];
   float test_val[3];
@@ -2718,7 +3405,6 @@ LSM6DSV16XStatusTypeDef LSM6DSV16X::Test_G_IMU(uint8_t TestType) // = LSM6DSV16X
   /*
    * Gyroscope Self Test
    */
-
   if (gy_data_rate_set(LSM6DSV16X_ODR_AT_240Hz) != LSM6DSV16X_OK) {
     return LSM6DSV16X_ERROR;
   }
@@ -2729,7 +3415,7 @@ LSM6DSV16XStatusTypeDef LSM6DSV16X::Test_G_IMU(uint8_t TestType) // = LSM6DSV16X
 
   thread_sleep_for(100);
 
-  /*Ignore First Data*/
+  /* Ignore First Data */
   if (Get_G_AxesRaw_When_Aval(data_raw) != LSM6DSV16X_OK) {
     return LSM6DSV16X_ERROR;
   }
@@ -2742,7 +3428,7 @@ LSM6DSV16XStatusTypeDef LSM6DSV16X::Test_G_IMU(uint8_t TestType) // = LSM6DSV16X
       return LSM6DSV16X_ERROR;
     }
 
-    /*Average the data in each axis*/
+    /* Average the data in each axis */
     for (uint8_t j = 0; j < 3; j++) {
       val_st_off[j] += from_fs2000_to_mdps(data_raw[j]);
     }
@@ -2758,7 +3444,7 @@ LSM6DSV16XStatusTypeDef LSM6DSV16X::Test_G_IMU(uint8_t TestType) // = LSM6DSV16X
   }
   thread_sleep_for(100);
 
-  /*Ignore First Data*/
+  /* Ignore First Data */
   if (Get_G_AxesRaw_When_Aval(data_raw) != LSM6DSV16X_OK) {
     return LSM6DSV16X_ERROR;
   }
@@ -2768,7 +3454,7 @@ LSM6DSV16XStatusTypeDef LSM6DSV16X::Test_G_IMU(uint8_t TestType) // = LSM6DSV16X
       return LSM6DSV16X_ERROR;
     }
 
-    /*Average the data in each axis*/
+    /* Average the data in each axis */
     for (uint8_t j = 0; j < 3; j++) {
       val_st_on[j] += from_fs2000_to_mdps(data_raw[j]);
     }
@@ -2801,22 +3487,15 @@ LSM6DSV16XStatusTypeDef LSM6DSV16X::Test_G_IMU(uint8_t TestType) // = LSM6DSV16X
   return LSM6DSV16X_OK;
 }
 
-LSM6DSV16XStatusTypeDef LSM6DSV16X::Get_G_AxesRaw_When_Aval(int16_t *Value)
-{
-  lsm6dsv16x_data_ready_t drdy;
-  do {
-    if (flag_data_ready_get(&drdy) != LSM6DSV16X_OK) {
-      return LSM6DSV16X_ERROR;
-    }
-  } while (!drdy.drdy_gy);
-
-  if (Get_G_AxesRaw(Value) != LSM6DSV16X_OK) {
-    return LSM6DSV16X_ERROR;
-  }
-  return LSM6DSV16X_OK;
-}
-
-
+/**
+ * @brief Enable QVAR feature.
+ * 
+ * This function enables the QVAR feature.
+ * 
+ * @return Status of the operation.
+ *         - LSM6DSV16X_OK if the operation is successful.
+ *         - LSM6DSV16X_ERROR if the operation fails.
+ */
 LSM6DSV16XStatusTypeDef LSM6DSV16X::QVAR_Enable()
 {
   lsm6dsv16x_ctrl7_t ctrl7;
@@ -2835,7 +3514,15 @@ LSM6DSV16XStatusTypeDef LSM6DSV16X::QVAR_Enable()
   return LSM6DSV16X_OK;
 }
 
-
+/**
+ * @brief Disable QVAR feature.
+ * 
+ * This function disables the QVAR feature.
+ * 
+ * @return Status of the operation.
+ *         - LSM6DSV16X_OK if the operation is successful.
+ *         - LSM6DSV16X_ERROR if the operation fails.
+ */
 LSM6DSV16XStatusTypeDef LSM6DSV16X::QVAR_Disable()
 {
   lsm6dsv16x_ctrl7_t ctrl7;
@@ -2854,7 +3541,17 @@ LSM6DSV16XStatusTypeDef LSM6DSV16X::QVAR_Disable()
   return LSM6DSV16X_OK;
 }
 
-
+/**
+ * @brief Get QVAR data.
+ * 
+ * This function retrieves QVAR data.
+ * 
+ * @param[out] Data Pointer to store the QVAR data.
+ * 
+ * @return Status of the operation.
+ *         - LSM6DSV16X_OK if the operation is successful.
+ *         - LSM6DSV16X_ERROR if the operation fails.
+ */
 LSM6DSV16XStatusTypeDef LSM6DSV16X::QVAR_GetData(float *Data)
 {
   lsm6dsv16x_axis1bit16_t data_raw;
@@ -2868,7 +3565,17 @@ LSM6DSV16XStatusTypeDef LSM6DSV16X::QVAR_GetData(float *Data)
   return LSM6DSV16X_OK;
 }
 
-
+/**
+ * @brief Get QVAR impedance.
+ * 
+ * This function retrieves QVAR impedance.
+ * 
+ * @param[out] val Pointer to store the QVAR impedance.
+ * 
+ * @return Status of the operation.
+ *         - LSM6DSV16X_OK if the operation is successful.
+ *         - LSM6DSV16X_ERROR if the operation fails.
+ */
 LSM6DSV16XStatusTypeDef LSM6DSV16X::QVAR_GetImpedance(uint16_t *val)
 {
   LSM6DSV16XStatusTypeDef ret = LSM6DSV16X_OK;
@@ -2898,7 +3605,17 @@ LSM6DSV16XStatusTypeDef LSM6DSV16X::QVAR_GetImpedance(uint16_t *val)
   return ret;
 }
 
-
+/**
+ * @brief Set QVAR impedance.
+ * 
+ * This function sets QVAR impedance.
+ * 
+ * @param[in] val QVAR impedance to set.
+ * 
+ * @return Status of the operation.
+ *         - LSM6DSV16X_OK if the operation is successful.
+ *         - LSM6DSV16X_ERROR if the operation fails.
+ */
 LSM6DSV16XStatusTypeDef LSM6DSV16X::QVAR_SetImpedance(uint16_t val)
 {
   LSM6DSV16XStatusTypeDef ret = LSM6DSV16X_OK;
@@ -2928,6 +3645,17 @@ LSM6DSV16XStatusTypeDef LSM6DSV16X::QVAR_SetImpedance(uint16_t val)
   return ret;
 }
 
+/**
+ * @brief Get QVAR status.
+ * 
+ * This function retrieves QVAR status.
+ * 
+ * @param[out] val Pointer to store the QVAR status.
+ * 
+ * @return Status of the operation.
+ *         - LSM6DSV16X_OK if the operation is successful.
+ *         - LSM6DSV16X_ERROR if the operation fails.
+ */
 LSM6DSV16XStatusTypeDef LSM6DSV16X::QVAR_GetStatus(uint8_t *val)
 {
   lsm6dsv16x_status_reg_t status;
@@ -2941,7 +3669,17 @@ LSM6DSV16XStatusTypeDef LSM6DSV16X::QVAR_GetStatus(uint8_t *val)
   return LSM6DSV16X_OK;
 }
 
-
+/**
+ * @brief Get MLC status.
+ * 
+ * This function retrieves MLC (Machine Learning Core) status.
+ * 
+ * @param[out] status Pointer to store the MLC status.
+ * 
+ * @return Status of the operation.
+ *         - LSM6DSV16X_OK if the operation is successful.
+ *         - LSM6DSV16X_ERROR if the operation fails.
+ */
 LSM6DSV16XStatusTypeDef LSM6DSV16X::Get_MLC_Status(lsm6dsv16x_mlc_status_mainpage_t *status)
 {
   if (readRegister(LSM6DSV16X_MLC_STATUS_MAINPAGE, (uint8_t *)status, 1) != LSM6DSV16X_OK) {
@@ -2951,7 +3689,17 @@ LSM6DSV16XStatusTypeDef LSM6DSV16X::Get_MLC_Status(lsm6dsv16x_mlc_status_mainpag
   return LSM6DSV16X_OK;
 }
 
-
+/**
+ * @brief Get MLC output.
+ * 
+ * This function retrieves MLC output.
+ * 
+ * @param[out] output Pointer to store the MLC output.
+ * 
+ * @return Status of the operation.
+ *         - LSM6DSV16X_OK if the operation is successful.
+ *         - LSM6DSV16X_ERROR if the operation fails.
+ */
 LSM6DSV16XStatusTypeDef LSM6DSV16X::Get_MLC_Output(lsm6dsv16x_mlc_out_t *output)
 {
   if (mlc_out_get(output) != LSM6DSV16X_OK) {
@@ -2961,6 +3709,15 @@ LSM6DSV16XStatusTypeDef LSM6DSV16X::Get_MLC_Output(lsm6dsv16x_mlc_out_t *output)
   return LSM6DSV16X_OK;
 }
 
+/**
+ * @brief Enable Rotation Vector feature.
+ * 
+ * This function enables the Rotation Vector feature.
+ * 
+ * @return Status of the operation.
+ *         - LSM6DSV16X_OK if the operation is successful.
+ *         - LSM6DSV16X_ERROR if the operation fails.
+ */
 LSM6DSV16XStatusTypeDef LSM6DSV16X::Enable_Rotation_Vector()
 {
   lsm6dsv16x_fifo_sflp_raw_t fifo_sflp;
@@ -2982,7 +3739,15 @@ LSM6DSV16XStatusTypeDef LSM6DSV16X::Enable_Rotation_Vector()
   return LSM6DSV16X_OK;
 }
 
-
+/**
+ * @brief Disable Rotation Vector feature.
+ * 
+ * This function disables the Rotation Vector feature.
+ * 
+ * @return Status of the operation.
+ *         - LSM6DSV16X_OK if the operation is successful.
+ *         - LSM6DSV16X_ERROR if the operation fails.
+ */
 LSM6DSV16XStatusTypeDef LSM6DSV16X::Disable_Rotation_Vector()
 {
   lsm6dsv16x_fifo_sflp_raw_t fifo_sflp;
@@ -3007,7 +3772,15 @@ LSM6DSV16XStatusTypeDef LSM6DSV16X::Disable_Rotation_Vector()
   return LSM6DSV16X_OK;
 }
 
-
+/**
+ * @brief Enable Gravity Vector feature.
+ * 
+ * This function enables the Gravity Vector feature.
+ * 
+ * @return Status of the operation.
+ *         - LSM6DSV16X_OK if the operation is successful.
+ *         - LSM6DSV16X_ERROR if the operation fails.
+ */
 LSM6DSV16XStatusTypeDef LSM6DSV16X::Enable_Gravity_Vector()
 {
   lsm6dsv16x_fifo_sflp_raw_t fifo_sflp;
@@ -3029,7 +3802,15 @@ LSM6DSV16XStatusTypeDef LSM6DSV16X::Enable_Gravity_Vector()
   return LSM6DSV16X_OK;
 }
 
-
+/**
+ * @brief Disable Gravity Vector feature.
+ * 
+ * This function disables the Gravity Vector feature.
+ * 
+ * @return Status of the operation.
+ *         - LSM6DSV16X_OK if the operation is successful.
+ *         - LSM6DSV16X_ERROR if the operation fails.
+ */
 LSM6DSV16XStatusTypeDef LSM6DSV16X::Disable_Gravity_Vector()
 {
   lsm6dsv16x_fifo_sflp_raw_t fifo_sflp;
@@ -3054,7 +3835,15 @@ LSM6DSV16XStatusTypeDef LSM6DSV16X::Disable_Gravity_Vector()
   return LSM6DSV16X_OK;
 }
 
-
+/**
+ * @brief Enable Gyroscope Bias feature.
+ * 
+ * This function enables the Gyroscope Bias feature.
+ * 
+ * @return Status of the operation.
+ *         - LSM6DSV16X_OK if the operation is successful.
+ *         - LSM6DSV16X_ERROR if the operation fails.
+ */
 LSM6DSV16XStatusTypeDef LSM6DSV16X::Enable_Gyroscope_Bias()
 {
   lsm6dsv16x_fifo_sflp_raw_t fifo_sflp;
@@ -3076,7 +3865,15 @@ LSM6DSV16XStatusTypeDef LSM6DSV16X::Enable_Gyroscope_Bias()
   return LSM6DSV16X_OK;
 }
 
-
+/**
+ * @brief Disable Gyroscope Bias feature.
+ * 
+ * This function disables the Gyroscope Bias feature.
+ * 
+ * @return Status of the operation.
+ *         - LSM6DSV16X_OK if the operation is successful.
+ *         - LSM6DSV16X_ERROR if the operation fails.
+ */
 LSM6DSV16XStatusTypeDef LSM6DSV16X::Disable_Gyroscope_Bias()
 {
   lsm6dsv16x_fifo_sflp_raw_t fifo_sflp;
@@ -3101,7 +3898,19 @@ LSM6DSV16XStatusTypeDef LSM6DSV16X::Disable_Gyroscope_Bias()
   return LSM6DSV16X_OK;
 }
 
-
+/**
+ * @brief Set SFLP Batch.
+ * 
+ * This function sets the SFLP Batch configuration.
+ * 
+ * @param GameRotation Flag to enable or disable Game Rotation.
+ * @param Gravity Flag to enable or disable Gravity.
+ * @param gBias Flag to enable or disable Gyroscope Bias.
+ * 
+ * @return Status of the operation.
+ *         - LSM6DSV16X_OK if the operation is successful.
+ *         - LSM6DSV16X_ERROR if the operation fails.
+ */
 LSM6DSV16XStatusTypeDef LSM6DSV16X::Set_SFLP_Batch(bool GameRotation, bool Gravity, bool gBias)
 {
   lsm6dsv16x_fifo_sflp_raw_t fifo_sflp;
@@ -3128,6 +3937,17 @@ LSM6DSV16XStatusTypeDef LSM6DSV16X::Set_SFLP_Batch(bool GameRotation, bool Gravi
 }
 
 
+/**
+ * @brief Set the SFLP (Sensor Filtered Low Power) data rate.
+ * 
+ * This function sets the SFLP data rate based on the given parameter.
+ * 
+ * @param odr The desired output data rate (in Hz).
+ * 
+ * @return Status of the operation.
+ *         - LSM6DSV16X_OK if the operation is successful.
+ *         - LSM6DSV16X_ERROR if the operation fails.
+ */
 LSM6DSV16XStatusTypeDef LSM6DSV16X::Set_SFLP_ODR(float odr)
 {
   lsm6dsv16x_sflp_data_rate_t rate = odr <= 15    ? LSM6DSV16X_SFLP_15Hz
@@ -3140,6 +3960,19 @@ LSM6DSV16XStatusTypeDef LSM6DSV16X::Set_SFLP_ODR(float odr)
   return (LSM6DSV16XStatusTypeDef)sflp_data_rate_set(rate);
 }
 
+/**
+ * @brief Set the Gyroscope Bias for SFLP (Sensor Filtered Low Power) mode.
+ * 
+ * This function sets the Gyroscope Bias values for SFLP mode.
+ * 
+ * @param x The Gyroscope Bias value for the X-axis.
+ * @param y The Gyroscope Bias value for the Y-axis.
+ * @param z The Gyroscope Bias value for the Z-axis.
+ * 
+ * @return Status of the operation.
+ *         - LSM6DSV16X_OK if the operation is successful.
+ *         - LSM6DSV16X_ERROR if the operation fails.
+ */
 LSM6DSV16XStatusTypeDef LSM6DSV16X::Set_SFLP_GBIAS(float x, float y, float z)
 {
   lsm6dsv16x_sflp_gbias_t val = {0, 0, 0};
@@ -3152,7 +3985,15 @@ LSM6DSV16XStatusTypeDef LSM6DSV16X::Set_SFLP_GBIAS(float x, float y, float z)
   return LSM6DSV16X_OK;
 }
 
-
+/**
+ * @brief Reset SFLP (Sensor Filtered Low Power).
+ * 
+ * This function resets the SFLP mode.
+ * 
+ * @return Status of the operation.
+ *         - LSM6DSV16X_OK if the operation is successful.
+ *         - LSM6DSV16X_ERROR if the operation fails.
+ */
 LSM6DSV16XStatusTypeDef LSM6DSV16X::Reset_SFLP(void)
 {
   lsm6dsv16x_emb_func_init_a_t emb_func_init_a;
@@ -3177,31 +4018,74 @@ LSM6DSV16XStatusTypeDef LSM6DSV16X::Reset_SFLP(void)
   return LSM6DSV16X_OK;
 }
 
-
+/**
+ * @brief Enable Block Data Update.
+ * 
+ * This function enables the Block Data Update feature.
+ * 
+ * @return Status of the operation.
+ *         - LSM6DSV16X_OK if the operation is successful.
+ *         - LSM6DSV16X_ERROR if the operation fails.
+ */
 LSM6DSV16XStatusTypeDef LSM6DSV16X::Enable_Block_Data_Update()
 {
   return (LSM6DSV16XStatusTypeDef)block_data_update_set(PROPERTY_ENABLE);
 }
 
-
+/**
+ * @brief Disable Block Data Update.
+ * 
+ * This function disables the Block Data Update feature.
+ * 
+ * @return Status of the operation.
+ *         - LSM6DSV16X_OK if the operation is successful.
+ *         - LSM6DSV16X_ERROR if the operation fails.
+ */
 LSM6DSV16XStatusTypeDef LSM6DSV16X::Disable_Block_Data_Update()
 {
   return (LSM6DSV16XStatusTypeDef)block_data_update_set(PROPERTY_DISABLE);
 }
 
-
+/**
+ * @brief Enable Auto Increment.
+ * 
+ * This function enables the Auto Increment feature.
+ * 
+ * @return Status of the operation.
+ *         - LSM6DSV16X_OK if the operation is successful.
+ *         - LSM6DSV16X_ERROR if the operation fails.
+ */
 LSM6DSV16XStatusTypeDef LSM6DSV16X::Enable_Auto_Increment()
 {
   return (LSM6DSV16XStatusTypeDef)auto_increment_set(PROPERTY_ENABLE);
 }
 
-
+/**
+ * @brief Disable Auto Increment.
+ * 
+ * This function disables the Auto Increment feature.
+ * 
+ * @return Status of the operation.
+ *         - LSM6DSV16X_OK if the operation is successful.
+ *         - LSM6DSV16X_ERROR if the operation fails.
+ */
 LSM6DSV16XStatusTypeDef LSM6DSV16X::Disable_Auto_Increment()
 {
   return (LSM6DSV16XStatusTypeDef)auto_increment_set(PROPERTY_DISABLE);
 }
 
-
+/**
+ * @brief Reset the LSM6DSV16X device.
+ * 
+ * This function resets the LSM6DSV16X device according to the specified reset flags and ensures
+ * that the device is ready after the reset.
+ * 
+ * @param flags The reset flags specifying which components of the device to reset.
+ * 
+ * @return Status of the operation.
+ *         - LSM6DSV16X_OK if the operation is successful.
+ *         - LSM6DSV16X_ERROR if the operation fails.
+ */
 LSM6DSV16XStatusTypeDef LSM6DSV16X::Device_Reset(LSM6DSV16X_Reset_t flags)
 {
   if (reset_set((lsm6dsv16x_reset_t)flags) != LSM6DSV16X_OK) {
@@ -3210,14 +4094,13 @@ LSM6DSV16XStatusTypeDef LSM6DSV16X::Device_Reset(LSM6DSV16X_Reset_t flags)
 
   lsm6dsv16x_reset_t rst;
   do {
-    if (reset_get( &rst) != LSM6DSV16X_OK) {
+    if (reset_get(&rst) != LSM6DSV16X_OK) {
       return LSM6DSV16X_ERROR;
     }
   } while (rst != LSM6DSV16X_READY);
+  
   return LSM6DSV16X_OK;
 }
-
-
 
 /*********************/
 /* PRIVATE FUNCTIONS */

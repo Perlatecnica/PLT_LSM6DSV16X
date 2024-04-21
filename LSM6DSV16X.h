@@ -286,8 +286,6 @@ private:
     int32_t fifo_gy_batch_set(lsm6dsv16x_fifo_gy_batch_t val);
     int32_t timestamp_set(uint8_t val);
     int32_t fifo_timestamp_batch_set(lsm6dsv16x_fifo_timestamp_batch_t val);
-
-    
 };
 
 #endif // LSM6DSV16X_H
