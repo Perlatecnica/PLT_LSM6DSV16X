@@ -82,6 +82,21 @@ void LSM6DSV16X::initialize() {
 }
 
 /**
+ * @brief Get the step count.
+ * 
+ * @param[out] StepCount Pointer to a variable where the step count will be stored.
+ * @return LSM6DSV16XStatusTypeDef Status of the operation.
+ */
+LSM6DSV16XStatusTypeDef LSM6DSV16X::Get_Step_Count(uint16_t *StepCount)
+{
+  if (stpcnt_steps_get(StepCount) != LSM6DSV16X_OK) {
+    return LSM6DSV16X_ERROR;
+  }
+
+  return LSM6DSV16X_OK;
+}
+
+/**
  * @brief Get the X-axis acceleration in milli-g.
  * 
  * @param[out] Acceleration Pointer to an array where the X, Y, and Z axis acceleration values will be stored.
