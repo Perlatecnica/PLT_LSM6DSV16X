@@ -3087,10 +3087,7 @@ typedef struct {
 #endif /* DRV_BYTE_ORDER */
 } lsm6dsv16x_mlc_ext_sensitivity_h_t;
 
-/** @defgroup bitfields page pg2_emb_adv
-  * @{
-  *
-  */
+
 #define LSM6DSV16X_EMB_ADV_PG_2             0x200U
 
 #define LSM6DSV16X_EXT_FORMAT               0x00

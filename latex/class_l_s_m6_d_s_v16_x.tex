@@ -1,0 +1,2690 @@
+\doxysection{LSM6\+DSV16X Class Reference}
+\hypertarget{class_l_s_m6_d_s_v16_x}{}\label{class_l_s_m6_d_s_v16_x}\index{LSM6DSV16X@{LSM6DSV16X}}
+\doxysubsubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_l_s_m6_d_s_v16_x_a251bf7a894b2e7da57093698e19f3c46}\label{class_l_s_m6_d_s_v16_x_a251bf7a894b2e7da57093698e19f3c46} 
+enum {\bfseries Interface\+Type} \{ {\bfseries INTERFACE\+\_\+\+I2C}
+, {\bfseries INTERFACE\+\_\+\+SPI}
+ \}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_l_s_m6_d_s_v16_x_affe5056eb5b156edcd4a44685ac87455}{LSM6\+DSV16X}} (Pin\+Name sda, Pin\+Name scl)
+\begin{DoxyCompactList}\small\item\em Constructor for the \doxylink{class_l_s_m6_d_s_v16_x}{LSM6\+DSV16X} class. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_l_s_m6_d_s_v16_x_ae21fe5768493fbfff9617b41be66f34e}{LSM6\+DSV16X}} (Pin\+Name mosi, Pin\+Name miso, Pin\+Name sck, Pin\+Name cs)
+\begin{DoxyCompactList}\small\item\em Constructor for the \doxylink{class_l_s_m6_d_s_v16_x}{LSM6\+DSV16X} class. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_l_s_m6_d_s_v16_x_a9edd6361b4ef69d32b777e48425906a6}{\texorpdfstring{$\sim$}{\string~}\+LSM6\+DSV16X}} ()
+\begin{DoxyCompactList}\small\item\em Destructor for the \doxylink{class_l_s_m6_d_s_v16_x}{LSM6\+DSV16X} class. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_l_s_m6_d_s_v16_x_aa2e8cc4ad40feffc76e972cd5c2453d7}{initialize}} ()
+\begin{DoxyCompactList}\small\item\em Initialize the \doxylink{class_l_s_m6_d_s_v16_x}{LSM6\+DSV16X} device. \end{DoxyCompactList}\item 
+\Hypertarget{class_l_s_m6_d_s_v16_x_a1d8148411ff418e9feedb39fd447c68a}\label{class_l_s_m6_d_s_v16_x_a1d8148411ff418e9feedb39fd447c68a} 
+void {\bfseries read\+Sensor\+Data} ()
+\item 
+LSM6\+DSV16\+XStatus\+Type\+Def \mbox{\hyperlink{class_l_s_m6_d_s_v16_x_aafb3c5b570d6499aea47edf3f771a969}{Read\+ID}} (uint8\+\_\+t \texorpdfstring{$\ast$}{*}val)
+\begin{DoxyCompactList}\small\item\em Read the device ID. \end{DoxyCompactList}\item 
+LSM6\+DSV16\+XStatus\+Type\+Def \mbox{\hyperlink{class_l_s_m6_d_s_v16_x_a07420e44905b02e73b8e99b6896a3bec}{begin}} (void)
+\begin{DoxyCompactList}\small\item\em Initialize the \doxylink{class_l_s_m6_d_s_v16_x}{LSM6\+DSV16X} device. \end{DoxyCompactList}\item 
+LSM6\+DSV16\+XStatus\+Type\+Def \mbox{\hyperlink{class_l_s_m6_d_s_v16_x_a5a23aa5fd3eaea664758f2c5290a82da}{end}} ()
+\begin{DoxyCompactList}\small\item\em Disable the \doxylink{class_l_s_m6_d_s_v16_x}{LSM6\+DSV16X} sensor. \end{DoxyCompactList}\item 
+LSM6\+DSV16\+XStatus\+Type\+Def \mbox{\hyperlink{class_l_s_m6_d_s_v16_x_af68fd52954e047746c90c04a751bd548}{Enable\+\_\+X}} ()
+\begin{DoxyCompactList}\small\item\em Enable the X-\/axis accelerometer. \end{DoxyCompactList}\item 
+\Hypertarget{class_l_s_m6_d_s_v16_x_ac916b4cee2989affea5ff7e4905efd80}\label{class_l_s_m6_d_s_v16_x_ac916b4cee2989affea5ff7e4905efd80} 
+LSM6\+DSV16\+XStatus\+Type\+Def {\bfseries Get\+\_\+\+X\+\_\+\+Axes} (int32\+\_\+t \texorpdfstring{$\ast$}{*}Acceleration)
+\item 
+LSM6\+DSV16\+XStatus\+Type\+Def \mbox{\hyperlink{class_l_s_m6_d_s_v16_x_a72004eb0fc6012e8bcaa734e8b9dc4f4}{Set\+\_\+\+X\+\_\+\+FS}} (int32\+\_\+t Full\+Scale)
+\begin{DoxyCompactList}\small\item\em Set the full-\/scale range for the X axis. \end{DoxyCompactList}\item 
+\Hypertarget{class_l_s_m6_d_s_v16_x_a2f8076bdf47851398917fe79bbf60861}\label{class_l_s_m6_d_s_v16_x_a2f8076bdf47851398917fe79bbf60861} 
+LSM6\+DSV16\+XStatus\+Type\+Def {\bfseries Get\+\_\+\+X\+\_\+\+ODR} (float \texorpdfstring{$\ast$}{*}Odr)
+\item 
+LSM6\+DSV16\+XStatus\+Type\+Def \mbox{\hyperlink{class_l_s_m6_d_s_v16_x_a94752de123a71b6bd68ddc742521650b}{Set\+\_\+\+X\+\_\+\+ODR}} (float Odr, LSM6\+DSV16\+X\+\_\+\+ACC\+\_\+\+Operating\+\_\+\+Mode\+\_\+t Mode=LSM6\+DSV16\+X\+\_\+\+ACC\+\_\+\+HIGH\+\_\+\+PERFORMANCE\+\_\+\+MODE)
+\begin{DoxyCompactList}\small\item\em Set the output data rate (ODR) for the X axis accelerometer. \end{DoxyCompactList}\item 
+LSM6\+DSV16\+XStatus\+Type\+Def \mbox{\hyperlink{class_l_s_m6_d_s_v16_x_a19588d698ef1daaef9779f5c851160a6}{Set\+\_\+\+X\+\_\+\+ODR\+\_\+\+When\+\_\+\+Enabled}} (float Odr)
+\begin{DoxyCompactList}\small\item\em Set the output data rate (ODR) for the X axis accelerometer when enabled. \end{DoxyCompactList}\item 
+LSM6\+DSV16\+XStatus\+Type\+Def \mbox{\hyperlink{class_l_s_m6_d_s_v16_x_ad8c229338e775a3a0322ccc128d2de49}{Set\+\_\+\+X\+\_\+\+ODR\+\_\+\+When\+\_\+\+Disabled}} (float Odr)
+\begin{DoxyCompactList}\small\item\em Set the output data rate (ODR) for the X axis accelerometer when disabled. \end{DoxyCompactList}\item 
+LSM6\+DSV16\+XStatus\+Type\+Def \mbox{\hyperlink{class_l_s_m6_d_s_v16_x_a5ad94919d1573d93f15f84a9e413e793}{Disable\+\_\+X}} ()
+\begin{DoxyCompactList}\small\item\em Disable the X-\/axis accelerometer. \end{DoxyCompactList}\item 
+LSM6\+DSV16\+XStatus\+Type\+Def \mbox{\hyperlink{class_l_s_m6_d_s_v16_x_a419792f8fff4c54023a9f74aa0eb122c}{Enable\+\_\+G}} ()
+\begin{DoxyCompactList}\small\item\em Enable the gyroscope. \end{DoxyCompactList}\item 
+LSM6\+DSV16\+XStatus\+Type\+Def \mbox{\hyperlink{class_l_s_m6_d_s_v16_x_a5429ae394f09bc3c0bb295ea5614ac50}{Disable\+\_\+G}} ()
+\begin{DoxyCompactList}\small\item\em Disable the gyroscope. \end{DoxyCompactList}\item 
+LSM6\+DSV16\+XStatus\+Type\+Def \mbox{\hyperlink{class_l_s_m6_d_s_v16_x_acd667ce63ea43a12daeb44c6124b5e5f}{Get\+\_\+\+G\+\_\+\+Sensitivity}} (float \texorpdfstring{$\ast$}{*}Sensitivity)
+\begin{DoxyCompactList}\small\item\em Get the sensitivity of the gyroscope. \end{DoxyCompactList}\item 
+float \mbox{\hyperlink{class_l_s_m6_d_s_v16_x_acac648836a00e13fdaeffab34cc99473}{Convert\+\_\+\+G\+\_\+\+Sensitivity}} (lsm6dsv16x\+\_\+gy\+\_\+full\+\_\+scale\+\_\+t full\+\_\+scale)
+\begin{DoxyCompactList}\small\item\em Convert the gyroscope full-\/scale sensitivity to a floating-\/point value. \end{DoxyCompactList}\item 
+LSM6\+DSV16\+XStatus\+Type\+Def \mbox{\hyperlink{class_l_s_m6_d_s_v16_x_a9e6ed07f8b61a856312c94d4de1a651b}{Get\+\_\+\+G\+\_\+\+ODR}} (float \texorpdfstring{$\ast$}{*}Odr)
+\begin{DoxyCompactList}\small\item\em Get the output data rate (ODR) of the gyroscope. \end{DoxyCompactList}\item 
+LSM6\+DSV16\+XStatus\+Type\+Def \mbox{\hyperlink{class_l_s_m6_d_s_v16_x_a832c164d8975c1cf4be1c94d46720950}{Set\+\_\+\+G\+\_\+\+ODR}} (float Odr, LSM6\+DSV16\+X\+\_\+\+GYRO\+\_\+\+Operating\+\_\+\+Mode\+\_\+t Mode=LSM6\+DSV16\+X\+\_\+\+GYRO\+\_\+\+HIGH\+\_\+\+PERFORMANCE\+\_\+\+MODE)
+\begin{DoxyCompactList}\small\item\em Set the output data rate (ODR) of the gyroscope. \end{DoxyCompactList}\item 
+LSM6\+DSV16\+XStatus\+Type\+Def \mbox{\hyperlink{class_l_s_m6_d_s_v16_x_a2488db35bc1ae15e9d963fe450af0ec4}{Set\+\_\+\+G\+\_\+\+ODR\+\_\+\+When\+\_\+\+Enabled}} (float Odr)
+\begin{DoxyCompactList}\small\item\em Set the gyroscope output data rate (ODR) when the gyroscope is enabled. \end{DoxyCompactList}\item 
+LSM6\+DSV16\+XStatus\+Type\+Def \mbox{\hyperlink{class_l_s_m6_d_s_v16_x_a3c976c0c29f533b533f5dd4bc2f875ea}{Set\+\_\+\+G\+\_\+\+ODR\+\_\+\+When\+\_\+\+Disabled}} (float Odr)
+\begin{DoxyCompactList}\small\item\em Set the gyroscope output data rate (ODR) when the gyroscope is disabled. \end{DoxyCompactList}\item 
+LSM6\+DSV16\+XStatus\+Type\+Def \mbox{\hyperlink{class_l_s_m6_d_s_v16_x_aa6a163f58cb87292332ffe8c57b5be8a}{Get\+\_\+\+G\+\_\+\+FS}} (int32\+\_\+t \texorpdfstring{$\ast$}{*}Full\+Scale)
+\begin{DoxyCompactList}\small\item\em Get the full-\/scale range (FS) of the gyroscope. \end{DoxyCompactList}\item 
+LSM6\+DSV16\+XStatus\+Type\+Def \mbox{\hyperlink{class_l_s_m6_d_s_v16_x_acf3fbfc232f99cff7eead90ee4015604}{Set\+\_\+\+G\+\_\+\+FS}} (int32\+\_\+t Full\+Scale)
+\begin{DoxyCompactList}\small\item\em Set the full-\/scale range (FS) of the gyroscope. \end{DoxyCompactList}\item 
+LSM6\+DSV16\+XStatus\+Type\+Def \mbox{\hyperlink{class_l_s_m6_d_s_v16_x_a02fc48efc921b0bc8e576c8d758770b5}{Get\+\_\+\+G\+\_\+\+Axes\+Raw}} (int16\+\_\+t \texorpdfstring{$\ast$}{*}Value)
+\begin{DoxyCompactList}\small\item\em Get the raw angular rate values from the gyroscope. \end{DoxyCompactList}\item 
+LSM6\+DSV16\+XStatus\+Type\+Def \mbox{\hyperlink{class_l_s_m6_d_s_v16_x_a53c3663af4299e1524c4bf4fa5ee2bde}{Get\+\_\+\+G\+\_\+\+Axes}} (int32\+\_\+t \texorpdfstring{$\ast$}{*}Angular\+Rate)
+\begin{DoxyCompactList}\small\item\em Get the angular rate values from the gyroscope. \end{DoxyCompactList}\item 
+LSM6\+DSV16\+XStatus\+Type\+Def \mbox{\hyperlink{class_l_s_m6_d_s_v16_x_a86ce712c576b761465e9a2ff87c78a44}{Get\+\_\+\+G\+\_\+\+DRDY\+\_\+\+Status}} (uint8\+\_\+t \texorpdfstring{$\ast$}{*}Status)
+\begin{DoxyCompactList}\small\item\em Get the gyroscope data ready (DRDY) status. \end{DoxyCompactList}\item 
+LSM6\+DSV16\+XStatus\+Type\+Def \mbox{\hyperlink{class_l_s_m6_d_s_v16_x_aae4ebe8f840684a73e96bc91db40b697}{Set\+\_\+\+G\+\_\+\+Power\+\_\+\+Mode}} (uint8\+\_\+t Power\+Mode)
+\begin{DoxyCompactList}\small\item\em Set the gyroscope power mode. \end{DoxyCompactList}\item 
+LSM6\+DSV16\+XStatus\+Type\+Def \mbox{\hyperlink{class_l_s_m6_d_s_v16_x_a50db1bebe8f48fd49ddee6567fb59882}{Set\+\_\+\+G\+\_\+\+Filter\+\_\+\+Mode}} (uint8\+\_\+t Low\+High\+Pass\+Flag, uint8\+\_\+t Filter\+Mode)
+\begin{DoxyCompactList}\small\item\em Set the gyroscope filter mode. \end{DoxyCompactList}\item 
+LSM6\+DSV16\+XStatus\+Type\+Def \mbox{\hyperlink{class_l_s_m6_d_s_v16_x_a420cbb4cf36bf81545b44742acc763d3}{Get\+\_\+\+G\+\_\+\+Axes\+Raw\+\_\+\+When\+\_\+\+Aval}} (int16\+\_\+t \texorpdfstring{$\ast$}{*}Value)
+\begin{DoxyCompactList}\small\item\em Get the gyroscope raw data when data is available. \end{DoxyCompactList}\item 
+LSM6\+DSV16\+XStatus\+Type\+Def \mbox{\hyperlink{class_l_s_m6_d_s_v16_x_a26c4e2d38416313d4ce7fbde2a55df52}{Get\+\_\+\+X\+\_\+\+Axes\+Raw\+\_\+\+When\+\_\+\+Aval}} (int16\+\_\+t \texorpdfstring{$\ast$}{*}Value)
+\begin{DoxyCompactList}\small\item\em Get the raw accelerometer data when available. \end{DoxyCompactList}\item 
+LSM6\+DSV16\+XStatus\+Type\+Def \mbox{\hyperlink{class_l_s_m6_d_s_v16_x_a996ab3abe4d370f6a624b883cea581d2}{Get\+\_\+\+X\+\_\+\+Axes\+Raw}} (int16\+\_\+t \texorpdfstring{$\ast$}{*}Value)
+\begin{DoxyCompactList}\small\item\em Get the raw accelerometer data along the X, Y, and Z axes. \end{DoxyCompactList}\item 
+LSM6\+DSV16\+XStatus\+Type\+Def \mbox{\hyperlink{class_l_s_m6_d_s_v16_x_a3053b1a75efbf71b59aab56daf21a931}{Get\+\_\+\+Temp\+\_\+\+ODR}} (float \texorpdfstring{$\ast$}{*}Odr)
+\begin{DoxyCompactList}\small\item\em Get the temperature output data rate (ODR). \end{DoxyCompactList}\item 
+LSM6\+DSV16\+XStatus\+Type\+Def \mbox{\hyperlink{class_l_s_m6_d_s_v16_x_a56aa513b06fe071ab1db04d9afc54fc8}{Set\+\_\+\+Temp\+\_\+\+ODR}} (float Odr)
+\begin{DoxyCompactList}\small\item\em Set the temperature output data rate (ODR). \end{DoxyCompactList}\item 
+LSM6\+DSV16\+XStatus\+Type\+Def \mbox{\hyperlink{class_l_s_m6_d_s_v16_x_a094dbad0bb72a7e48acd59a6f7731e63}{Get\+\_\+\+Temp\+\_\+\+Raw}} (int16\+\_\+t \texorpdfstring{$\ast$}{*}value)
+\begin{DoxyCompactList}\small\item\em Get the raw temperature value. \end{DoxyCompactList}\item 
+LSM6\+DSV16\+XStatus\+Type\+Def \mbox{\hyperlink{class_l_s_m6_d_s_v16_x_a12f84ad247cabd12084c2900fc2e7ea3}{Test\+\_\+\+IMU}} (uint8\+\_\+t XTest\+Type, uint8\+\_\+t GTest\+Type)
+\begin{DoxyCompactList}\small\item\em Test the IMU functionality. \end{DoxyCompactList}\item 
+LSM6\+DSV16\+XStatus\+Type\+Def \mbox{\hyperlink{class_l_s_m6_d_s_v16_x_a83e933e8132d0b23de9a4d83092c18b5}{Test\+\_\+\+X\+\_\+\+IMU}} (uint8\+\_\+t Test\+Type)
+\begin{DoxyCompactList}\small\item\em Perform X-\/axis accelerometer self-\/test. \end{DoxyCompactList}\item 
+LSM6\+DSV16\+XStatus\+Type\+Def \mbox{\hyperlink{class_l_s_m6_d_s_v16_x_a404252728c628b3508167e442497f6e6}{Test\+\_\+\+G\+\_\+\+IMU}} (uint8\+\_\+t Test\+Type=LSM6\+DSV16\+X\+\_\+\+GY\+\_\+\+ST\+\_\+\+POSITIVE)
+\begin{DoxyCompactList}\small\item\em Perform gyroscope self-\/test. \end{DoxyCompactList}\item 
+LSM6\+DSV16\+XStatus\+Type\+Def \mbox{\hyperlink{class_l_s_m6_d_s_v16_x_a77b2be81ce339e2e339b462751d7c9a5}{QVAR\+\_\+\+Enable}} ()
+\begin{DoxyCompactList}\small\item\em Enable QVAR feature. \end{DoxyCompactList}\item 
+LSM6\+DSV16\+XStatus\+Type\+Def \mbox{\hyperlink{class_l_s_m6_d_s_v16_x_a9ef0d588ce9957e99999055257198ab9}{QVAR\+\_\+\+Disable}} ()
+\begin{DoxyCompactList}\small\item\em Disable QVAR feature. \end{DoxyCompactList}\item 
+LSM6\+DSV16\+XStatus\+Type\+Def \mbox{\hyperlink{class_l_s_m6_d_s_v16_x_a0478eedf4366b52b7e6e58d217f61efa}{QVAR\+\_\+\+Get\+Data}} (float \texorpdfstring{$\ast$}{*}Data)
+\begin{DoxyCompactList}\small\item\em Get QVAR data. \end{DoxyCompactList}\item 
+LSM6\+DSV16\+XStatus\+Type\+Def \mbox{\hyperlink{class_l_s_m6_d_s_v16_x_aadce494b7c247e238f99c7ba658e0b33}{QVAR\+\_\+\+Get\+Impedance}} (uint16\+\_\+t \texorpdfstring{$\ast$}{*}val)
+\begin{DoxyCompactList}\small\item\em Get QVAR impedance. \end{DoxyCompactList}\item 
+LSM6\+DSV16\+XStatus\+Type\+Def \mbox{\hyperlink{class_l_s_m6_d_s_v16_x_a9f8b7b59ab19e5ccde2dec1ac0d48469}{QVAR\+\_\+\+Set\+Impedance}} (uint16\+\_\+t val)
+\begin{DoxyCompactList}\small\item\em Set QVAR impedance. \end{DoxyCompactList}\item 
+LSM6\+DSV16\+XStatus\+Type\+Def \mbox{\hyperlink{class_l_s_m6_d_s_v16_x_a8074ff4160e12e3aafd31f1a6e853cc6}{QVAR\+\_\+\+Get\+Status}} (uint8\+\_\+t \texorpdfstring{$\ast$}{*}val)
+\begin{DoxyCompactList}\small\item\em Get QVAR status. \end{DoxyCompactList}\item 
+LSM6\+DSV16\+XStatus\+Type\+Def \mbox{\hyperlink{class_l_s_m6_d_s_v16_x_a8a19466118d40004966366470813e120}{Get\+\_\+\+MLC\+\_\+\+Status}} (\mbox{\hyperlink{structlsm6dsv16x__mlc__status__mainpage__t}{lsm6dsv16x\+\_\+mlc\+\_\+status\+\_\+mainpage\+\_\+t}} \texorpdfstring{$\ast$}{*}status)
+\begin{DoxyCompactList}\small\item\em Get MLC status. \end{DoxyCompactList}\item 
+LSM6\+DSV16\+XStatus\+Type\+Def \mbox{\hyperlink{class_l_s_m6_d_s_v16_x_a3f2422232e0713551165d8608761183a}{Get\+\_\+\+MLC\+\_\+\+Output}} (\mbox{\hyperlink{structlsm6dsv16x__mlc__out__t}{lsm6dsv16x\+\_\+mlc\+\_\+out\+\_\+t}} \texorpdfstring{$\ast$}{*}output)
+\begin{DoxyCompactList}\small\item\em Get MLC output. \end{DoxyCompactList}\item 
+LSM6\+DSV16\+XStatus\+Type\+Def \mbox{\hyperlink{class_l_s_m6_d_s_v16_x_ac6bc9092dd2ffab0381622b6b88d43fd}{Enable\+\_\+\+Rotation\+\_\+\+Vector}} ()
+\begin{DoxyCompactList}\small\item\em Enable Rotation Vector feature. \end{DoxyCompactList}\item 
+LSM6\+DSV16\+XStatus\+Type\+Def \mbox{\hyperlink{class_l_s_m6_d_s_v16_x_a96c2dc499895b4bab5753c148c302527}{Disable\+\_\+\+Rotation\+\_\+\+Vector}} ()
+\begin{DoxyCompactList}\small\item\em Disable Rotation Vector feature. \end{DoxyCompactList}\item 
+LSM6\+DSV16\+XStatus\+Type\+Def \mbox{\hyperlink{class_l_s_m6_d_s_v16_x_a1225d7a0fe9613e3152c2b62be90e70a}{Enable\+\_\+\+Gravity\+\_\+\+Vector}} ()
+\begin{DoxyCompactList}\small\item\em Enable Gravity Vector feature. \end{DoxyCompactList}\item 
+LSM6\+DSV16\+XStatus\+Type\+Def \mbox{\hyperlink{class_l_s_m6_d_s_v16_x_ade79b189c197c78036351f16b1bd1b01}{Disable\+\_\+\+Gravity\+\_\+\+Vector}} ()
+\begin{DoxyCompactList}\small\item\em Disable Gravity Vector feature. \end{DoxyCompactList}\item 
+LSM6\+DSV16\+XStatus\+Type\+Def \mbox{\hyperlink{class_l_s_m6_d_s_v16_x_a7e4d04043b9a3c5b0fe04d78cd327d28}{Enable\+\_\+\+Gyroscope\+\_\+\+Bias}} ()
+\begin{DoxyCompactList}\small\item\em Enable Gyroscope Bias feature. \end{DoxyCompactList}\item 
+LSM6\+DSV16\+XStatus\+Type\+Def \mbox{\hyperlink{class_l_s_m6_d_s_v16_x_a0a119004ee81047b5fa50eea73cab254}{Disable\+\_\+\+Gyroscope\+\_\+\+Bias}} ()
+\begin{DoxyCompactList}\small\item\em Disable Gyroscope Bias feature. \end{DoxyCompactList}\item 
+LSM6\+DSV16\+XStatus\+Type\+Def \mbox{\hyperlink{class_l_s_m6_d_s_v16_x_af6bcf3a6e2295cad2fef1864ca14cb85}{Set\+\_\+\+SFLP\+\_\+\+Batch}} (bool Game\+Rotation, bool Gravity, bool g\+Bias)
+\begin{DoxyCompactList}\small\item\em Set SFLP Batch. \end{DoxyCompactList}\item 
+LSM6\+DSV16\+XStatus\+Type\+Def \mbox{\hyperlink{class_l_s_m6_d_s_v16_x_a15625ea6cb53b45ca39f25314acc00e3}{Set\+\_\+\+SFLP\+\_\+\+ODR}} (float odr)
+\begin{DoxyCompactList}\small\item\em Set the SFLP (Sensor Filtered Low Power) data rate. \end{DoxyCompactList}\item 
+LSM6\+DSV16\+XStatus\+Type\+Def \mbox{\hyperlink{class_l_s_m6_d_s_v16_x_a2134add05aedfb0eeacea97fc9105c1c}{Set\+\_\+\+SFLP\+\_\+\+GBIAS}} (float x, float y, float z)
+\begin{DoxyCompactList}\small\item\em Set the Gyroscope Bias for SFLP (Sensor Filtered Low Power) mode. \end{DoxyCompactList}\item 
+LSM6\+DSV16\+XStatus\+Type\+Def \mbox{\hyperlink{class_l_s_m6_d_s_v16_x_a47162653f6dbbd383f901f828753f98b}{Reset\+\_\+\+SFLP}} (void)
+\begin{DoxyCompactList}\small\item\em Reset SFLP (Sensor Filtered Low Power). \end{DoxyCompactList}\item 
+LSM6\+DSV16\+XStatus\+Type\+Def \mbox{\hyperlink{class_l_s_m6_d_s_v16_x_a41ea0298257cd614c230878e4d21813c}{Enable\+\_\+\+Block\+\_\+\+Data\+\_\+\+Update}} ()
+\begin{DoxyCompactList}\small\item\em Enable Block Data Update. \end{DoxyCompactList}\item 
+LSM6\+DSV16\+XStatus\+Type\+Def \mbox{\hyperlink{class_l_s_m6_d_s_v16_x_a2533b098bc7748b289ad6854f73d0e57}{Disable\+\_\+\+Block\+\_\+\+Data\+\_\+\+Update}} ()
+\begin{DoxyCompactList}\small\item\em Disable Block Data Update. \end{DoxyCompactList}\item 
+LSM6\+DSV16\+XStatus\+Type\+Def \mbox{\hyperlink{class_l_s_m6_d_s_v16_x_acd53acb7ba6d13cf9f4a333ba82c94a6}{Enable\+\_\+\+Auto\+\_\+\+Increment}} ()
+\begin{DoxyCompactList}\small\item\em Enable Auto Increment. \end{DoxyCompactList}\item 
+LSM6\+DSV16\+XStatus\+Type\+Def \mbox{\hyperlink{class_l_s_m6_d_s_v16_x_ae4557c41f4387abb5132b4df67dc4026}{Disable\+\_\+\+Auto\+\_\+\+Increment}} ()
+\begin{DoxyCompactList}\small\item\em Disable Auto Increment. \end{DoxyCompactList}\item 
+LSM6\+DSV16\+XStatus\+Type\+Def \mbox{\hyperlink{class_l_s_m6_d_s_v16_x_aec393b610446b97e638229d4f89f67ef}{Device\+\_\+\+Reset}} (LSM6\+DSV16\+X\+\_\+\+Reset\+\_\+t flags)
+\begin{DoxyCompactList}\small\item\em Reset the \doxylink{class_l_s_m6_d_s_v16_x}{LSM6\+DSV16X} device. \end{DoxyCompactList}\item 
+LSM6\+DSV16\+XStatus\+Type\+Def \mbox{\hyperlink{class_l_s_m6_d_s_v16_x_af127e8bc02813c8dd26ba0d421ce2cc9}{Get\+\_\+6\+D\+\_\+\+Orientation\+\_\+\+XL}} (uint8\+\_\+t \texorpdfstring{$\ast$}{*}XLow)
+\begin{DoxyCompactList}\small\item\em Get the low byte of the X axis from the 6D orientation source register. \end{DoxyCompactList}\item 
+LSM6\+DSV16\+XStatus\+Type\+Def \mbox{\hyperlink{class_l_s_m6_d_s_v16_x_af76fc7d446cadeb038127dbe3769928d}{Get\+\_\+6\+D\+\_\+\+Orientation\+\_\+\+XH}} (uint8\+\_\+t \texorpdfstring{$\ast$}{*}XHigh)
+\begin{DoxyCompactList}\small\item\em Get the high byte of the X axis from the 6D orientation source register. \end{DoxyCompactList}\item 
+LSM6\+DSV16\+XStatus\+Type\+Def \mbox{\hyperlink{class_l_s_m6_d_s_v16_x_ad6a590199f1969d72cd342d7e2f5e6ff}{Get\+\_\+6\+D\+\_\+\+Orientation\+\_\+\+YL}} (uint8\+\_\+t \texorpdfstring{$\ast$}{*}YLow)
+\begin{DoxyCompactList}\small\item\em Get the low byte of the Y axis from the 6D orientation source register. \end{DoxyCompactList}\item 
+LSM6\+DSV16\+XStatus\+Type\+Def \mbox{\hyperlink{class_l_s_m6_d_s_v16_x_a0b306ad3f895e05a513d930f38c5c680}{Get\+\_\+6\+D\+\_\+\+Orientation\+\_\+\+YH}} (uint8\+\_\+t \texorpdfstring{$\ast$}{*}YHigh)
+\begin{DoxyCompactList}\small\item\em Get the high byte of the Y axis from the 6D orientation source register. \end{DoxyCompactList}\item 
+LSM6\+DSV16\+XStatus\+Type\+Def \mbox{\hyperlink{class_l_s_m6_d_s_v16_x_a817f68304605abf551bf88ecc700f442}{Get\+\_\+6\+D\+\_\+\+Orientation\+\_\+\+ZL}} (uint8\+\_\+t \texorpdfstring{$\ast$}{*}ZLow)
+\begin{DoxyCompactList}\small\item\em Get the low byte of the Z axis from the 6D orientation source register. \end{DoxyCompactList}\item 
+LSM6\+DSV16\+XStatus\+Type\+Def \mbox{\hyperlink{class_l_s_m6_d_s_v16_x_a70e5b67c4ea06744f13fd9cd4622d034}{Get\+\_\+6\+D\+\_\+\+Orientation\+\_\+\+ZH}} (uint8\+\_\+t \texorpdfstring{$\ast$}{*}ZHigh)
+\begin{DoxyCompactList}\small\item\em Get the high byte of the Z axis from the 6D orientation source register. \end{DoxyCompactList}\item 
+LSM6\+DSV16\+XStatus\+Type\+Def \mbox{\hyperlink{class_l_s_m6_d_s_v16_x_adde3463948d409eefa9ee425b6ac9d97}{Set\+\_\+6\+D\+\_\+\+Orientation\+\_\+\+Threshold}} (uint8\+\_\+t Threshold)
+\begin{DoxyCompactList}\small\item\em Sets the threshold for 6D orientation detection on the \doxylink{class_l_s_m6_d_s_v16_x}{LSM6\+DSV16X} sensor. \end{DoxyCompactList}\item 
+LSM6\+DSV16\+XStatus\+Type\+Def \mbox{\hyperlink{class_l_s_m6_d_s_v16_x_a31c021486f2442792244e5bf4fc0d3db}{Enable\+\_\+6\+D\+\_\+\+Orientation}} (LSM6\+DSV16\+X\+\_\+\+Sensor\+Int\+Pin\+\_\+t Int\+Pin)
+\begin{DoxyCompactList}\small\item\em Enables 6D orientation detection on the \doxylink{class_l_s_m6_d_s_v16_x}{LSM6\+DSV16X} sensor. \end{DoxyCompactList}\item 
+LSM6\+DSV16\+XStatus\+Type\+Def \mbox{\hyperlink{class_l_s_m6_d_s_v16_x_a37bfe6955c17b60f36afb52beaffc965}{Disable\+\_\+6\+D\+\_\+\+Orientation}} ()
+\begin{DoxyCompactList}\small\item\em Disables 6D orientation detection on the \doxylink{class_l_s_m6_d_s_v16_x}{LSM6\+DSV16X} sensor. \end{DoxyCompactList}\item 
+LSM6\+DSV16\+XStatus\+Type\+Def \mbox{\hyperlink{class_l_s_m6_d_s_v16_x_a6fab27962fa98b936301f94faebf640c}{Get\+\_\+\+X\+\_\+\+Event\+\_\+\+Status}} (\mbox{\hyperlink{struct_l_s_m6_d_s_v16_x___event___status__t}{LSM6\+DSV16\+X\+\_\+\+Event\+\_\+\+Status\+\_\+t}} \texorpdfstring{$\ast$}{*}Status)
+\begin{DoxyCompactList}\small\item\em Get the event status of the \doxylink{class_l_s_m6_d_s_v16_x}{LSM6\+DSV16X} sensor. \end{DoxyCompactList}\item 
+LSM6\+DSV16\+XStatus\+Type\+Def \mbox{\hyperlink{class_l_s_m6_d_s_v16_x_a9047811ec6d31e35518a3c3cb07ee86b}{Enable\+\_\+\+Single\+\_\+\+Tap\+\_\+\+Detection}} (LSM6\+DSV16\+X\+\_\+\+Sensor\+Int\+Pin\+\_\+t Int\+Pin)
+\begin{DoxyCompactList}\small\item\em Enable Single Tap Detection. \end{DoxyCompactList}\item 
+LSM6\+DSV16\+XStatus\+Type\+Def \mbox{\hyperlink{class_l_s_m6_d_s_v16_x_a4eff3f755570b1b4e4f65c2d2a81d88b}{Enable\+\_\+\+Double\+\_\+\+Tap\+\_\+\+Detection}} (LSM6\+DSV16\+X\+\_\+\+Sensor\+Int\+Pin\+\_\+t Int\+Pin)
+\begin{DoxyCompactList}\small\item\em Enable Double Tap Detection. \end{DoxyCompactList}\item 
+LSM6\+DSV16\+XStatus\+Type\+Def \mbox{\hyperlink{class_l_s_m6_d_s_v16_x_a899146c5618a8e36427af4093d6c9cdb}{Disable\+\_\+\+Double\+\_\+\+Tap\+\_\+\+Detection}} ()
+\begin{DoxyCompactList}\small\item\em Disable Double Tap Detection. \end{DoxyCompactList}\item 
+\Hypertarget{class_l_s_m6_d_s_v16_x_a86293bbb970d4ffaef6e38818fcfab7a}\label{class_l_s_m6_d_s_v16_x_a86293bbb970d4ffaef6e38818fcfab7a} 
+LSM6\+DSV16\+XStatus\+Type\+Def {\bfseries Set\+\_\+\+Tap\+\_\+\+Threshold} (uint8\+\_\+t Threshold)
+\item 
+\Hypertarget{class_l_s_m6_d_s_v16_x_aa6403244d09b49528c7eeac39b853406}\label{class_l_s_m6_d_s_v16_x_aa6403244d09b49528c7eeac39b853406} 
+LSM6\+DSV16\+XStatus\+Type\+Def {\bfseries Set\+\_\+\+Tap\+\_\+\+Shock\+\_\+\+Time} (uint8\+\_\+t Time)
+\item 
+\Hypertarget{class_l_s_m6_d_s_v16_x_a23bf4ffb277dfaa4985ab8158ecfd0d3}\label{class_l_s_m6_d_s_v16_x_a23bf4ffb277dfaa4985ab8158ecfd0d3} 
+LSM6\+DSV16\+XStatus\+Type\+Def {\bfseries Set\+\_\+\+Tap\+\_\+\+Quiet\+\_\+\+Time} (uint8\+\_\+t Time)
+\item 
+\Hypertarget{class_l_s_m6_d_s_v16_x_a68cc7f28d992539627e04d421e4d12a4}\label{class_l_s_m6_d_s_v16_x_a68cc7f28d992539627e04d421e4d12a4} 
+LSM6\+DSV16\+XStatus\+Type\+Def {\bfseries Set\+\_\+\+Tap\+\_\+\+Duration\+\_\+\+Time} (uint8\+\_\+t Time)
+\item 
+LSM6\+DSV16\+XStatus\+Type\+Def \mbox{\hyperlink{class_l_s_m6_d_s_v16_x_ac4230c11e0216c9a4a9c5ecc80dad7b2}{Enable\+\_\+\+Tilt\+\_\+\+Detection}} (LSM6\+DSV16\+X\+\_\+\+Sensor\+Int\+Pin\+\_\+t Int\+Pin)
+\begin{DoxyCompactList}\small\item\em Enable Tilt Detection. \end{DoxyCompactList}\item 
+LSM6\+DSV16\+XStatus\+Type\+Def \mbox{\hyperlink{class_l_s_m6_d_s_v16_x_aac1c07396a9a9915a2853d79cf549781}{Disable\+\_\+\+Tilt\+\_\+\+Detection}} ()
+\begin{DoxyCompactList}\small\item\em Disable Tilt Detection. \end{DoxyCompactList}\item 
+LSM6\+DSV16\+XStatus\+Type\+Def \mbox{\hyperlink{class_l_s_m6_d_s_v16_x_abcd54c07c22b4f7039862d50cdcb978f}{Enable\+\_\+\+Pedometer}} (LSM6\+DSV16\+X\+\_\+\+Sensor\+Int\+Pin\+\_\+t Int\+Pin)
+\begin{DoxyCompactList}\small\item\em Enable Pedometer. \end{DoxyCompactList}\item 
+\Hypertarget{class_l_s_m6_d_s_v16_x_a5c0cba2865ee7142421d732d614d37dd}\label{class_l_s_m6_d_s_v16_x_a5c0cba2865ee7142421d732d614d37dd} 
+LSM6\+DSV16\+XStatus\+Type\+Def {\bfseries Disable\+\_\+\+Pedometer} ()
+\item 
+\Hypertarget{class_l_s_m6_d_s_v16_x_a7949cc8203840e63389e5e56309aa940}\label{class_l_s_m6_d_s_v16_x_a7949cc8203840e63389e5e56309aa940} 
+LSM6\+DSV16\+XStatus\+Type\+Def {\bfseries Get\+\_\+\+Step\+\_\+\+Count} (uint16\+\_\+t \texorpdfstring{$\ast$}{*}Step\+Count)
+\item 
+\Hypertarget{class_l_s_m6_d_s_v16_x_a4b7c43d1e745cfb7c29f2464152819ef}\label{class_l_s_m6_d_s_v16_x_a4b7c43d1e745cfb7c29f2464152819ef} 
+LSM6\+DSV16\+XStatus\+Type\+Def {\bfseries Step\+\_\+\+Counter\+\_\+\+Reset} ()
+\item 
+LSM6\+DSV16\+XStatus\+Type\+Def \mbox{\hyperlink{class_l_s_m6_d_s_v16_x_ae7dbeef46503a2c6a2df55690a64f38b}{Enable\+\_\+\+Free\+\_\+\+Fall\+\_\+\+Detection}} (LSM6\+DSV16\+X\+\_\+\+Sensor\+Int\+Pin\+\_\+t Int\+Pin)
+\begin{DoxyCompactList}\small\item\em Enable Free Fall Detection. \end{DoxyCompactList}\item 
+LSM6\+DSV16\+XStatus\+Type\+Def \mbox{\hyperlink{class_l_s_m6_d_s_v16_x_a25b39200c8fd8dc5dd4c252a3c04a7a2}{Disable\+\_\+\+Free\+\_\+\+Fall\+\_\+\+Detection}} ()
+\begin{DoxyCompactList}\small\item\em Disable Free Fall Detection. \end{DoxyCompactList}\item 
+LSM6\+DSV16\+XStatus\+Type\+Def \mbox{\hyperlink{class_l_s_m6_d_s_v16_x_ac67a401c8481437c7f2d586a385ee987}{Set\+\_\+\+Free\+\_\+\+Fall\+\_\+\+Threshold}} (uint8\+\_\+t Threshold)
+\begin{DoxyCompactList}\small\item\em Set Free Fall Threshold. \end{DoxyCompactList}\item 
+LSM6\+DSV16\+XStatus\+Type\+Def \mbox{\hyperlink{class_l_s_m6_d_s_v16_x_aa448f825368679b4f9c6ebfdfa9b5e48}{Set\+\_\+\+Free\+\_\+\+Fall\+\_\+\+Duration}} (uint8\+\_\+t Duration)
+\begin{DoxyCompactList}\small\item\em Set Free Fall Duration. \end{DoxyCompactList}\item 
+LSM6\+DSV16\+XStatus\+Type\+Def \mbox{\hyperlink{class_l_s_m6_d_s_v16_x_ab83ef3860a9a61ace9c7065f1ac331d5}{Enable\+\_\+\+Wake\+\_\+\+Up\+\_\+\+Detection}} (LSM6\+DSV16\+X\+\_\+\+Sensor\+Int\+Pin\+\_\+t Int\+Pin)
+\begin{DoxyCompactList}\small\item\em Enable Wake-\/\+Up Detection. \end{DoxyCompactList}\item 
+LSM6\+DSV16\+XStatus\+Type\+Def \mbox{\hyperlink{class_l_s_m6_d_s_v16_x_ad59f7e0d75d56ec9ec8472dae08ce5e5}{Disable\+\_\+\+Wake\+\_\+\+Up\+\_\+\+Detection}} ()
+\begin{DoxyCompactList}\small\item\em Disable Wake-\/\+Up Detection. \end{DoxyCompactList}\item 
+LSM6\+DSV16\+XStatus\+Type\+Def \mbox{\hyperlink{class_l_s_m6_d_s_v16_x_a2ce542a0911b27749814a780e8dba991}{Set\+\_\+\+Wake\+\_\+\+Up\+\_\+\+Threshold}} (uint32\+\_\+t Threshold)
+\begin{DoxyCompactList}\small\item\em Set Wake-\/\+Up Threshold. \end{DoxyCompactList}\item 
+LSM6\+DSV16\+XStatus\+Type\+Def \mbox{\hyperlink{class_l_s_m6_d_s_v16_x_a3131d9d208a7579cc6e395d1a3ceb315}{Set\+\_\+\+Wake\+\_\+\+Up\+\_\+\+Duration}} (uint8\+\_\+t Duration)
+\begin{DoxyCompactList}\small\item\em Set Wake-\/\+Up Duration. \end{DoxyCompactList}\item 
+LSM6\+DSV16\+XStatus\+Type\+Def \mbox{\hyperlink{class_l_s_m6_d_s_v16_x_a51361fb1f7b776260c499c2f9d5b62ce}{FIFO\+\_\+\+Reset}} ()
+\begin{DoxyCompactList}\small\item\em Reset the FIFO of the \doxylink{class_l_s_m6_d_s_v16_x}{LSM6\+DSV16X} device. \end{DoxyCompactList}\item 
+LSM6\+DSV16\+XStatus\+Type\+Def \mbox{\hyperlink{class_l_s_m6_d_s_v16_x_a55144ed23dba93e2eee08f2d4b441cbf}{FIFO\+\_\+\+Get\+\_\+\+Num\+\_\+\+Samples}} (uint16\+\_\+t \texorpdfstring{$\ast$}{*}Num\+Samples)
+\begin{DoxyCompactList}\small\item\em Get the number of samples stored in the FIFO. \end{DoxyCompactList}\item 
+LSM6\+DSV16\+XStatus\+Type\+Def \mbox{\hyperlink{class_l_s_m6_d_s_v16_x_a4b9b5c306cfccce7e7c289cf788dcb3e}{FIFO\+\_\+\+Get\+\_\+\+Tag}} (uint8\+\_\+t \texorpdfstring{$\ast$}{*}Tag)
+\begin{DoxyCompactList}\small\item\em Get the tag of the next data set stored in the FIFO. \end{DoxyCompactList}\item 
+LSM6\+DSV16\+XStatus\+Type\+Def \mbox{\hyperlink{class_l_s_m6_d_s_v16_x_ac60d91179dfd7e716263fd4fcee0269b}{FIFO\+\_\+\+Get\+\_\+\+Rotation\+\_\+\+Vector}} (float \texorpdfstring{$\ast$}{*}rvec)
+\begin{DoxyCompactList}\small\item\em Get the rotation vector data from the FIFO. \end{DoxyCompactList}\item 
+LSM6\+DSV16\+XStatus\+Type\+Def \mbox{\hyperlink{class_l_s_m6_d_s_v16_x_abb445b65f20db8d83956f83654344a13}{FIFO\+\_\+\+Get\+\_\+\+Data}} (uint8\+\_\+t \texorpdfstring{$\ast$}{*}Data)
+\begin{DoxyCompactList}\small\item\em Get data from the FIFO buffer. \end{DoxyCompactList}\item 
+LSM6\+DSV16\+XStatus\+Type\+Def \mbox{\hyperlink{class_l_s_m6_d_s_v16_x_a4214988277987a3878af57876ff50a46}{FIFO\+\_\+\+Get\+\_\+\+Full\+\_\+\+Status}} (uint8\+\_\+t \texorpdfstring{$\ast$}{*}Status)
+\begin{DoxyCompactList}\small\item\em Get the full status of the FIFO in the \doxylink{class_l_s_m6_d_s_v16_x}{LSM6\+DSV16X} device. \end{DoxyCompactList}\item 
+LSM6\+DSV16\+XStatus\+Type\+Def \mbox{\hyperlink{class_l_s_m6_d_s_v16_x_aef0c8437fc90987c3dcb6ace3c4123f9}{FIFO\+\_\+\+Set\+\_\+\+INT1\+\_\+\+FIFO\+\_\+\+Full}} (uint8\+\_\+t Status)
+\begin{DoxyCompactList}\small\item\em Set the interrupt configuration for FIFO full on INT1 pin. \end{DoxyCompactList}\item 
+LSM6\+DSV16\+XStatus\+Type\+Def \mbox{\hyperlink{class_l_s_m6_d_s_v16_x_ac47fa4e79a73e5e289c7b02d5c2d26f4}{FIFO\+\_\+\+Set\+\_\+\+INT2\+\_\+\+FIFO\+\_\+\+Full}} (uint8\+\_\+t Status)
+\begin{DoxyCompactList}\small\item\em Set the interrupt configuration for FIFO full on INT2 pin. \end{DoxyCompactList}\item 
+LSM6\+DSV16\+XStatus\+Type\+Def \mbox{\hyperlink{class_l_s_m6_d_s_v16_x_a6a2d1cdd641e926868808c1a99ae1941}{FIFO\+\_\+\+Set\+\_\+\+Watermark\+\_\+\+Level}} (uint8\+\_\+t Watermark)
+\begin{DoxyCompactList}\small\item\em Set the watermark level for the FIFO. \end{DoxyCompactList}\item 
+LSM6\+DSV16\+XStatus\+Type\+Def \mbox{\hyperlink{class_l_s_m6_d_s_v16_x_a62165ff52404f8796adea5409e0bf4fb}{FIFO\+\_\+\+Set\+\_\+\+Stop\+\_\+\+On\+\_\+\+Fth}} (uint8\+\_\+t Status)
+\begin{DoxyCompactList}\small\item\em Set the stop on FIFO threshold status. \end{DoxyCompactList}\item 
+LSM6\+DSV16\+XStatus\+Type\+Def \mbox{\hyperlink{class_l_s_m6_d_s_v16_x_afb000a567cda374eade0324647602bfa}{FIFO\+\_\+\+Set\+\_\+\+Mode}} (uint8\+\_\+t Mode)
+\begin{DoxyCompactList}\small\item\em Set the FIFO mode. \end{DoxyCompactList}\item 
+LSM6\+DSV16\+XStatus\+Type\+Def \mbox{\hyperlink{class_l_s_m6_d_s_v16_x_a6ee63bd874cde0b40de5caf3c78f2736}{FIFO\+\_\+\+Get\+\_\+\+X\+\_\+\+Axes}} (int32\+\_\+t \texorpdfstring{$\ast$}{*}Acceleration)
+\begin{DoxyCompactList}\small\item\em Get the X-\/axis acceleration data from FIFO. \end{DoxyCompactList}\item 
+LSM6\+DSV16\+XStatus\+Type\+Def \mbox{\hyperlink{class_l_s_m6_d_s_v16_x_a6363459ee69098334fb6cdb2e72ee654}{FIFO\+\_\+\+Set\+\_\+\+X\+\_\+\+BDR}} (float Bdr)
+\begin{DoxyCompactList}\small\item\em Set the batch data rate for X-\/axis acceleration in FIFO. \end{DoxyCompactList}\item 
+LSM6\+DSV16\+XStatus\+Type\+Def \mbox{\hyperlink{class_l_s_m6_d_s_v16_x_ac6c2b10c67fd19c384c3f98805bad78b}{FIFO\+\_\+\+Get\+\_\+\+G\+\_\+\+Axes}} (int32\+\_\+t \texorpdfstring{$\ast$}{*}Angular\+Velocity)
+\begin{DoxyCompactList}\small\item\em Get the gyroscope data from FIFO. \end{DoxyCompactList}\item 
+LSM6\+DSV16\+XStatus\+Type\+Def \mbox{\hyperlink{class_l_s_m6_d_s_v16_x_a459cd35e12a218f5fa35e8ede8bbfc8c}{FIFO\+\_\+\+Set\+\_\+\+G\+\_\+\+BDR}} (float Bdr)
+\begin{DoxyCompactList}\small\item\em Set the batch data rate for gyroscope in FIFO. \end{DoxyCompactList}\item 
+LSM6\+DSV16\+XStatus\+Type\+Def \mbox{\hyperlink{class_l_s_m6_d_s_v16_x_a41464b5e4afbbb70955350ee214dd705}{FIFO\+\_\+\+Get\+\_\+\+Status}} (\mbox{\hyperlink{structlsm6dsv16x__fifo__status__t}{lsm6dsv16x\+\_\+fifo\+\_\+status\+\_\+t}} \texorpdfstring{$\ast$}{*}Status)
+\begin{DoxyCompactList}\small\item\em Get the status of the FIFO. \end{DoxyCompactList}\item 
+LSM6\+DSV16\+XStatus\+Type\+Def \mbox{\hyperlink{class_l_s_m6_d_s_v16_x_aa81d55f8a05c2f14314b7e586728960c}{FIFO\+\_\+\+Get\+\_\+\+Gravity\+\_\+\+Vector}} (float \texorpdfstring{$\ast$}{*}gvec)
+\begin{DoxyCompactList}\small\item\em Get the gravity vector data from FIFO. \end{DoxyCompactList}\item 
+LSM6\+DSV16\+XStatus\+Type\+Def \mbox{\hyperlink{class_l_s_m6_d_s_v16_x_adda62079160c4f2352787a73b9f3f8a6}{FIFO\+\_\+\+Get\+\_\+\+Gyroscope\+\_\+\+Bias}} (float \texorpdfstring{$\ast$}{*}gbias)
+\begin{DoxyCompactList}\small\item\em Get the gyroscope bias data from FIFO. \end{DoxyCompactList}\item 
+LSM6\+DSV16\+XStatus\+Type\+Def \mbox{\hyperlink{class_l_s_m6_d_s_v16_x_a78b16bc7759fee43500cfdb0055d7c38}{FIFO\+\_\+\+Enable\+\_\+\+Timestamp}} ()
+\begin{DoxyCompactList}\small\item\em Enable timestamp in FIFO. \end{DoxyCompactList}\item 
+LSM6\+DSV16\+XStatus\+Type\+Def \mbox{\hyperlink{class_l_s_m6_d_s_v16_x_a083df35941ad29f03bcc2d73ae9b3086}{FIFO\+\_\+\+Disable\+\_\+\+Timestamp}} ()
+\begin{DoxyCompactList}\small\item\em Disable timestamp in FIFO. \end{DoxyCompactList}\item 
+LSM6\+DSV16\+XStatus\+Type\+Def \mbox{\hyperlink{class_l_s_m6_d_s_v16_x_af636e29b9b520393beaa74c489c2ea7b}{FIFO\+\_\+\+Set\+\_\+\+Timestamp\+\_\+\+Decimation}} (uint8\+\_\+t decimation)
+\begin{DoxyCompactList}\small\item\em Set the timestamp decimation in FIFO. \end{DoxyCompactList}\item 
+LSM6\+DSV16\+XStatus\+Type\+Def \mbox{\hyperlink{class_l_s_m6_d_s_v16_x_adabae6154f6b4225795feabcdf0432ae}{FIFO\+\_\+\+Get\+\_\+\+Timestamp}} (uint32\+\_\+t \texorpdfstring{$\ast$}{*}timestamp)
+\begin{DoxyCompactList}\small\item\em Get the timestamp from FIFO. \end{DoxyCompactList}\item 
+\Hypertarget{class_l_s_m6_d_s_v16_x_a90d5396d510859a182bd6716e54db5f4}\label{class_l_s_m6_d_s_v16_x_a90d5396d510859a182bd6716e54db5f4} 
+bool {\bfseries read\+Register} (uint8\+\_\+t reg, uint8\+\_\+t \texorpdfstring{$\ast$}{*}value, uint16\+\_\+t len)
+\item 
+\Hypertarget{class_l_s_m6_d_s_v16_x_acc5ea036a3aa29651955c5e3af2a80bf}\label{class_l_s_m6_d_s_v16_x_acc5ea036a3aa29651955c5e3af2a80bf} 
+bool {\bfseries write\+Register} (uint8\+\_\+t reg, const uint8\+\_\+t \texorpdfstring{$\ast$}{*}value, uint16\+\_\+t len)
+\item 
+\Hypertarget{class_l_s_m6_d_s_v16_x_aa98acf3581ce0fa14aa148ac4177a304}\label{class_l_s_m6_d_s_v16_x_aa98acf3581ce0fa14aa148ac4177a304} 
+void {\bfseries set\+\_\+\+SDO\+\_\+\+SAO\+\_\+\+TO\+\_\+\+GND} ()
+\item 
+\Hypertarget{class_l_s_m6_d_s_v16_x_a5321a536e2afd56216378f740b1c7dd1}\label{class_l_s_m6_d_s_v16_x_a5321a536e2afd56216378f740b1c7dd1} 
+void {\bfseries set\+\_\+\+SDO\+\_\+\+SAO\+\_\+\+TO\+\_\+\+VCC} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_l_s_m6_d_s_v16_x_affe5056eb5b156edcd4a44685ac87455}\label{class_l_s_m6_d_s_v16_x_affe5056eb5b156edcd4a44685ac87455} 
+\index{LSM6DSV16X@{LSM6DSV16X}!LSM6DSV16X@{LSM6DSV16X}}
+\index{LSM6DSV16X@{LSM6DSV16X}!LSM6DSV16X@{LSM6DSV16X}}
+\doxysubsubsection{\texorpdfstring{LSM6DSV16X()}{LSM6DSV16X()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily LSM6\+DSV16\+X\+::\+LSM6\+DSV16X (\begin{DoxyParamCaption}\item[{Pin\+Name}]{sda,  }\item[{Pin\+Name}]{scl }\end{DoxyParamCaption})}
+
+
+
+Constructor for the \doxylink{class_l_s_m6_d_s_v16_x}{LSM6\+DSV16X} class. 
+
+Initializes the \doxylink{class_l_s_m6_d_s_v16_x}{LSM6\+DSV16X} object with the specified I2C pins.
+
+
+\begin{DoxyParams}{Parameters}
+{\em sda} & Pin\+Name of the data line for I2C communication. \\
+\hline
+{\em scl} & Pin\+Name of the clock line for I2C communication. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_l_s_m6_d_s_v16_x_ae21fe5768493fbfff9617b41be66f34e}\label{class_l_s_m6_d_s_v16_x_ae21fe5768493fbfff9617b41be66f34e} 
+\index{LSM6DSV16X@{LSM6DSV16X}!LSM6DSV16X@{LSM6DSV16X}}
+\index{LSM6DSV16X@{LSM6DSV16X}!LSM6DSV16X@{LSM6DSV16X}}
+\doxysubsubsection{\texorpdfstring{LSM6DSV16X()}{LSM6DSV16X()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily LSM6\+DSV16\+X\+::\+LSM6\+DSV16X (\begin{DoxyParamCaption}\item[{Pin\+Name}]{mosi,  }\item[{Pin\+Name}]{miso,  }\item[{Pin\+Name}]{sck,  }\item[{Pin\+Name}]{cs }\end{DoxyParamCaption})}
+
+
+
+Constructor for the \doxylink{class_l_s_m6_d_s_v16_x}{LSM6\+DSV16X} class. 
+
+Initializes the \doxylink{class_l_s_m6_d_s_v16_x}{LSM6\+DSV16X} object with the specified SPI pins.
+
+
+\begin{DoxyParams}{Parameters}
+{\em mosi} & Pin\+Name of the Master Out Slave In (MOSI) line for SPI communication. \\
+\hline
+{\em miso} & Pin\+Name of the Master In Slave Out (MISO) line for SPI communication. \\
+\hline
+{\em sck} & Pin\+Name of the Serial Clock (SCK) line for SPI communication. \\
+\hline
+{\em cs} & Pin\+Name of the Chip Select (CS) line for SPI communication. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_l_s_m6_d_s_v16_x_a9edd6361b4ef69d32b777e48425906a6}\label{class_l_s_m6_d_s_v16_x_a9edd6361b4ef69d32b777e48425906a6} 
+\index{LSM6DSV16X@{LSM6DSV16X}!````~LSM6DSV16X@{\texorpdfstring{$\sim$}{\string~}LSM6DSV16X}}
+\index{````~LSM6DSV16X@{\texorpdfstring{$\sim$}{\string~}LSM6DSV16X}!LSM6DSV16X@{LSM6DSV16X}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}LSM6DSV16X()}{\string~LSM6DSV16X()}}
+{\footnotesize\ttfamily LSM6\+DSV16\+X\+::\texorpdfstring{$\sim$}{\string~}\+LSM6\+DSV16X (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Destructor for the \doxylink{class_l_s_m6_d_s_v16_x}{LSM6\+DSV16X} class. 
+
+Cleans up resources allocated for I2C and SPI communication. 
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_l_s_m6_d_s_v16_x_a07420e44905b02e73b8e99b6896a3bec}\label{class_l_s_m6_d_s_v16_x_a07420e44905b02e73b8e99b6896a3bec} 
+\index{LSM6DSV16X@{LSM6DSV16X}!begin@{begin}}
+\index{begin@{begin}!LSM6DSV16X@{LSM6DSV16X}}
+\doxysubsubsection{\texorpdfstring{begin()}{begin()}}
+{\footnotesize\ttfamily LSM6\+DSV16\+XStatus\+Type\+Def LSM6\+DSV16\+X\+::begin (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Initialize the \doxylink{class_l_s_m6_d_s_v16_x}{LSM6\+DSV16X} device. 
+
+Configures various settings of the \doxylink{class_l_s_m6_d_s_v16_x}{LSM6\+DSV16X} sensor upon startup.
+
+\begin{DoxyReturn}{Returns}
+Status of the initialization process.
+\begin{DoxyItemize}
+\item LSM6\+DSV16\+X\+\_\+\+OK if initialization is successful.
+\item LSM6\+DSV16\+X\+\_\+\+ERROR if initialization fails. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\Hypertarget{class_l_s_m6_d_s_v16_x_acac648836a00e13fdaeffab34cc99473}\label{class_l_s_m6_d_s_v16_x_acac648836a00e13fdaeffab34cc99473} 
+\index{LSM6DSV16X@{LSM6DSV16X}!Convert\_G\_Sensitivity@{Convert\_G\_Sensitivity}}
+\index{Convert\_G\_Sensitivity@{Convert\_G\_Sensitivity}!LSM6DSV16X@{LSM6DSV16X}}
+\doxysubsubsection{\texorpdfstring{Convert\_G\_Sensitivity()}{Convert\_G\_Sensitivity()}}
+{\footnotesize\ttfamily float LSM6\+DSV16\+X\+::\+Convert\+\_\+\+G\+\_\+\+Sensitivity (\begin{DoxyParamCaption}\item[{lsm6dsv16x\+\_\+gy\+\_\+full\+\_\+scale\+\_\+t}]{full\+\_\+scale }\end{DoxyParamCaption})}
+
+
+
+Convert the gyroscope full-\/scale sensitivity to a floating-\/point value. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em full\+\_\+scale} & The full-\/scale range of the gyroscope. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+float The sensitivity value corresponding to the given full-\/scale range. 
+\end{DoxyReturn}
+\Hypertarget{class_l_s_m6_d_s_v16_x_aec393b610446b97e638229d4f89f67ef}\label{class_l_s_m6_d_s_v16_x_aec393b610446b97e638229d4f89f67ef} 
+\index{LSM6DSV16X@{LSM6DSV16X}!Device\_Reset@{Device\_Reset}}
+\index{Device\_Reset@{Device\_Reset}!LSM6DSV16X@{LSM6DSV16X}}
+\doxysubsubsection{\texorpdfstring{Device\_Reset()}{Device\_Reset()}}
+{\footnotesize\ttfamily LSM6\+DSV16\+XStatus\+Type\+Def LSM6\+DSV16\+X\+::\+Device\+\_\+\+Reset (\begin{DoxyParamCaption}\item[{LSM6\+DSV16\+X\+\_\+\+Reset\+\_\+t}]{flags }\end{DoxyParamCaption})}
+
+
+
+Reset the \doxylink{class_l_s_m6_d_s_v16_x}{LSM6\+DSV16X} device. 
+
+This function resets the \doxylink{class_l_s_m6_d_s_v16_x}{LSM6\+DSV16X} device according to the specified reset flags and ensures that the device is ready after the reset.
+
+
+\begin{DoxyParams}{Parameters}
+{\em flags} & The reset flags specifying which components of the device to reset.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Status of the operation.
+\begin{DoxyItemize}
+\item LSM6\+DSV16\+X\+\_\+\+OK if the operation is successful.
+\item LSM6\+DSV16\+X\+\_\+\+ERROR if the operation fails. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\Hypertarget{class_l_s_m6_d_s_v16_x_a37bfe6955c17b60f36afb52beaffc965}\label{class_l_s_m6_d_s_v16_x_a37bfe6955c17b60f36afb52beaffc965} 
+\index{LSM6DSV16X@{LSM6DSV16X}!Disable\_6D\_Orientation@{Disable\_6D\_Orientation}}
+\index{Disable\_6D\_Orientation@{Disable\_6D\_Orientation}!LSM6DSV16X@{LSM6DSV16X}}
+\doxysubsubsection{\texorpdfstring{Disable\_6D\_Orientation()}{Disable\_6D\_Orientation()}}
+{\footnotesize\ttfamily LSM6\+DSV16\+XStatus\+Type\+Def LSM6\+DSV16\+X\+::\+Disable\+\_\+6\+D\+\_\+\+Orientation (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Disables 6D orientation detection on the \doxylink{class_l_s_m6_d_s_v16_x}{LSM6\+DSV16X} sensor. 
+
+This function disables 6D orientation detection and clears the corresponding interrupt pins.
+
+\begin{DoxyReturn}{Returns}
+Status of the operation.
+\begin{DoxyItemize}
+\item LSM6\+DSV16\+X\+\_\+\+OK if the operation is successful.
+\item LSM6\+DSV16\+X\+\_\+\+ERROR if the operation fails. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\Hypertarget{class_l_s_m6_d_s_v16_x_ae4557c41f4387abb5132b4df67dc4026}\label{class_l_s_m6_d_s_v16_x_ae4557c41f4387abb5132b4df67dc4026} 
+\index{LSM6DSV16X@{LSM6DSV16X}!Disable\_Auto\_Increment@{Disable\_Auto\_Increment}}
+\index{Disable\_Auto\_Increment@{Disable\_Auto\_Increment}!LSM6DSV16X@{LSM6DSV16X}}
+\doxysubsubsection{\texorpdfstring{Disable\_Auto\_Increment()}{Disable\_Auto\_Increment()}}
+{\footnotesize\ttfamily LSM6\+DSV16\+XStatus\+Type\+Def LSM6\+DSV16\+X\+::\+Disable\+\_\+\+Auto\+\_\+\+Increment (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Disable Auto Increment. 
+
+This function disables the Auto Increment feature.
+
+\begin{DoxyReturn}{Returns}
+Status of the operation.
+\begin{DoxyItemize}
+\item LSM6\+DSV16\+X\+\_\+\+OK if the operation is successful.
+\item LSM6\+DSV16\+X\+\_\+\+ERROR if the operation fails. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\Hypertarget{class_l_s_m6_d_s_v16_x_a2533b098bc7748b289ad6854f73d0e57}\label{class_l_s_m6_d_s_v16_x_a2533b098bc7748b289ad6854f73d0e57} 
+\index{LSM6DSV16X@{LSM6DSV16X}!Disable\_Block\_Data\_Update@{Disable\_Block\_Data\_Update}}
+\index{Disable\_Block\_Data\_Update@{Disable\_Block\_Data\_Update}!LSM6DSV16X@{LSM6DSV16X}}
+\doxysubsubsection{\texorpdfstring{Disable\_Block\_Data\_Update()}{Disable\_Block\_Data\_Update()}}
+{\footnotesize\ttfamily LSM6\+DSV16\+XStatus\+Type\+Def LSM6\+DSV16\+X\+::\+Disable\+\_\+\+Block\+\_\+\+Data\+\_\+\+Update (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Disable Block Data Update. 
+
+This function disables the Block Data Update feature.
+
+\begin{DoxyReturn}{Returns}
+Status of the operation.
+\begin{DoxyItemize}
+\item LSM6\+DSV16\+X\+\_\+\+OK if the operation is successful.
+\item LSM6\+DSV16\+X\+\_\+\+ERROR if the operation fails. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\Hypertarget{class_l_s_m6_d_s_v16_x_a899146c5618a8e36427af4093d6c9cdb}\label{class_l_s_m6_d_s_v16_x_a899146c5618a8e36427af4093d6c9cdb} 
+\index{LSM6DSV16X@{LSM6DSV16X}!Disable\_Double\_Tap\_Detection@{Disable\_Double\_Tap\_Detection}}
+\index{Disable\_Double\_Tap\_Detection@{Disable\_Double\_Tap\_Detection}!LSM6DSV16X@{LSM6DSV16X}}
+\doxysubsubsection{\texorpdfstring{Disable\_Double\_Tap\_Detection()}{Disable\_Double\_Tap\_Detection()}}
+{\footnotesize\ttfamily LSM6\+DSV16\+XStatus\+Type\+Def LSM6\+DSV16\+X\+::\+Disable\+\_\+\+Double\+\_\+\+Tap\+\_\+\+Detection (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Disable Double Tap Detection. 
+
+Disables double tap detection on the \doxylink{class_l_s_m6_d_s_v16_x}{LSM6\+DSV16X} device.
+
+\begin{DoxyReturn}{Returns}
+Status of the double tap detection disabling operation.
+\begin{DoxyItemize}
+\item LSM6\+DSV16\+X\+\_\+\+OK if the operation is successful.
+\item LSM6\+DSV16\+X\+\_\+\+ERROR if the operation fails. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\Hypertarget{class_l_s_m6_d_s_v16_x_a25b39200c8fd8dc5dd4c252a3c04a7a2}\label{class_l_s_m6_d_s_v16_x_a25b39200c8fd8dc5dd4c252a3c04a7a2} 
+\index{LSM6DSV16X@{LSM6DSV16X}!Disable\_Free\_Fall\_Detection@{Disable\_Free\_Fall\_Detection}}
+\index{Disable\_Free\_Fall\_Detection@{Disable\_Free\_Fall\_Detection}!LSM6DSV16X@{LSM6DSV16X}}
+\doxysubsubsection{\texorpdfstring{Disable\_Free\_Fall\_Detection()}{Disable\_Free\_Fall\_Detection()}}
+{\footnotesize\ttfamily LSM6\+DSV16\+XStatus\+Type\+Def LSM6\+DSV16\+X\+::\+Disable\+\_\+\+Free\+\_\+\+Fall\+\_\+\+Detection (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Disable Free Fall Detection. 
+
+Disables the free fall detection feature in the \doxylink{class_l_s_m6_d_s_v16_x}{LSM6\+DSV16X} device.
+
+\begin{DoxyReturn}{Returns}
+Status of the free fall detection disabling operation.
+\begin{DoxyItemize}
+\item LSM6\+DSV16\+X\+\_\+\+OK if the operation is successful.
+\item LSM6\+DSV16\+X\+\_\+\+ERROR if the operation fails. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\Hypertarget{class_l_s_m6_d_s_v16_x_a5429ae394f09bc3c0bb295ea5614ac50}\label{class_l_s_m6_d_s_v16_x_a5429ae394f09bc3c0bb295ea5614ac50} 
+\index{LSM6DSV16X@{LSM6DSV16X}!Disable\_G@{Disable\_G}}
+\index{Disable\_G@{Disable\_G}!LSM6DSV16X@{LSM6DSV16X}}
+\doxysubsubsection{\texorpdfstring{Disable\_G()}{Disable\_G()}}
+{\footnotesize\ttfamily LSM6\+DSV16\+XStatus\+Type\+Def LSM6\+DSV16\+X\+::\+Disable\+\_\+G (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Disable the gyroscope. 
+
+This function disables the gyroscope.
+
+\begin{DoxyReturn}{Returns}
+Status of the operation.
+\begin{DoxyItemize}
+\item LSM6\+DSV16\+X\+\_\+\+OK if the operation is successful.
+\item LSM6\+DSV16\+X\+\_\+\+ERROR if the operation fails. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\Hypertarget{class_l_s_m6_d_s_v16_x_ade79b189c197c78036351f16b1bd1b01}\label{class_l_s_m6_d_s_v16_x_ade79b189c197c78036351f16b1bd1b01} 
+\index{LSM6DSV16X@{LSM6DSV16X}!Disable\_Gravity\_Vector@{Disable\_Gravity\_Vector}}
+\index{Disable\_Gravity\_Vector@{Disable\_Gravity\_Vector}!LSM6DSV16X@{LSM6DSV16X}}
+\doxysubsubsection{\texorpdfstring{Disable\_Gravity\_Vector()}{Disable\_Gravity\_Vector()}}
+{\footnotesize\ttfamily LSM6\+DSV16\+XStatus\+Type\+Def LSM6\+DSV16\+X\+::\+Disable\+\_\+\+Gravity\+\_\+\+Vector (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Disable Gravity Vector feature. 
+
+This function disables the Gravity Vector feature.
+
+\begin{DoxyReturn}{Returns}
+Status of the operation.
+\begin{DoxyItemize}
+\item LSM6\+DSV16\+X\+\_\+\+OK if the operation is successful.
+\item LSM6\+DSV16\+X\+\_\+\+ERROR if the operation fails. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\Hypertarget{class_l_s_m6_d_s_v16_x_a0a119004ee81047b5fa50eea73cab254}\label{class_l_s_m6_d_s_v16_x_a0a119004ee81047b5fa50eea73cab254} 
+\index{LSM6DSV16X@{LSM6DSV16X}!Disable\_Gyroscope\_Bias@{Disable\_Gyroscope\_Bias}}
+\index{Disable\_Gyroscope\_Bias@{Disable\_Gyroscope\_Bias}!LSM6DSV16X@{LSM6DSV16X}}
+\doxysubsubsection{\texorpdfstring{Disable\_Gyroscope\_Bias()}{Disable\_Gyroscope\_Bias()}}
+{\footnotesize\ttfamily LSM6\+DSV16\+XStatus\+Type\+Def LSM6\+DSV16\+X\+::\+Disable\+\_\+\+Gyroscope\+\_\+\+Bias (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Disable Gyroscope Bias feature. 
+
+This function disables the Gyroscope Bias feature.
+
+\begin{DoxyReturn}{Returns}
+Status of the operation.
+\begin{DoxyItemize}
+\item LSM6\+DSV16\+X\+\_\+\+OK if the operation is successful.
+\item LSM6\+DSV16\+X\+\_\+\+ERROR if the operation fails. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\Hypertarget{class_l_s_m6_d_s_v16_x_a96c2dc499895b4bab5753c148c302527}\label{class_l_s_m6_d_s_v16_x_a96c2dc499895b4bab5753c148c302527} 
+\index{LSM6DSV16X@{LSM6DSV16X}!Disable\_Rotation\_Vector@{Disable\_Rotation\_Vector}}
+\index{Disable\_Rotation\_Vector@{Disable\_Rotation\_Vector}!LSM6DSV16X@{LSM6DSV16X}}
+\doxysubsubsection{\texorpdfstring{Disable\_Rotation\_Vector()}{Disable\_Rotation\_Vector()}}
+{\footnotesize\ttfamily LSM6\+DSV16\+XStatus\+Type\+Def LSM6\+DSV16\+X\+::\+Disable\+\_\+\+Rotation\+\_\+\+Vector (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Disable Rotation Vector feature. 
+
+This function disables the Rotation Vector feature.
+
+\begin{DoxyReturn}{Returns}
+Status of the operation.
+\begin{DoxyItemize}
+\item LSM6\+DSV16\+X\+\_\+\+OK if the operation is successful.
+\item LSM6\+DSV16\+X\+\_\+\+ERROR if the operation fails. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\Hypertarget{class_l_s_m6_d_s_v16_x_aac1c07396a9a9915a2853d79cf549781}\label{class_l_s_m6_d_s_v16_x_aac1c07396a9a9915a2853d79cf549781} 
+\index{LSM6DSV16X@{LSM6DSV16X}!Disable\_Tilt\_Detection@{Disable\_Tilt\_Detection}}
+\index{Disable\_Tilt\_Detection@{Disable\_Tilt\_Detection}!LSM6DSV16X@{LSM6DSV16X}}
+\doxysubsubsection{\texorpdfstring{Disable\_Tilt\_Detection()}{Disable\_Tilt\_Detection()}}
+{\footnotesize\ttfamily LSM6\+DSV16\+XStatus\+Type\+Def LSM6\+DSV16\+X\+::\+Disable\+\_\+\+Tilt\+\_\+\+Detection (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Disable Tilt Detection. 
+
+Disables tilt detection in the \doxylink{class_l_s_m6_d_s_v16_x}{LSM6\+DSV16X} device.
+
+\begin{DoxyReturn}{Returns}
+Status of the tilt detection disabling operation.
+\begin{DoxyItemize}
+\item LSM6\+DSV16\+X\+\_\+\+OK if the operation is successful.
+\item LSM6\+DSV16\+X\+\_\+\+ERROR if the operation fails. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\Hypertarget{class_l_s_m6_d_s_v16_x_ad59f7e0d75d56ec9ec8472dae08ce5e5}\label{class_l_s_m6_d_s_v16_x_ad59f7e0d75d56ec9ec8472dae08ce5e5} 
+\index{LSM6DSV16X@{LSM6DSV16X}!Disable\_Wake\_Up\_Detection@{Disable\_Wake\_Up\_Detection}}
+\index{Disable\_Wake\_Up\_Detection@{Disable\_Wake\_Up\_Detection}!LSM6DSV16X@{LSM6DSV16X}}
+\doxysubsubsection{\texorpdfstring{Disable\_Wake\_Up\_Detection()}{Disable\_Wake\_Up\_Detection()}}
+{\footnotesize\ttfamily LSM6\+DSV16\+XStatus\+Type\+Def LSM6\+DSV16\+X\+::\+Disable\+\_\+\+Wake\+\_\+\+Up\+\_\+\+Detection (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Disable Wake-\/\+Up Detection. 
+
+Disables the wake-\/up detection feature in the \doxylink{class_l_s_m6_d_s_v16_x}{LSM6\+DSV16X} device.
+
+\begin{DoxyReturn}{Returns}
+Status of the wake-\/up detection disabling operation.
+\begin{DoxyItemize}
+\item LSM6\+DSV16\+X\+\_\+\+OK if the operation is successful.
+\item LSM6\+DSV16\+X\+\_\+\+ERROR if the operation fails. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\Hypertarget{class_l_s_m6_d_s_v16_x_a5ad94919d1573d93f15f84a9e413e793}\label{class_l_s_m6_d_s_v16_x_a5ad94919d1573d93f15f84a9e413e793} 
+\index{LSM6DSV16X@{LSM6DSV16X}!Disable\_X@{Disable\_X}}
+\index{Disable\_X@{Disable\_X}!LSM6DSV16X@{LSM6DSV16X}}
+\doxysubsubsection{\texorpdfstring{Disable\_X()}{Disable\_X()}}
+{\footnotesize\ttfamily LSM6\+DSV16\+XStatus\+Type\+Def LSM6\+DSV16\+X\+::\+Disable\+\_\+X (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Disable the X-\/axis accelerometer. 
+
+This function disables the X-\/axis accelerometer.
+
+\begin{DoxyReturn}{Returns}
+Status of the operation.
+\begin{DoxyItemize}
+\item LSM6\+DSV16\+X\+\_\+\+OK if the operation is successful.
+\item LSM6\+DSV16\+X\+\_\+\+ERROR if the operation fails. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\Hypertarget{class_l_s_m6_d_s_v16_x_a31c021486f2442792244e5bf4fc0d3db}\label{class_l_s_m6_d_s_v16_x_a31c021486f2442792244e5bf4fc0d3db} 
+\index{LSM6DSV16X@{LSM6DSV16X}!Enable\_6D\_Orientation@{Enable\_6D\_Orientation}}
+\index{Enable\_6D\_Orientation@{Enable\_6D\_Orientation}!LSM6DSV16X@{LSM6DSV16X}}
+\doxysubsubsection{\texorpdfstring{Enable\_6D\_Orientation()}{Enable\_6D\_Orientation()}}
+{\footnotesize\ttfamily LSM6\+DSV16\+XStatus\+Type\+Def LSM6\+DSV16\+X\+::\+Enable\+\_\+6\+D\+\_\+\+Orientation (\begin{DoxyParamCaption}\item[{LSM6\+DSV16\+X\+\_\+\+Sensor\+Int\+Pin\+\_\+t}]{Int\+Pin }\end{DoxyParamCaption})}
+
+
+
+Enables 6D orientation detection on the \doxylink{class_l_s_m6_d_s_v16_x}{LSM6\+DSV16X} sensor. 
+
+This function configures the sensor to enable 6D orientation detection and sets the corresponding interrupt pin.
+
+
+\begin{DoxyParams}{Parameters}
+{\em Int\+Pin} & Selects the interrupt pin to which the 6D orientation event will be routed.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Status of the operation.
+\begin{DoxyItemize}
+\item LSM6\+DSV16\+X\+\_\+\+OK if the operation is successful.
+\item LSM6\+DSV16\+X\+\_\+\+ERROR if the operation fails. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\Hypertarget{class_l_s_m6_d_s_v16_x_acd53acb7ba6d13cf9f4a333ba82c94a6}\label{class_l_s_m6_d_s_v16_x_acd53acb7ba6d13cf9f4a333ba82c94a6} 
+\index{LSM6DSV16X@{LSM6DSV16X}!Enable\_Auto\_Increment@{Enable\_Auto\_Increment}}
+\index{Enable\_Auto\_Increment@{Enable\_Auto\_Increment}!LSM6DSV16X@{LSM6DSV16X}}
+\doxysubsubsection{\texorpdfstring{Enable\_Auto\_Increment()}{Enable\_Auto\_Increment()}}
+{\footnotesize\ttfamily LSM6\+DSV16\+XStatus\+Type\+Def LSM6\+DSV16\+X\+::\+Enable\+\_\+\+Auto\+\_\+\+Increment (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Enable Auto Increment. 
+
+This function enables the Auto Increment feature.
+
+\begin{DoxyReturn}{Returns}
+Status of the operation.
+\begin{DoxyItemize}
+\item LSM6\+DSV16\+X\+\_\+\+OK if the operation is successful.
+\item LSM6\+DSV16\+X\+\_\+\+ERROR if the operation fails. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\Hypertarget{class_l_s_m6_d_s_v16_x_a41ea0298257cd614c230878e4d21813c}\label{class_l_s_m6_d_s_v16_x_a41ea0298257cd614c230878e4d21813c} 
+\index{LSM6DSV16X@{LSM6DSV16X}!Enable\_Block\_Data\_Update@{Enable\_Block\_Data\_Update}}
+\index{Enable\_Block\_Data\_Update@{Enable\_Block\_Data\_Update}!LSM6DSV16X@{LSM6DSV16X}}
+\doxysubsubsection{\texorpdfstring{Enable\_Block\_Data\_Update()}{Enable\_Block\_Data\_Update()}}
+{\footnotesize\ttfamily LSM6\+DSV16\+XStatus\+Type\+Def LSM6\+DSV16\+X\+::\+Enable\+\_\+\+Block\+\_\+\+Data\+\_\+\+Update (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Enable Block Data Update. 
+
+This function enables the Block Data Update feature.
+
+\begin{DoxyReturn}{Returns}
+Status of the operation.
+\begin{DoxyItemize}
+\item LSM6\+DSV16\+X\+\_\+\+OK if the operation is successful.
+\item LSM6\+DSV16\+X\+\_\+\+ERROR if the operation fails. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\Hypertarget{class_l_s_m6_d_s_v16_x_a4eff3f755570b1b4e4f65c2d2a81d88b}\label{class_l_s_m6_d_s_v16_x_a4eff3f755570b1b4e4f65c2d2a81d88b} 
+\index{LSM6DSV16X@{LSM6DSV16X}!Enable\_Double\_Tap\_Detection@{Enable\_Double\_Tap\_Detection}}
+\index{Enable\_Double\_Tap\_Detection@{Enable\_Double\_Tap\_Detection}!LSM6DSV16X@{LSM6DSV16X}}
+\doxysubsubsection{\texorpdfstring{Enable\_Double\_Tap\_Detection()}{Enable\_Double\_Tap\_Detection()}}
+{\footnotesize\ttfamily LSM6\+DSV16\+XStatus\+Type\+Def LSM6\+DSV16\+X\+::\+Enable\+\_\+\+Double\+\_\+\+Tap\+\_\+\+Detection (\begin{DoxyParamCaption}\item[{LSM6\+DSV16\+X\+\_\+\+Sensor\+Int\+Pin\+\_\+t}]{Int\+Pin }\end{DoxyParamCaption})}
+
+
+
+Enable Double Tap Detection. 
+
+Enables double tap detection on the \doxylink{class_l_s_m6_d_s_v16_x}{LSM6\+DSV16X} device.
+
+
+\begin{DoxyParams}{Parameters}
+{\em Int\+Pin} & The interrupt pin to which the double tap interrupt will be routed.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Status of the double tap detection enabling operation.
+\begin{DoxyItemize}
+\item LSM6\+DSV16\+X\+\_\+\+OK if the operation is successful.
+\item LSM6\+DSV16\+X\+\_\+\+ERROR if the operation fails. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\Hypertarget{class_l_s_m6_d_s_v16_x_ae7dbeef46503a2c6a2df55690a64f38b}\label{class_l_s_m6_d_s_v16_x_ae7dbeef46503a2c6a2df55690a64f38b} 
+\index{LSM6DSV16X@{LSM6DSV16X}!Enable\_Free\_Fall\_Detection@{Enable\_Free\_Fall\_Detection}}
+\index{Enable\_Free\_Fall\_Detection@{Enable\_Free\_Fall\_Detection}!LSM6DSV16X@{LSM6DSV16X}}
+\doxysubsubsection{\texorpdfstring{Enable\_Free\_Fall\_Detection()}{Enable\_Free\_Fall\_Detection()}}
+{\footnotesize\ttfamily LSM6\+DSV16\+XStatus\+Type\+Def LSM6\+DSV16\+X\+::\+Enable\+\_\+\+Free\+\_\+\+Fall\+\_\+\+Detection (\begin{DoxyParamCaption}\item[{LSM6\+DSV16\+X\+\_\+\+Sensor\+Int\+Pin\+\_\+t}]{Int\+Pin }\end{DoxyParamCaption})}
+
+
+
+Enable Free Fall Detection. 
+
+Enables the free fall detection feature in the \doxylink{class_l_s_m6_d_s_v16_x}{LSM6\+DSV16X} device.
+
+
+\begin{DoxyParams}{Parameters}
+{\em Int\+Pin} & Specifies the interrupt pin for free fall detection.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Status of the free fall detection enabling operation.
+\begin{DoxyItemize}
+\item LSM6\+DSV16\+X\+\_\+\+OK if the operation is successful.
+\item LSM6\+DSV16\+X\+\_\+\+ERROR if the operation fails. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\Hypertarget{class_l_s_m6_d_s_v16_x_a419792f8fff4c54023a9f74aa0eb122c}\label{class_l_s_m6_d_s_v16_x_a419792f8fff4c54023a9f74aa0eb122c} 
+\index{LSM6DSV16X@{LSM6DSV16X}!Enable\_G@{Enable\_G}}
+\index{Enable\_G@{Enable\_G}!LSM6DSV16X@{LSM6DSV16X}}
+\doxysubsubsection{\texorpdfstring{Enable\_G()}{Enable\_G()}}
+{\footnotesize\ttfamily LSM6\+DSV16\+XStatus\+Type\+Def LSM6\+DSV16\+X\+::\+Enable\+\_\+G (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Enable the gyroscope. 
+
+This function enables the gyroscope.
+
+\begin{DoxyReturn}{Returns}
+Status of the operation.
+\begin{DoxyItemize}
+\item LSM6\+DSV16\+X\+\_\+\+OK if the operation is successful.
+\item LSM6\+DSV16\+X\+\_\+\+ERROR if the operation fails. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\Hypertarget{class_l_s_m6_d_s_v16_x_a1225d7a0fe9613e3152c2b62be90e70a}\label{class_l_s_m6_d_s_v16_x_a1225d7a0fe9613e3152c2b62be90e70a} 
+\index{LSM6DSV16X@{LSM6DSV16X}!Enable\_Gravity\_Vector@{Enable\_Gravity\_Vector}}
+\index{Enable\_Gravity\_Vector@{Enable\_Gravity\_Vector}!LSM6DSV16X@{LSM6DSV16X}}
+\doxysubsubsection{\texorpdfstring{Enable\_Gravity\_Vector()}{Enable\_Gravity\_Vector()}}
+{\footnotesize\ttfamily LSM6\+DSV16\+XStatus\+Type\+Def LSM6\+DSV16\+X\+::\+Enable\+\_\+\+Gravity\+\_\+\+Vector (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Enable Gravity Vector feature. 
+
+This function enables the Gravity Vector feature.
+
+\begin{DoxyReturn}{Returns}
+Status of the operation.
+\begin{DoxyItemize}
+\item LSM6\+DSV16\+X\+\_\+\+OK if the operation is successful.
+\item LSM6\+DSV16\+X\+\_\+\+ERROR if the operation fails. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\Hypertarget{class_l_s_m6_d_s_v16_x_a7e4d04043b9a3c5b0fe04d78cd327d28}\label{class_l_s_m6_d_s_v16_x_a7e4d04043b9a3c5b0fe04d78cd327d28} 
+\index{LSM6DSV16X@{LSM6DSV16X}!Enable\_Gyroscope\_Bias@{Enable\_Gyroscope\_Bias}}
+\index{Enable\_Gyroscope\_Bias@{Enable\_Gyroscope\_Bias}!LSM6DSV16X@{LSM6DSV16X}}
+\doxysubsubsection{\texorpdfstring{Enable\_Gyroscope\_Bias()}{Enable\_Gyroscope\_Bias()}}
+{\footnotesize\ttfamily LSM6\+DSV16\+XStatus\+Type\+Def LSM6\+DSV16\+X\+::\+Enable\+\_\+\+Gyroscope\+\_\+\+Bias (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Enable Gyroscope Bias feature. 
+
+This function enables the Gyroscope Bias feature.
+
+\begin{DoxyReturn}{Returns}
+Status of the operation.
+\begin{DoxyItemize}
+\item LSM6\+DSV16\+X\+\_\+\+OK if the operation is successful.
+\item LSM6\+DSV16\+X\+\_\+\+ERROR if the operation fails. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\Hypertarget{class_l_s_m6_d_s_v16_x_abcd54c07c22b4f7039862d50cdcb978f}\label{class_l_s_m6_d_s_v16_x_abcd54c07c22b4f7039862d50cdcb978f} 
+\index{LSM6DSV16X@{LSM6DSV16X}!Enable\_Pedometer@{Enable\_Pedometer}}
+\index{Enable\_Pedometer@{Enable\_Pedometer}!LSM6DSV16X@{LSM6DSV16X}}
+\doxysubsubsection{\texorpdfstring{Enable\_Pedometer()}{Enable\_Pedometer()}}
+{\footnotesize\ttfamily LSM6\+DSV16\+XStatus\+Type\+Def LSM6\+DSV16\+X\+::\+Enable\+\_\+\+Pedometer (\begin{DoxyParamCaption}\item[{LSM6\+DSV16\+X\+\_\+\+Sensor\+Int\+Pin\+\_\+t}]{Int\+Pin }\end{DoxyParamCaption})}
+
+
+
+Enable Pedometer. 
+
+Enables the pedometer algorithm in the \doxylink{class_l_s_m6_d_s_v16_x}{LSM6\+DSV16X} device.
+
+
+\begin{DoxyParams}{Parameters}
+{\em Int\+Pin} & The interrupt pin to which the pedometer interrupt will be routed.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Status of the pedometer enabling operation.
+\begin{DoxyItemize}
+\item LSM6\+DSV16\+X\+\_\+\+OK if the operation is successful.
+\item LSM6\+DSV16\+X\+\_\+\+ERROR if the operation fails. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\Hypertarget{class_l_s_m6_d_s_v16_x_ac6bc9092dd2ffab0381622b6b88d43fd}\label{class_l_s_m6_d_s_v16_x_ac6bc9092dd2ffab0381622b6b88d43fd} 
+\index{LSM6DSV16X@{LSM6DSV16X}!Enable\_Rotation\_Vector@{Enable\_Rotation\_Vector}}
+\index{Enable\_Rotation\_Vector@{Enable\_Rotation\_Vector}!LSM6DSV16X@{LSM6DSV16X}}
+\doxysubsubsection{\texorpdfstring{Enable\_Rotation\_Vector()}{Enable\_Rotation\_Vector()}}
+{\footnotesize\ttfamily LSM6\+DSV16\+XStatus\+Type\+Def LSM6\+DSV16\+X\+::\+Enable\+\_\+\+Rotation\+\_\+\+Vector (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Enable Rotation Vector feature. 
+
+This function enables the Rotation Vector feature.
+
+\begin{DoxyReturn}{Returns}
+Status of the operation.
+\begin{DoxyItemize}
+\item LSM6\+DSV16\+X\+\_\+\+OK if the operation is successful.
+\item LSM6\+DSV16\+X\+\_\+\+ERROR if the operation fails. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\Hypertarget{class_l_s_m6_d_s_v16_x_a9047811ec6d31e35518a3c3cb07ee86b}\label{class_l_s_m6_d_s_v16_x_a9047811ec6d31e35518a3c3cb07ee86b} 
+\index{LSM6DSV16X@{LSM6DSV16X}!Enable\_Single\_Tap\_Detection@{Enable\_Single\_Tap\_Detection}}
+\index{Enable\_Single\_Tap\_Detection@{Enable\_Single\_Tap\_Detection}!LSM6DSV16X@{LSM6DSV16X}}
+\doxysubsubsection{\texorpdfstring{Enable\_Single\_Tap\_Detection()}{Enable\_Single\_Tap\_Detection()}}
+{\footnotesize\ttfamily LSM6\+DSV16\+XStatus\+Type\+Def LSM6\+DSV16\+X\+::\+Enable\+\_\+\+Single\+\_\+\+Tap\+\_\+\+Detection (\begin{DoxyParamCaption}\item[{LSM6\+DSV16\+X\+\_\+\+Sensor\+Int\+Pin\+\_\+t}]{Int\+Pin }\end{DoxyParamCaption})}
+
+
+
+Enable Single Tap Detection. 
+
+Enables single tap detection on the \doxylink{class_l_s_m6_d_s_v16_x}{LSM6\+DSV16X} device.
+
+
+\begin{DoxyParams}{Parameters}
+{\em Int\+Pin} & The interrupt pin to which the single tap event will be mapped.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Status of the single tap detection enabling operation.
+\begin{DoxyItemize}
+\item LSM6\+DSV16\+X\+\_\+\+OK if the operation is successful.
+\item LSM6\+DSV16\+X\+\_\+\+ERROR if the operation fails. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\Hypertarget{class_l_s_m6_d_s_v16_x_ac4230c11e0216c9a4a9c5ecc80dad7b2}\label{class_l_s_m6_d_s_v16_x_ac4230c11e0216c9a4a9c5ecc80dad7b2} 
+\index{LSM6DSV16X@{LSM6DSV16X}!Enable\_Tilt\_Detection@{Enable\_Tilt\_Detection}}
+\index{Enable\_Tilt\_Detection@{Enable\_Tilt\_Detection}!LSM6DSV16X@{LSM6DSV16X}}
+\doxysubsubsection{\texorpdfstring{Enable\_Tilt\_Detection()}{Enable\_Tilt\_Detection()}}
+{\footnotesize\ttfamily LSM6\+DSV16\+XStatus\+Type\+Def LSM6\+DSV16\+X\+::\+Enable\+\_\+\+Tilt\+\_\+\+Detection (\begin{DoxyParamCaption}\item[{LSM6\+DSV16\+X\+\_\+\+Sensor\+Int\+Pin\+\_\+t}]{Int\+Pin }\end{DoxyParamCaption})}
+
+
+
+Enable Tilt Detection. 
+
+Enables tilt detection in the \doxylink{class_l_s_m6_d_s_v16_x}{LSM6\+DSV16X} device.
+
+
+\begin{DoxyParams}{Parameters}
+{\em Int\+Pin} & The interrupt pin to which the tilt interrupt will be routed.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Status of the tilt detection enabling operation.
+\begin{DoxyItemize}
+\item LSM6\+DSV16\+X\+\_\+\+OK if the operation is successful.
+\item LSM6\+DSV16\+X\+\_\+\+ERROR if the operation fails. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\Hypertarget{class_l_s_m6_d_s_v16_x_ab83ef3860a9a61ace9c7065f1ac331d5}\label{class_l_s_m6_d_s_v16_x_ab83ef3860a9a61ace9c7065f1ac331d5} 
+\index{LSM6DSV16X@{LSM6DSV16X}!Enable\_Wake\_Up\_Detection@{Enable\_Wake\_Up\_Detection}}
+\index{Enable\_Wake\_Up\_Detection@{Enable\_Wake\_Up\_Detection}!LSM6DSV16X@{LSM6DSV16X}}
+\doxysubsubsection{\texorpdfstring{Enable\_Wake\_Up\_Detection()}{Enable\_Wake\_Up\_Detection()}}
+{\footnotesize\ttfamily LSM6\+DSV16\+XStatus\+Type\+Def LSM6\+DSV16\+X\+::\+Enable\+\_\+\+Wake\+\_\+\+Up\+\_\+\+Detection (\begin{DoxyParamCaption}\item[{LSM6\+DSV16\+X\+\_\+\+Sensor\+Int\+Pin\+\_\+t}]{Int\+Pin }\end{DoxyParamCaption})}
+
+
+
+Enable Wake-\/\+Up Detection. 
+
+Enables the wake-\/up detection feature in the \doxylink{class_l_s_m6_d_s_v16_x}{LSM6\+DSV16X} device.
+
+
+\begin{DoxyParams}{Parameters}
+{\em Int\+Pin} & Selects the interrupt pin for wake-\/up event.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Status of the wake-\/up detection enabling operation.
+\begin{DoxyItemize}
+\item LSM6\+DSV16\+X\+\_\+\+OK if the operation is successful.
+\item LSM6\+DSV16\+X\+\_\+\+ERROR if the operation fails. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\Hypertarget{class_l_s_m6_d_s_v16_x_af68fd52954e047746c90c04a751bd548}\label{class_l_s_m6_d_s_v16_x_af68fd52954e047746c90c04a751bd548} 
+\index{LSM6DSV16X@{LSM6DSV16X}!Enable\_X@{Enable\_X}}
+\index{Enable\_X@{Enable\_X}!LSM6DSV16X@{LSM6DSV16X}}
+\doxysubsubsection{\texorpdfstring{Enable\_X()}{Enable\_X()}}
+{\footnotesize\ttfamily LSM6\+DSV16\+XStatus\+Type\+Def LSM6\+DSV16\+X\+::\+Enable\+\_\+X (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Enable the X-\/axis accelerometer. 
+
+This function enables the X-\/axis accelerometer.
+
+\begin{DoxyReturn}{Returns}
+Status of the operation.
+\begin{DoxyItemize}
+\item LSM6\+DSV16\+X\+\_\+\+OK if the operation is successful.
+\item LSM6\+DSV16\+X\+\_\+\+ERROR if the operation fails. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\Hypertarget{class_l_s_m6_d_s_v16_x_a5a23aa5fd3eaea664758f2c5290a82da}\label{class_l_s_m6_d_s_v16_x_a5a23aa5fd3eaea664758f2c5290a82da} 
+\index{LSM6DSV16X@{LSM6DSV16X}!end@{end}}
+\index{end@{end}!LSM6DSV16X@{LSM6DSV16X}}
+\doxysubsubsection{\texorpdfstring{end()}{end()}}
+{\footnotesize\ttfamily LSM6\+DSV16\+XStatus\+Type\+Def LSM6\+DSV16\+X\+::end (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Disable the \doxylink{class_l_s_m6_d_s_v16_x}{LSM6\+DSV16X} sensor. 
+
+This function disables both the accelerometer and the gyroscope, resets the output data rate, and resets the initialization flag.
+
+\begin{DoxyReturn}{Returns}
+Status of the operation.
+\begin{DoxyItemize}
+\item LSM6\+DSV16\+X\+\_\+\+OK if the operation is successful.
+\item LSM6\+DSV16\+X\+\_\+\+ERROR if the operation fails. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\Hypertarget{class_l_s_m6_d_s_v16_x_a083df35941ad29f03bcc2d73ae9b3086}\label{class_l_s_m6_d_s_v16_x_a083df35941ad29f03bcc2d73ae9b3086} 
+\index{LSM6DSV16X@{LSM6DSV16X}!FIFO\_Disable\_Timestamp@{FIFO\_Disable\_Timestamp}}
+\index{FIFO\_Disable\_Timestamp@{FIFO\_Disable\_Timestamp}!LSM6DSV16X@{LSM6DSV16X}}
+\doxysubsubsection{\texorpdfstring{FIFO\_Disable\_Timestamp()}{FIFO\_Disable\_Timestamp()}}
+{\footnotesize\ttfamily LSM6\+DSV16\+XStatus\+Type\+Def LSM6\+DSV16\+X\+::\+FIFO\+\_\+\+Disable\+\_\+\+Timestamp (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Disable timestamp in FIFO. 
+
+Disables the timestamp feature in the FIFO of the \doxylink{class_l_s_m6_d_s_v16_x}{LSM6\+DSV16X} device.
+
+\begin{DoxyReturn}{Returns}
+Status of the timestamp disabling operation.
+\begin{DoxyItemize}
+\item LSM6\+DSV16\+X\+\_\+\+OK if the operation is successful.
+\item LSM6\+DSV16\+X\+\_\+\+ERROR if the operation fails. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\Hypertarget{class_l_s_m6_d_s_v16_x_a78b16bc7759fee43500cfdb0055d7c38}\label{class_l_s_m6_d_s_v16_x_a78b16bc7759fee43500cfdb0055d7c38} 
+\index{LSM6DSV16X@{LSM6DSV16X}!FIFO\_Enable\_Timestamp@{FIFO\_Enable\_Timestamp}}
+\index{FIFO\_Enable\_Timestamp@{FIFO\_Enable\_Timestamp}!LSM6DSV16X@{LSM6DSV16X}}
+\doxysubsubsection{\texorpdfstring{FIFO\_Enable\_Timestamp()}{FIFO\_Enable\_Timestamp()}}
+{\footnotesize\ttfamily LSM6\+DSV16\+XStatus\+Type\+Def LSM6\+DSV16\+X\+::\+FIFO\+\_\+\+Enable\+\_\+\+Timestamp (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Enable timestamp in FIFO. 
+
+Enables the timestamp feature in the FIFO of the \doxylink{class_l_s_m6_d_s_v16_x}{LSM6\+DSV16X} device.
+
+\begin{DoxyReturn}{Returns}
+Status of the timestamp enabling operation.
+\begin{DoxyItemize}
+\item LSM6\+DSV16\+X\+\_\+\+OK if the operation is successful.
+\item LSM6\+DSV16\+X\+\_\+\+ERROR if the operation fails. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\Hypertarget{class_l_s_m6_d_s_v16_x_abb445b65f20db8d83956f83654344a13}\label{class_l_s_m6_d_s_v16_x_abb445b65f20db8d83956f83654344a13} 
+\index{LSM6DSV16X@{LSM6DSV16X}!FIFO\_Get\_Data@{FIFO\_Get\_Data}}
+\index{FIFO\_Get\_Data@{FIFO\_Get\_Data}!LSM6DSV16X@{LSM6DSV16X}}
+\doxysubsubsection{\texorpdfstring{FIFO\_Get\_Data()}{FIFO\_Get\_Data()}}
+{\footnotesize\ttfamily LSM6\+DSV16\+XStatus\+Type\+Def LSM6\+DSV16\+X\+::\+FIFO\+\_\+\+Get\+\_\+\+Data (\begin{DoxyParamCaption}\item[{uint8\+\_\+t \texorpdfstring{$\ast$}{*}}]{Data }\end{DoxyParamCaption})}
+
+
+
+Get data from the FIFO buffer. 
+
+This function retrieves data from the FIFO buffer.
+
+
+\begin{DoxyParams}{Parameters}
+{\em Data} & Pointer to an array to store the retrieved data.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Status of the operation.
+\begin{DoxyItemize}
+\item LSM6\+DSV16\+X\+\_\+\+OK if the operation is successful.
+\item LSM6\+DSV16\+X\+\_\+\+ERROR if the operation fails. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\Hypertarget{class_l_s_m6_d_s_v16_x_a4214988277987a3878af57876ff50a46}\label{class_l_s_m6_d_s_v16_x_a4214988277987a3878af57876ff50a46} 
+\index{LSM6DSV16X@{LSM6DSV16X}!FIFO\_Get\_Full\_Status@{FIFO\_Get\_Full\_Status}}
+\index{FIFO\_Get\_Full\_Status@{FIFO\_Get\_Full\_Status}!LSM6DSV16X@{LSM6DSV16X}}
+\doxysubsubsection{\texorpdfstring{FIFO\_Get\_Full\_Status()}{FIFO\_Get\_Full\_Status()}}
+{\footnotesize\ttfamily LSM6\+DSV16\+XStatus\+Type\+Def LSM6\+DSV16\+X\+::\+FIFO\+\_\+\+Get\+\_\+\+Full\+\_\+\+Status (\begin{DoxyParamCaption}\item[{uint8\+\_\+t \texorpdfstring{$\ast$}{*}}]{Status }\end{DoxyParamCaption})}
+
+
+
+Get the full status of the FIFO in the \doxylink{class_l_s_m6_d_s_v16_x}{LSM6\+DSV16X} device. 
+
+Retrieves the full status of the FIFO and stores it in the provided variable.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ out}}  & {\em Status} & Pointer to a variable where the full status of the FIFO will be stored.
+\begin{DoxyItemize}
+\item 0x00 if FIFO is not full.
+\item 0x01 if FIFO is full.
+\end{DoxyItemize}\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Status of the FIFO full status retrieval operation.
+\begin{DoxyItemize}
+\item LSM6\+DSV16\+X\+\_\+\+OK if the operation is successful.
+\item LSM6\+DSV16\+X\+\_\+\+ERROR if the operation fails. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\Hypertarget{class_l_s_m6_d_s_v16_x_ac6c2b10c67fd19c384c3f98805bad78b}\label{class_l_s_m6_d_s_v16_x_ac6c2b10c67fd19c384c3f98805bad78b} 
+\index{LSM6DSV16X@{LSM6DSV16X}!FIFO\_Get\_G\_Axes@{FIFO\_Get\_G\_Axes}}
+\index{FIFO\_Get\_G\_Axes@{FIFO\_Get\_G\_Axes}!LSM6DSV16X@{LSM6DSV16X}}
+\doxysubsubsection{\texorpdfstring{FIFO\_Get\_G\_Axes()}{FIFO\_Get\_G\_Axes()}}
+{\footnotesize\ttfamily LSM6\+DSV16\+XStatus\+Type\+Def LSM6\+DSV16\+X\+::\+FIFO\+\_\+\+Get\+\_\+\+G\+\_\+\+Axes (\begin{DoxyParamCaption}\item[{int32\+\_\+t \texorpdfstring{$\ast$}{*}}]{Angular\+Velocity }\end{DoxyParamCaption})}
+
+
+
+Get the gyroscope data from FIFO. 
+
+Retrieves the gyroscope data from the FIFO of the \doxylink{class_l_s_m6_d_s_v16_x}{LSM6\+DSV16X} device.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ out}}  & {\em Angular\+Velocity} & Pointer to an array where the gyroscope data will be stored.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Status of the gyroscope data retrieval operation.
+\begin{DoxyItemize}
+\item LSM6\+DSV16\+X\+\_\+\+OK if the operation is successful.
+\item LSM6\+DSV16\+X\+\_\+\+ERROR if the operation fails. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\Hypertarget{class_l_s_m6_d_s_v16_x_aa81d55f8a05c2f14314b7e586728960c}\label{class_l_s_m6_d_s_v16_x_aa81d55f8a05c2f14314b7e586728960c} 
+\index{LSM6DSV16X@{LSM6DSV16X}!FIFO\_Get\_Gravity\_Vector@{FIFO\_Get\_Gravity\_Vector}}
+\index{FIFO\_Get\_Gravity\_Vector@{FIFO\_Get\_Gravity\_Vector}!LSM6DSV16X@{LSM6DSV16X}}
+\doxysubsubsection{\texorpdfstring{FIFO\_Get\_Gravity\_Vector()}{FIFO\_Get\_Gravity\_Vector()}}
+{\footnotesize\ttfamily LSM6\+DSV16\+XStatus\+Type\+Def LSM6\+DSV16\+X\+::\+FIFO\+\_\+\+Get\+\_\+\+Gravity\+\_\+\+Vector (\begin{DoxyParamCaption}\item[{float \texorpdfstring{$\ast$}{*}}]{gvec }\end{DoxyParamCaption})}
+
+
+
+Get the gravity vector data from FIFO. 
+
+Retrieves the gravity vector data from the FIFO of the \doxylink{class_l_s_m6_d_s_v16_x}{LSM6\+DSV16X} device.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ out}}  & {\em gvec} & Pointer to an array where the gravity vector data will be stored.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Status of the gravity vector data retrieval operation.
+\begin{DoxyItemize}
+\item LSM6\+DSV16\+X\+\_\+\+OK if the operation is successful.
+\item LSM6\+DSV16\+X\+\_\+\+ERROR if the operation fails. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\Hypertarget{class_l_s_m6_d_s_v16_x_adda62079160c4f2352787a73b9f3f8a6}\label{class_l_s_m6_d_s_v16_x_adda62079160c4f2352787a73b9f3f8a6} 
+\index{LSM6DSV16X@{LSM6DSV16X}!FIFO\_Get\_Gyroscope\_Bias@{FIFO\_Get\_Gyroscope\_Bias}}
+\index{FIFO\_Get\_Gyroscope\_Bias@{FIFO\_Get\_Gyroscope\_Bias}!LSM6DSV16X@{LSM6DSV16X}}
+\doxysubsubsection{\texorpdfstring{FIFO\_Get\_Gyroscope\_Bias()}{FIFO\_Get\_Gyroscope\_Bias()}}
+{\footnotesize\ttfamily LSM6\+DSV16\+XStatus\+Type\+Def LSM6\+DSV16\+X\+::\+FIFO\+\_\+\+Get\+\_\+\+Gyroscope\+\_\+\+Bias (\begin{DoxyParamCaption}\item[{float \texorpdfstring{$\ast$}{*}}]{gbias }\end{DoxyParamCaption})}
+
+
+
+Get the gyroscope bias data from FIFO. 
+
+Retrieves the gyroscope bias data from the FIFO of the \doxylink{class_l_s_m6_d_s_v16_x}{LSM6\+DSV16X} device.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ out}}  & {\em gbias} & Pointer to an array where the gyroscope bias data will be stored.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Status of the gyroscope bias data retrieval operation.
+\begin{DoxyItemize}
+\item LSM6\+DSV16\+X\+\_\+\+OK if the operation is successful.
+\item LSM6\+DSV16\+X\+\_\+\+ERROR if the operation fails. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\Hypertarget{class_l_s_m6_d_s_v16_x_a55144ed23dba93e2eee08f2d4b441cbf}\label{class_l_s_m6_d_s_v16_x_a55144ed23dba93e2eee08f2d4b441cbf} 
+\index{LSM6DSV16X@{LSM6DSV16X}!FIFO\_Get\_Num\_Samples@{FIFO\_Get\_Num\_Samples}}
+\index{FIFO\_Get\_Num\_Samples@{FIFO\_Get\_Num\_Samples}!LSM6DSV16X@{LSM6DSV16X}}
+\doxysubsubsection{\texorpdfstring{FIFO\_Get\_Num\_Samples()}{FIFO\_Get\_Num\_Samples()}}
+{\footnotesize\ttfamily LSM6\+DSV16\+XStatus\+Type\+Def LSM6\+DSV16\+X\+::\+FIFO\+\_\+\+Get\+\_\+\+Num\+\_\+\+Samples (\begin{DoxyParamCaption}\item[{uint16\+\_\+t \texorpdfstring{$\ast$}{*}}]{Num\+Samples }\end{DoxyParamCaption})}
+
+
+
+Get the number of samples stored in the FIFO. 
+
+This function retrieves the number of samples currently stored in the FIFO buffer.
+
+
+\begin{DoxyParams}{Parameters}
+{\em Num\+Samples} & Pointer to store the number of samples.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Status of the operation.
+\begin{DoxyItemize}
+\item LSM6\+DSV16\+X\+\_\+\+OK if the operation is successful.
+\item LSM6\+DSV16\+X\+\_\+\+ERROR if the operation fails. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\Hypertarget{class_l_s_m6_d_s_v16_x_ac60d91179dfd7e716263fd4fcee0269b}\label{class_l_s_m6_d_s_v16_x_ac60d91179dfd7e716263fd4fcee0269b} 
+\index{LSM6DSV16X@{LSM6DSV16X}!FIFO\_Get\_Rotation\_Vector@{FIFO\_Get\_Rotation\_Vector}}
+\index{FIFO\_Get\_Rotation\_Vector@{FIFO\_Get\_Rotation\_Vector}!LSM6DSV16X@{LSM6DSV16X}}
+\doxysubsubsection{\texorpdfstring{FIFO\_Get\_Rotation\_Vector()}{FIFO\_Get\_Rotation\_Vector()}}
+{\footnotesize\ttfamily LSM6\+DSV16\+XStatus\+Type\+Def LSM6\+DSV16\+X\+::\+FIFO\+\_\+\+Get\+\_\+\+Rotation\+\_\+\+Vector (\begin{DoxyParamCaption}\item[{float \texorpdfstring{$\ast$}{*}}]{rvec }\end{DoxyParamCaption})}
+
+
+
+Get the rotation vector data from the FIFO. 
+
+This function retrieves the rotation vector data from the FIFO buffer.
+
+
+\begin{DoxyParams}{Parameters}
+{\em rvec} & Pointer to an array to store the rotation vector data.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Status of the operation.
+\begin{DoxyItemize}
+\item LSM6\+DSV16\+X\+\_\+\+OK if the operation is successful.
+\item LSM6\+DSV16\+X\+\_\+\+ERROR if the operation fails. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\Hypertarget{class_l_s_m6_d_s_v16_x_a41464b5e4afbbb70955350ee214dd705}\label{class_l_s_m6_d_s_v16_x_a41464b5e4afbbb70955350ee214dd705} 
+\index{LSM6DSV16X@{LSM6DSV16X}!FIFO\_Get\_Status@{FIFO\_Get\_Status}}
+\index{FIFO\_Get\_Status@{FIFO\_Get\_Status}!LSM6DSV16X@{LSM6DSV16X}}
+\doxysubsubsection{\texorpdfstring{FIFO\_Get\_Status()}{FIFO\_Get\_Status()}}
+{\footnotesize\ttfamily LSM6\+DSV16\+XStatus\+Type\+Def LSM6\+DSV16\+X\+::\+FIFO\+\_\+\+Get\+\_\+\+Status (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structlsm6dsv16x__fifo__status__t}{lsm6dsv16x\+\_\+fifo\+\_\+status\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{Status }\end{DoxyParamCaption})}
+
+
+
+Get the status of the FIFO. 
+
+Retrieves the status of the FIFO in the \doxylink{class_l_s_m6_d_s_v16_x}{LSM6\+DSV16X} device.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ out}}  & {\em Status} & Pointer to a structure where the FIFO status will be stored.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Status of the FIFO status retrieval operation.
+\begin{DoxyItemize}
+\item LSM6\+DSV16\+X\+\_\+\+OK if the operation is successful.
+\item LSM6\+DSV16\+X\+\_\+\+ERROR if the operation fails. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\Hypertarget{class_l_s_m6_d_s_v16_x_a4b9b5c306cfccce7e7c289cf788dcb3e}\label{class_l_s_m6_d_s_v16_x_a4b9b5c306cfccce7e7c289cf788dcb3e} 
+\index{LSM6DSV16X@{LSM6DSV16X}!FIFO\_Get\_Tag@{FIFO\_Get\_Tag}}
+\index{FIFO\_Get\_Tag@{FIFO\_Get\_Tag}!LSM6DSV16X@{LSM6DSV16X}}
+\doxysubsubsection{\texorpdfstring{FIFO\_Get\_Tag()}{FIFO\_Get\_Tag()}}
+{\footnotesize\ttfamily LSM6\+DSV16\+XStatus\+Type\+Def LSM6\+DSV16\+X\+::\+FIFO\+\_\+\+Get\+\_\+\+Tag (\begin{DoxyParamCaption}\item[{uint8\+\_\+t \texorpdfstring{$\ast$}{*}}]{Tag }\end{DoxyParamCaption})}
+
+
+
+Get the tag of the next data set stored in the FIFO. 
+
+This function retrieves the tag of the next data set stored in the FIFO buffer.
+
+
+\begin{DoxyParams}{Parameters}
+{\em Tag} & Pointer to store the tag value.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Status of the operation.
+\begin{DoxyItemize}
+\item LSM6\+DSV16\+X\+\_\+\+OK if the operation is successful.
+\item LSM6\+DSV16\+X\+\_\+\+ERROR if the operation fails. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\Hypertarget{class_l_s_m6_d_s_v16_x_adabae6154f6b4225795feabcdf0432ae}\label{class_l_s_m6_d_s_v16_x_adabae6154f6b4225795feabcdf0432ae} 
+\index{LSM6DSV16X@{LSM6DSV16X}!FIFO\_Get\_Timestamp@{FIFO\_Get\_Timestamp}}
+\index{FIFO\_Get\_Timestamp@{FIFO\_Get\_Timestamp}!LSM6DSV16X@{LSM6DSV16X}}
+\doxysubsubsection{\texorpdfstring{FIFO\_Get\_Timestamp()}{FIFO\_Get\_Timestamp()}}
+{\footnotesize\ttfamily LSM6\+DSV16\+XStatus\+Type\+Def LSM6\+DSV16\+X\+::\+FIFO\+\_\+\+Get\+\_\+\+Timestamp (\begin{DoxyParamCaption}\item[{uint32\+\_\+t \texorpdfstring{$\ast$}{*}}]{timestamp }\end{DoxyParamCaption})}
+
+
+
+Get the timestamp from FIFO. 
+
+Retrieves the timestamp data from the FIFO of the \doxylink{class_l_s_m6_d_s_v16_x}{LSM6\+DSV16X} device.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ out}}  & {\em timestamp} & Pointer to a variable where the timestamp will be stored.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Status of the timestamp data retrieval operation.
+\begin{DoxyItemize}
+\item LSM6\+DSV16\+X\+\_\+\+OK if the operation is successful.
+\item LSM6\+DSV16\+X\+\_\+\+ERROR if the operation fails. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\Hypertarget{class_l_s_m6_d_s_v16_x_a6ee63bd874cde0b40de5caf3c78f2736}\label{class_l_s_m6_d_s_v16_x_a6ee63bd874cde0b40de5caf3c78f2736} 
+\index{LSM6DSV16X@{LSM6DSV16X}!FIFO\_Get\_X\_Axes@{FIFO\_Get\_X\_Axes}}
+\index{FIFO\_Get\_X\_Axes@{FIFO\_Get\_X\_Axes}!LSM6DSV16X@{LSM6DSV16X}}
+\doxysubsubsection{\texorpdfstring{FIFO\_Get\_X\_Axes()}{FIFO\_Get\_X\_Axes()}}
+{\footnotesize\ttfamily LSM6\+DSV16\+XStatus\+Type\+Def LSM6\+DSV16\+X\+::\+FIFO\+\_\+\+Get\+\_\+\+X\+\_\+\+Axes (\begin{DoxyParamCaption}\item[{int32\+\_\+t \texorpdfstring{$\ast$}{*}}]{Acceleration }\end{DoxyParamCaption})}
+
+
+
+Get the X-\/axis acceleration data from FIFO. 
+
+Retrieves the X-\/axis acceleration data from the FIFO of the \doxylink{class_l_s_m6_d_s_v16_x}{LSM6\+DSV16X} device.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ out}}  & {\em Acceleration} & Pointer to an array where the X-\/axis acceleration data will be stored.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Status of the X-\/axis acceleration data retrieval operation.
+\begin{DoxyItemize}
+\item LSM6\+DSV16\+X\+\_\+\+OK if the operation is successful.
+\item LSM6\+DSV16\+X\+\_\+\+ERROR if the operation fails. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\Hypertarget{class_l_s_m6_d_s_v16_x_a51361fb1f7b776260c499c2f9d5b62ce}\label{class_l_s_m6_d_s_v16_x_a51361fb1f7b776260c499c2f9d5b62ce} 
+\index{LSM6DSV16X@{LSM6DSV16X}!FIFO\_Reset@{FIFO\_Reset}}
+\index{FIFO\_Reset@{FIFO\_Reset}!LSM6DSV16X@{LSM6DSV16X}}
+\doxysubsubsection{\texorpdfstring{FIFO\_Reset()}{FIFO\_Reset()}}
+{\footnotesize\ttfamily LSM6\+DSV16\+XStatus\+Type\+Def LSM6\+DSV16\+X\+::\+FIFO\+\_\+\+Reset (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Reset the FIFO of the \doxylink{class_l_s_m6_d_s_v16_x}{LSM6\+DSV16X} device. 
+
+Resets the FIFO and sets the FIFO mode to the specified mode.
+
+\begin{DoxyReturn}{Returns}
+Status of the FIFO reset operation.
+\begin{DoxyItemize}
+\item LSM6\+DSV16\+X\+\_\+\+OK if the FIFO reset is successful.
+\item LSM6\+DSV16\+X\+\_\+\+ERROR if the FIFO reset fails. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\Hypertarget{class_l_s_m6_d_s_v16_x_a459cd35e12a218f5fa35e8ede8bbfc8c}\label{class_l_s_m6_d_s_v16_x_a459cd35e12a218f5fa35e8ede8bbfc8c} 
+\index{LSM6DSV16X@{LSM6DSV16X}!FIFO\_Set\_G\_BDR@{FIFO\_Set\_G\_BDR}}
+\index{FIFO\_Set\_G\_BDR@{FIFO\_Set\_G\_BDR}!LSM6DSV16X@{LSM6DSV16X}}
+\doxysubsubsection{\texorpdfstring{FIFO\_Set\_G\_BDR()}{FIFO\_Set\_G\_BDR()}}
+{\footnotesize\ttfamily LSM6\+DSV16\+XStatus\+Type\+Def LSM6\+DSV16\+X\+::\+FIFO\+\_\+\+Set\+\_\+\+G\+\_\+\+BDR (\begin{DoxyParamCaption}\item[{float}]{Bdr }\end{DoxyParamCaption})}
+
+
+
+Set the batch data rate for gyroscope in FIFO. 
+
+Sets the batch data rate for gyroscope data in the FIFO of the \doxylink{class_l_s_m6_d_s_v16_x}{LSM6\+DSV16X} device.
+
+
+\begin{DoxyParams}{Parameters}
+{\em Bdr} & Batch data rate to set for gyroscope.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Status of the batch data rate setting operation.
+\begin{DoxyItemize}
+\item LSM6\+DSV16\+X\+\_\+\+OK if the operation is successful.
+\item LSM6\+DSV16\+X\+\_\+\+ERROR if the operation fails. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\Hypertarget{class_l_s_m6_d_s_v16_x_aef0c8437fc90987c3dcb6ace3c4123f9}\label{class_l_s_m6_d_s_v16_x_aef0c8437fc90987c3dcb6ace3c4123f9} 
+\index{LSM6DSV16X@{LSM6DSV16X}!FIFO\_Set\_INT1\_FIFO\_Full@{FIFO\_Set\_INT1\_FIFO\_Full}}
+\index{FIFO\_Set\_INT1\_FIFO\_Full@{FIFO\_Set\_INT1\_FIFO\_Full}!LSM6DSV16X@{LSM6DSV16X}}
+\doxysubsubsection{\texorpdfstring{FIFO\_Set\_INT1\_FIFO\_Full()}{FIFO\_Set\_INT1\_FIFO\_Full()}}
+{\footnotesize\ttfamily LSM6\+DSV16\+XStatus\+Type\+Def LSM6\+DSV16\+X\+::\+FIFO\+\_\+\+Set\+\_\+\+INT1\+\_\+\+FIFO\+\_\+\+Full (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{Status }\end{DoxyParamCaption})}
+
+
+
+Set the interrupt configuration for FIFO full on INT1 pin. 
+
+Configures the interrupt settings for FIFO full on the INT1 pin of the \doxylink{class_l_s_m6_d_s_v16_x}{LSM6\+DSV16X} device.
+
+
+\begin{DoxyParams}{Parameters}
+{\em Status} & Status to set for FIFO full interrupt on INT1 pin.
+\begin{DoxyItemize}
+\item 0x00 to disable FIFO full interrupt on INT1 pin.
+\item 0x01 to enable FIFO full interrupt on INT1 pin.
+\end{DoxyItemize}\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Status of the interrupt configuration setting operation.
+\begin{DoxyItemize}
+\item LSM6\+DSV16\+X\+\_\+\+OK if the operation is successful.
+\item LSM6\+DSV16\+X\+\_\+\+ERROR if the operation fails. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\Hypertarget{class_l_s_m6_d_s_v16_x_ac47fa4e79a73e5e289c7b02d5c2d26f4}\label{class_l_s_m6_d_s_v16_x_ac47fa4e79a73e5e289c7b02d5c2d26f4} 
+\index{LSM6DSV16X@{LSM6DSV16X}!FIFO\_Set\_INT2\_FIFO\_Full@{FIFO\_Set\_INT2\_FIFO\_Full}}
+\index{FIFO\_Set\_INT2\_FIFO\_Full@{FIFO\_Set\_INT2\_FIFO\_Full}!LSM6DSV16X@{LSM6DSV16X}}
+\doxysubsubsection{\texorpdfstring{FIFO\_Set\_INT2\_FIFO\_Full()}{FIFO\_Set\_INT2\_FIFO\_Full()}}
+{\footnotesize\ttfamily LSM6\+DSV16\+XStatus\+Type\+Def LSM6\+DSV16\+X\+::\+FIFO\+\_\+\+Set\+\_\+\+INT2\+\_\+\+FIFO\+\_\+\+Full (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{Status }\end{DoxyParamCaption})}
+
+
+
+Set the interrupt configuration for FIFO full on INT2 pin. 
+
+Configures the interrupt settings for FIFO full on the INT2 pin of the \doxylink{class_l_s_m6_d_s_v16_x}{LSM6\+DSV16X} device.
+
+
+\begin{DoxyParams}{Parameters}
+{\em Status} & Status to set for FIFO full interrupt on INT2 pin.
+\begin{DoxyItemize}
+\item 0x00 to disable FIFO full interrupt on INT2 pin.
+\item 0x01 to enable FIFO full interrupt on INT2 pin.
+\end{DoxyItemize}\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Status of the interrupt configuration setting operation.
+\begin{DoxyItemize}
+\item LSM6\+DSV16\+X\+\_\+\+OK if the operation is successful.
+\item LSM6\+DSV16\+X\+\_\+\+ERROR if the operation fails. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\Hypertarget{class_l_s_m6_d_s_v16_x_afb000a567cda374eade0324647602bfa}\label{class_l_s_m6_d_s_v16_x_afb000a567cda374eade0324647602bfa} 
+\index{LSM6DSV16X@{LSM6DSV16X}!FIFO\_Set\_Mode@{FIFO\_Set\_Mode}}
+\index{FIFO\_Set\_Mode@{FIFO\_Set\_Mode}!LSM6DSV16X@{LSM6DSV16X}}
+\doxysubsubsection{\texorpdfstring{FIFO\_Set\_Mode()}{FIFO\_Set\_Mode()}}
+{\footnotesize\ttfamily LSM6\+DSV16\+XStatus\+Type\+Def LSM6\+DSV16\+X\+::\+FIFO\+\_\+\+Set\+\_\+\+Mode (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{Mode }\end{DoxyParamCaption})}
+
+
+
+Set the FIFO mode. 
+
+Sets the mode of the FIFO in the \doxylink{class_l_s_m6_d_s_v16_x}{LSM6\+DSV16X} device.
+
+
+\begin{DoxyParams}{Parameters}
+{\em Mode} & Mode to set for the FIFO.
+\begin{DoxyItemize}
+\item 0\+: Bypass mode
+\item 1\+: FIFO mode
+\item 3\+: Stream-\/to-\/\+FIFO mode
+\item 4\+: Bypass-\/to-\/stream mode
+\item 6\+: Stream mode
+\item 7\+: Bypass-\/to-\/\+FIFO mode
+\end{DoxyItemize}\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Status of the FIFO mode setting operation.
+\begin{DoxyItemize}
+\item LSM6\+DSV16\+X\+\_\+\+OK if the operation is successful.
+\item LSM6\+DSV16\+X\+\_\+\+ERROR if the operation fails. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\Hypertarget{class_l_s_m6_d_s_v16_x_a62165ff52404f8796adea5409e0bf4fb}\label{class_l_s_m6_d_s_v16_x_a62165ff52404f8796adea5409e0bf4fb} 
+\index{LSM6DSV16X@{LSM6DSV16X}!FIFO\_Set\_Stop\_On\_Fth@{FIFO\_Set\_Stop\_On\_Fth}}
+\index{FIFO\_Set\_Stop\_On\_Fth@{FIFO\_Set\_Stop\_On\_Fth}!LSM6DSV16X@{LSM6DSV16X}}
+\doxysubsubsection{\texorpdfstring{FIFO\_Set\_Stop\_On\_Fth()}{FIFO\_Set\_Stop\_On\_Fth()}}
+{\footnotesize\ttfamily LSM6\+DSV16\+XStatus\+Type\+Def LSM6\+DSV16\+X\+::\+FIFO\+\_\+\+Set\+\_\+\+Stop\+\_\+\+On\+\_\+\+Fth (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{Status }\end{DoxyParamCaption})}
+
+
+
+Set the stop on FIFO threshold status. 
+
+Configures whether to stop collecting data when the FIFO threshold is reached.
+
+
+\begin{DoxyParams}{Parameters}
+{\em Status} & Status to set for stop on FIFO threshold.
+\begin{DoxyItemize}
+\item 0x00 to disable stop on FIFO threshold.
+\item 0x01 to enable stop on FIFO threshold.
+\end{DoxyItemize}\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Status of the stop on FIFO threshold setting operation.
+\begin{DoxyItemize}
+\item LSM6\+DSV16\+X\+\_\+\+OK if the operation is successful.
+\item LSM6\+DSV16\+X\+\_\+\+ERROR if the operation fails. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\Hypertarget{class_l_s_m6_d_s_v16_x_af636e29b9b520393beaa74c489c2ea7b}\label{class_l_s_m6_d_s_v16_x_af636e29b9b520393beaa74c489c2ea7b} 
+\index{LSM6DSV16X@{LSM6DSV16X}!FIFO\_Set\_Timestamp\_Decimation@{FIFO\_Set\_Timestamp\_Decimation}}
+\index{FIFO\_Set\_Timestamp\_Decimation@{FIFO\_Set\_Timestamp\_Decimation}!LSM6DSV16X@{LSM6DSV16X}}
+\doxysubsubsection{\texorpdfstring{FIFO\_Set\_Timestamp\_Decimation()}{FIFO\_Set\_Timestamp\_Decimation()}}
+{\footnotesize\ttfamily LSM6\+DSV16\+XStatus\+Type\+Def LSM6\+DSV16\+X\+::\+FIFO\+\_\+\+Set\+\_\+\+Timestamp\+\_\+\+Decimation (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{decimation }\end{DoxyParamCaption})}
+
+
+
+Set the timestamp decimation in FIFO. 
+
+Sets the decimation factor for the timestamp in the FIFO of the \doxylink{class_l_s_m6_d_s_v16_x}{LSM6\+DSV16X} device.
+
+
+\begin{DoxyParams}{Parameters}
+{\em decimation} & Decimation factor to set for the timestamp.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Status of the timestamp decimation setting operation.
+\begin{DoxyItemize}
+\item LSM6\+DSV16\+X\+\_\+\+OK if the operation is successful.
+\item LSM6\+DSV16\+X\+\_\+\+ERROR if the operation fails. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\Hypertarget{class_l_s_m6_d_s_v16_x_a6a2d1cdd641e926868808c1a99ae1941}\label{class_l_s_m6_d_s_v16_x_a6a2d1cdd641e926868808c1a99ae1941} 
+\index{LSM6DSV16X@{LSM6DSV16X}!FIFO\_Set\_Watermark\_Level@{FIFO\_Set\_Watermark\_Level}}
+\index{FIFO\_Set\_Watermark\_Level@{FIFO\_Set\_Watermark\_Level}!LSM6DSV16X@{LSM6DSV16X}}
+\doxysubsubsection{\texorpdfstring{FIFO\_Set\_Watermark\_Level()}{FIFO\_Set\_Watermark\_Level()}}
+{\footnotesize\ttfamily LSM6\+DSV16\+XStatus\+Type\+Def LSM6\+DSV16\+X\+::\+FIFO\+\_\+\+Set\+\_\+\+Watermark\+\_\+\+Level (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{Watermark }\end{DoxyParamCaption})}
+
+
+
+Set the watermark level for the FIFO. 
+
+Sets the watermark level for the FIFO of the \doxylink{class_l_s_m6_d_s_v16_x}{LSM6\+DSV16X} device.
+
+
+\begin{DoxyParams}{Parameters}
+{\em Watermark} & Watermark level to set for the FIFO.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Status of the watermark level setting operation.
+\begin{DoxyItemize}
+\item LSM6\+DSV16\+X\+\_\+\+OK if the operation is successful.
+\item LSM6\+DSV16\+X\+\_\+\+ERROR if the operation fails. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\Hypertarget{class_l_s_m6_d_s_v16_x_a6363459ee69098334fb6cdb2e72ee654}\label{class_l_s_m6_d_s_v16_x_a6363459ee69098334fb6cdb2e72ee654} 
+\index{LSM6DSV16X@{LSM6DSV16X}!FIFO\_Set\_X\_BDR@{FIFO\_Set\_X\_BDR}}
+\index{FIFO\_Set\_X\_BDR@{FIFO\_Set\_X\_BDR}!LSM6DSV16X@{LSM6DSV16X}}
+\doxysubsubsection{\texorpdfstring{FIFO\_Set\_X\_BDR()}{FIFO\_Set\_X\_BDR()}}
+{\footnotesize\ttfamily LSM6\+DSV16\+XStatus\+Type\+Def LSM6\+DSV16\+X\+::\+FIFO\+\_\+\+Set\+\_\+\+X\+\_\+\+BDR (\begin{DoxyParamCaption}\item[{float}]{Bdr }\end{DoxyParamCaption})}
+
+
+
+Set the batch data rate for X-\/axis acceleration in FIFO. 
+
+Sets the batch data rate for X-\/axis acceleration data in the FIFO of the \doxylink{class_l_s_m6_d_s_v16_x}{LSM6\+DSV16X} device.
+
+
+\begin{DoxyParams}{Parameters}
+{\em Bdr} & Batch data rate to set for X-\/axis acceleration.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Status of the batch data rate setting operation.
+\begin{DoxyItemize}
+\item LSM6\+DSV16\+X\+\_\+\+OK if the operation is successful.
+\item LSM6\+DSV16\+X\+\_\+\+ERROR if the operation fails. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\Hypertarget{class_l_s_m6_d_s_v16_x_af76fc7d446cadeb038127dbe3769928d}\label{class_l_s_m6_d_s_v16_x_af76fc7d446cadeb038127dbe3769928d} 
+\index{LSM6DSV16X@{LSM6DSV16X}!Get\_6D\_Orientation\_XH@{Get\_6D\_Orientation\_XH}}
+\index{Get\_6D\_Orientation\_XH@{Get\_6D\_Orientation\_XH}!LSM6DSV16X@{LSM6DSV16X}}
+\doxysubsubsection{\texorpdfstring{Get\_6D\_Orientation\_XH()}{Get\_6D\_Orientation\_XH()}}
+{\footnotesize\ttfamily LSM6\+DSV16\+XStatus\+Type\+Def LSM6\+DSV16\+X\+::\+Get\+\_\+6\+D\+\_\+\+Orientation\+\_\+\+XH (\begin{DoxyParamCaption}\item[{uint8\+\_\+t \texorpdfstring{$\ast$}{*}}]{XHigh }\end{DoxyParamCaption})}
+
+
+
+Get the high byte of the X axis from the 6D orientation source register. 
+
+This function reads the high byte of the X axis from the 6D orientation source register.
+
+
+\begin{DoxyParams}{Parameters}
+{\em XHigh} & Pointer to store the high byte of the X axis.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Status of the operation.
+\begin{DoxyItemize}
+\item LSM6\+DSV16\+X\+\_\+\+OK if the operation is successful.
+\item LSM6\+DSV16\+X\+\_\+\+ERROR if the operation fails. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\Hypertarget{class_l_s_m6_d_s_v16_x_af127e8bc02813c8dd26ba0d421ce2cc9}\label{class_l_s_m6_d_s_v16_x_af127e8bc02813c8dd26ba0d421ce2cc9} 
+\index{LSM6DSV16X@{LSM6DSV16X}!Get\_6D\_Orientation\_XL@{Get\_6D\_Orientation\_XL}}
+\index{Get\_6D\_Orientation\_XL@{Get\_6D\_Orientation\_XL}!LSM6DSV16X@{LSM6DSV16X}}
+\doxysubsubsection{\texorpdfstring{Get\_6D\_Orientation\_XL()}{Get\_6D\_Orientation\_XL()}}
+{\footnotesize\ttfamily LSM6\+DSV16\+XStatus\+Type\+Def LSM6\+DSV16\+X\+::\+Get\+\_\+6\+D\+\_\+\+Orientation\+\_\+\+XL (\begin{DoxyParamCaption}\item[{uint8\+\_\+t \texorpdfstring{$\ast$}{*}}]{XLow }\end{DoxyParamCaption})}
+
+
+
+Get the low byte of the X axis from the 6D orientation source register. 
+
+This function reads the low byte of the X axis from the 6D orientation source register.
+
+
+\begin{DoxyParams}{Parameters}
+{\em XLow} & Pointer to store the low byte of the X axis.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Status of the operation.
+\begin{DoxyItemize}
+\item LSM6\+DSV16\+X\+\_\+\+OK if the operation is successful.
+\item LSM6\+DSV16\+X\+\_\+\+ERROR if the operation fails. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\Hypertarget{class_l_s_m6_d_s_v16_x_a0b306ad3f895e05a513d930f38c5c680}\label{class_l_s_m6_d_s_v16_x_a0b306ad3f895e05a513d930f38c5c680} 
+\index{LSM6DSV16X@{LSM6DSV16X}!Get\_6D\_Orientation\_YH@{Get\_6D\_Orientation\_YH}}
+\index{Get\_6D\_Orientation\_YH@{Get\_6D\_Orientation\_YH}!LSM6DSV16X@{LSM6DSV16X}}
+\doxysubsubsection{\texorpdfstring{Get\_6D\_Orientation\_YH()}{Get\_6D\_Orientation\_YH()}}
+{\footnotesize\ttfamily LSM6\+DSV16\+XStatus\+Type\+Def LSM6\+DSV16\+X\+::\+Get\+\_\+6\+D\+\_\+\+Orientation\+\_\+\+YH (\begin{DoxyParamCaption}\item[{uint8\+\_\+t \texorpdfstring{$\ast$}{*}}]{YHigh }\end{DoxyParamCaption})}
+
+
+
+Get the high byte of the Y axis from the 6D orientation source register. 
+
+This function reads the high byte of the Y axis from the 6D orientation source register.
+
+
+\begin{DoxyParams}{Parameters}
+{\em YHigh} & Pointer to store the high byte of the Y axis.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Status of the operation.
+\begin{DoxyItemize}
+\item LSM6\+DSV16\+X\+\_\+\+OK if the operation is successful.
+\item LSM6\+DSV16\+X\+\_\+\+ERROR if the operation fails. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\Hypertarget{class_l_s_m6_d_s_v16_x_ad6a590199f1969d72cd342d7e2f5e6ff}\label{class_l_s_m6_d_s_v16_x_ad6a590199f1969d72cd342d7e2f5e6ff} 
+\index{LSM6DSV16X@{LSM6DSV16X}!Get\_6D\_Orientation\_YL@{Get\_6D\_Orientation\_YL}}
+\index{Get\_6D\_Orientation\_YL@{Get\_6D\_Orientation\_YL}!LSM6DSV16X@{LSM6DSV16X}}
+\doxysubsubsection{\texorpdfstring{Get\_6D\_Orientation\_YL()}{Get\_6D\_Orientation\_YL()}}
+{\footnotesize\ttfamily LSM6\+DSV16\+XStatus\+Type\+Def LSM6\+DSV16\+X\+::\+Get\+\_\+6\+D\+\_\+\+Orientation\+\_\+\+YL (\begin{DoxyParamCaption}\item[{uint8\+\_\+t \texorpdfstring{$\ast$}{*}}]{YLow }\end{DoxyParamCaption})}
+
+
+
+Get the low byte of the Y axis from the 6D orientation source register. 
+
+This function reads the low byte of the Y axis from the 6D orientation source register.
+
+
+\begin{DoxyParams}{Parameters}
+{\em YLow} & Pointer to store the low byte of the Y axis.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Status of the operation.
+\begin{DoxyItemize}
+\item LSM6\+DSV16\+X\+\_\+\+OK if the operation is successful.
+\item LSM6\+DSV16\+X\+\_\+\+ERROR if the operation fails. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\Hypertarget{class_l_s_m6_d_s_v16_x_a70e5b67c4ea06744f13fd9cd4622d034}\label{class_l_s_m6_d_s_v16_x_a70e5b67c4ea06744f13fd9cd4622d034} 
+\index{LSM6DSV16X@{LSM6DSV16X}!Get\_6D\_Orientation\_ZH@{Get\_6D\_Orientation\_ZH}}
+\index{Get\_6D\_Orientation\_ZH@{Get\_6D\_Orientation\_ZH}!LSM6DSV16X@{LSM6DSV16X}}
+\doxysubsubsection{\texorpdfstring{Get\_6D\_Orientation\_ZH()}{Get\_6D\_Orientation\_ZH()}}
+{\footnotesize\ttfamily LSM6\+DSV16\+XStatus\+Type\+Def LSM6\+DSV16\+X\+::\+Get\+\_\+6\+D\+\_\+\+Orientation\+\_\+\+ZH (\begin{DoxyParamCaption}\item[{uint8\+\_\+t \texorpdfstring{$\ast$}{*}}]{ZHigh }\end{DoxyParamCaption})}
+
+
+
+Get the high byte of the Z axis from the 6D orientation source register. 
+
+This function reads the high byte of the Z axis from the 6D orientation source register.
+
+
+\begin{DoxyParams}{Parameters}
+{\em ZHigh} & Pointer to store the high byte of the Z axis.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Status of the operation.
+\begin{DoxyItemize}
+\item LSM6\+DSV16\+X\+\_\+\+OK if the operation is successful.
+\item LSM6\+DSV16\+X\+\_\+\+ERROR if the operation fails. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\Hypertarget{class_l_s_m6_d_s_v16_x_a817f68304605abf551bf88ecc700f442}\label{class_l_s_m6_d_s_v16_x_a817f68304605abf551bf88ecc700f442} 
+\index{LSM6DSV16X@{LSM6DSV16X}!Get\_6D\_Orientation\_ZL@{Get\_6D\_Orientation\_ZL}}
+\index{Get\_6D\_Orientation\_ZL@{Get\_6D\_Orientation\_ZL}!LSM6DSV16X@{LSM6DSV16X}}
+\doxysubsubsection{\texorpdfstring{Get\_6D\_Orientation\_ZL()}{Get\_6D\_Orientation\_ZL()}}
+{\footnotesize\ttfamily LSM6\+DSV16\+XStatus\+Type\+Def LSM6\+DSV16\+X\+::\+Get\+\_\+6\+D\+\_\+\+Orientation\+\_\+\+ZL (\begin{DoxyParamCaption}\item[{uint8\+\_\+t \texorpdfstring{$\ast$}{*}}]{ZLow }\end{DoxyParamCaption})}
+
+
+
+Get the low byte of the Z axis from the 6D orientation source register. 
+
+This function reads the low byte of the Z axis from the 6D orientation source register.
+
+
+\begin{DoxyParams}{Parameters}
+{\em ZLow} & Pointer to store the low byte of the Z axis.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Status of the operation.
+\begin{DoxyItemize}
+\item LSM6\+DSV16\+X\+\_\+\+OK if the operation is successful.
+\item LSM6\+DSV16\+X\+\_\+\+ERROR if the operation fails. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\Hypertarget{class_l_s_m6_d_s_v16_x_a53c3663af4299e1524c4bf4fa5ee2bde}\label{class_l_s_m6_d_s_v16_x_a53c3663af4299e1524c4bf4fa5ee2bde} 
+\index{LSM6DSV16X@{LSM6DSV16X}!Get\_G\_Axes@{Get\_G\_Axes}}
+\index{Get\_G\_Axes@{Get\_G\_Axes}!LSM6DSV16X@{LSM6DSV16X}}
+\doxysubsubsection{\texorpdfstring{Get\_G\_Axes()}{Get\_G\_Axes()}}
+{\footnotesize\ttfamily LSM6\+DSV16\+XStatus\+Type\+Def LSM6\+DSV16\+X\+::\+Get\+\_\+\+G\+\_\+\+Axes (\begin{DoxyParamCaption}\item[{int32\+\_\+t \texorpdfstring{$\ast$}{*}}]{Angular\+Rate }\end{DoxyParamCaption})}
+
+
+
+Get the angular rate values from the gyroscope. 
+
+This function retrieves the angular rate values from the gyroscope, scaled according to the selected full-\/scale range (FS).
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ out}}  & {\em Angular\+Rate} & Pointer to store the angular rate values \mbox{[}X, Y, Z\mbox{]} in dps (degrees per second).\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Status of the operation.
+\begin{DoxyItemize}
+\item LSM6\+DSV16\+X\+\_\+\+OK if the operation is successful.
+\item LSM6\+DSV16\+X\+\_\+\+ERROR if the operation fails. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\Hypertarget{class_l_s_m6_d_s_v16_x_a02fc48efc921b0bc8e576c8d758770b5}\label{class_l_s_m6_d_s_v16_x_a02fc48efc921b0bc8e576c8d758770b5} 
+\index{LSM6DSV16X@{LSM6DSV16X}!Get\_G\_AxesRaw@{Get\_G\_AxesRaw}}
+\index{Get\_G\_AxesRaw@{Get\_G\_AxesRaw}!LSM6DSV16X@{LSM6DSV16X}}
+\doxysubsubsection{\texorpdfstring{Get\_G\_AxesRaw()}{Get\_G\_AxesRaw()}}
+{\footnotesize\ttfamily LSM6\+DSV16\+XStatus\+Type\+Def LSM6\+DSV16\+X\+::\+Get\+\_\+\+G\+\_\+\+Axes\+Raw (\begin{DoxyParamCaption}\item[{int16\+\_\+t \texorpdfstring{$\ast$}{*}}]{Value }\end{DoxyParamCaption})}
+
+
+
+Get the raw angular rate values from the gyroscope. 
+
+This function retrieves the raw angular rate values from the gyroscope without any scaling applied.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ out}}  & {\em Value} & Pointer to store the raw angular rate values \mbox{[}X, Y, Z\mbox{]}.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Status of the operation.
+\begin{DoxyItemize}
+\item LSM6\+DSV16\+X\+\_\+\+OK if the operation is successful.
+\item LSM6\+DSV16\+X\+\_\+\+ERROR if the operation fails. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\Hypertarget{class_l_s_m6_d_s_v16_x_a420cbb4cf36bf81545b44742acc763d3}\label{class_l_s_m6_d_s_v16_x_a420cbb4cf36bf81545b44742acc763d3} 
+\index{LSM6DSV16X@{LSM6DSV16X}!Get\_G\_AxesRaw\_When\_Aval@{Get\_G\_AxesRaw\_When\_Aval}}
+\index{Get\_G\_AxesRaw\_When\_Aval@{Get\_G\_AxesRaw\_When\_Aval}!LSM6DSV16X@{LSM6DSV16X}}
+\doxysubsubsection{\texorpdfstring{Get\_G\_AxesRaw\_When\_Aval()}{Get\_G\_AxesRaw\_When\_Aval()}}
+{\footnotesize\ttfamily LSM6\+DSV16\+XStatus\+Type\+Def LSM6\+DSV16\+X\+::\+Get\+\_\+\+G\+\_\+\+Axes\+Raw\+\_\+\+When\+\_\+\+Aval (\begin{DoxyParamCaption}\item[{int16\+\_\+t \texorpdfstring{$\ast$}{*}}]{Value }\end{DoxyParamCaption})}
+
+
+
+Get the gyroscope raw data when data is available. 
+
+This method waits until gyroscope data is available before retrieving the raw data.
+
+
+\begin{DoxyParams}{Parameters}
+{\em Value} & Pointer to an array to store the raw gyroscope data. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+LSM6\+DSV16\+XStatus\+Type\+Def Indicates whether the operation was successful or encountered an error. 
+\end{DoxyReturn}
+\Hypertarget{class_l_s_m6_d_s_v16_x_a86ce712c576b761465e9a2ff87c78a44}\label{class_l_s_m6_d_s_v16_x_a86ce712c576b761465e9a2ff87c78a44} 
+\index{LSM6DSV16X@{LSM6DSV16X}!Get\_G\_DRDY\_Status@{Get\_G\_DRDY\_Status}}
+\index{Get\_G\_DRDY\_Status@{Get\_G\_DRDY\_Status}!LSM6DSV16X@{LSM6DSV16X}}
+\doxysubsubsection{\texorpdfstring{Get\_G\_DRDY\_Status()}{Get\_G\_DRDY\_Status()}}
+{\footnotesize\ttfamily LSM6\+DSV16\+XStatus\+Type\+Def LSM6\+DSV16\+X\+::\+Get\+\_\+\+G\+\_\+\+DRDY\+\_\+\+Status (\begin{DoxyParamCaption}\item[{uint8\+\_\+t \texorpdfstring{$\ast$}{*}}]{Status }\end{DoxyParamCaption})}
+
+
+
+Get the gyroscope data ready (DRDY) status. 
+
+This function retrieves the gyroscope data ready (DRDY) status.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ out}}  & {\em Status} & Pointer to store the gyroscope DRDY status.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Status of the operation.
+\begin{DoxyItemize}
+\item LSM6\+DSV16\+X\+\_\+\+OK if the operation is successful.
+\item LSM6\+DSV16\+X\+\_\+\+ERROR if the operation fails. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\Hypertarget{class_l_s_m6_d_s_v16_x_aa6a163f58cb87292332ffe8c57b5be8a}\label{class_l_s_m6_d_s_v16_x_aa6a163f58cb87292332ffe8c57b5be8a} 
+\index{LSM6DSV16X@{LSM6DSV16X}!Get\_G\_FS@{Get\_G\_FS}}
+\index{Get\_G\_FS@{Get\_G\_FS}!LSM6DSV16X@{LSM6DSV16X}}
+\doxysubsubsection{\texorpdfstring{Get\_G\_FS()}{Get\_G\_FS()}}
+{\footnotesize\ttfamily LSM6\+DSV16\+XStatus\+Type\+Def LSM6\+DSV16\+X\+::\+Get\+\_\+\+G\+\_\+\+FS (\begin{DoxyParamCaption}\item[{int32\+\_\+t \texorpdfstring{$\ast$}{*}}]{Full\+Scale }\end{DoxyParamCaption})}
+
+
+
+Get the full-\/scale range (FS) of the gyroscope. 
+
+This function retrieves the current full-\/scale range (FS) of the gyroscope.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ out}}  & {\em Full\+Scale} & Pointer to store the full-\/scale range (FS) value in dps.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Status of the operation.
+\begin{DoxyItemize}
+\item LSM6\+DSV16\+X\+\_\+\+OK if the operation is successful.
+\item LSM6\+DSV16\+X\+\_\+\+ERROR if the operation fails. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\Hypertarget{class_l_s_m6_d_s_v16_x_a9e6ed07f8b61a856312c94d4de1a651b}\label{class_l_s_m6_d_s_v16_x_a9e6ed07f8b61a856312c94d4de1a651b} 
+\index{LSM6DSV16X@{LSM6DSV16X}!Get\_G\_ODR@{Get\_G\_ODR}}
+\index{Get\_G\_ODR@{Get\_G\_ODR}!LSM6DSV16X@{LSM6DSV16X}}
+\doxysubsubsection{\texorpdfstring{Get\_G\_ODR()}{Get\_G\_ODR()}}
+{\footnotesize\ttfamily LSM6\+DSV16\+XStatus\+Type\+Def LSM6\+DSV16\+X\+::\+Get\+\_\+\+G\+\_\+\+ODR (\begin{DoxyParamCaption}\item[{float \texorpdfstring{$\ast$}{*}}]{Odr }\end{DoxyParamCaption})}
+
+
+
+Get the output data rate (ODR) of the gyroscope. 
+
+This function retrieves the output data rate (ODR) of the gyroscope.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ out}}  & {\em Odr} & Pointer to store the output data rate (ODR) value in Hz.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Status of the operation.
+\begin{DoxyItemize}
+\item LSM6\+DSV16\+X\+\_\+\+OK if the operation is successful.
+\item LSM6\+DSV16\+X\+\_\+\+ERROR if the operation fails. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\Hypertarget{class_l_s_m6_d_s_v16_x_acd667ce63ea43a12daeb44c6124b5e5f}\label{class_l_s_m6_d_s_v16_x_acd667ce63ea43a12daeb44c6124b5e5f} 
+\index{LSM6DSV16X@{LSM6DSV16X}!Get\_G\_Sensitivity@{Get\_G\_Sensitivity}}
+\index{Get\_G\_Sensitivity@{Get\_G\_Sensitivity}!LSM6DSV16X@{LSM6DSV16X}}
+\doxysubsubsection{\texorpdfstring{Get\_G\_Sensitivity()}{Get\_G\_Sensitivity()}}
+{\footnotesize\ttfamily LSM6\+DSV16\+XStatus\+Type\+Def LSM6\+DSV16\+X\+::\+Get\+\_\+\+G\+\_\+\+Sensitivity (\begin{DoxyParamCaption}\item[{float \texorpdfstring{$\ast$}{*}}]{Sensitivity }\end{DoxyParamCaption})}
+
+
+
+Get the sensitivity of the gyroscope. 
+
+This function retrieves the sensitivity of the gyroscope based on the current full scale selection.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ out}}  & {\em Sensitivity} & Pointer to store the sensitivity value.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Status of the operation.
+\begin{DoxyItemize}
+\item LSM6\+DSV16\+X\+\_\+\+OK if the operation is successful.
+\item LSM6\+DSV16\+X\+\_\+\+ERROR if the operation fails. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\Hypertarget{class_l_s_m6_d_s_v16_x_a3f2422232e0713551165d8608761183a}\label{class_l_s_m6_d_s_v16_x_a3f2422232e0713551165d8608761183a} 
+\index{LSM6DSV16X@{LSM6DSV16X}!Get\_MLC\_Output@{Get\_MLC\_Output}}
+\index{Get\_MLC\_Output@{Get\_MLC\_Output}!LSM6DSV16X@{LSM6DSV16X}}
+\doxysubsubsection{\texorpdfstring{Get\_MLC\_Output()}{Get\_MLC\_Output()}}
+{\footnotesize\ttfamily LSM6\+DSV16\+XStatus\+Type\+Def LSM6\+DSV16\+X\+::\+Get\+\_\+\+MLC\+\_\+\+Output (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structlsm6dsv16x__mlc__out__t}{lsm6dsv16x\+\_\+mlc\+\_\+out\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{output }\end{DoxyParamCaption})}
+
+
+
+Get MLC output. 
+
+This function retrieves MLC output.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ out}}  & {\em output} & Pointer to store the MLC output.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Status of the operation.
+\begin{DoxyItemize}
+\item LSM6\+DSV16\+X\+\_\+\+OK if the operation is successful.
+\item LSM6\+DSV16\+X\+\_\+\+ERROR if the operation fails. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\Hypertarget{class_l_s_m6_d_s_v16_x_a8a19466118d40004966366470813e120}\label{class_l_s_m6_d_s_v16_x_a8a19466118d40004966366470813e120} 
+\index{LSM6DSV16X@{LSM6DSV16X}!Get\_MLC\_Status@{Get\_MLC\_Status}}
+\index{Get\_MLC\_Status@{Get\_MLC\_Status}!LSM6DSV16X@{LSM6DSV16X}}
+\doxysubsubsection{\texorpdfstring{Get\_MLC\_Status()}{Get\_MLC\_Status()}}
+{\footnotesize\ttfamily LSM6\+DSV16\+XStatus\+Type\+Def LSM6\+DSV16\+X\+::\+Get\+\_\+\+MLC\+\_\+\+Status (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structlsm6dsv16x__mlc__status__mainpage__t}{lsm6dsv16x\+\_\+mlc\+\_\+status\+\_\+mainpage\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{status }\end{DoxyParamCaption})}
+
+
+
+Get MLC status. 
+
+This function retrieves MLC (Machine Learning Core) status.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ out}}  & {\em status} & Pointer to store the MLC status.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Status of the operation.
+\begin{DoxyItemize}
+\item LSM6\+DSV16\+X\+\_\+\+OK if the operation is successful.
+\item LSM6\+DSV16\+X\+\_\+\+ERROR if the operation fails. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\Hypertarget{class_l_s_m6_d_s_v16_x_a3053b1a75efbf71b59aab56daf21a931}\label{class_l_s_m6_d_s_v16_x_a3053b1a75efbf71b59aab56daf21a931} 
+\index{LSM6DSV16X@{LSM6DSV16X}!Get\_Temp\_ODR@{Get\_Temp\_ODR}}
+\index{Get\_Temp\_ODR@{Get\_Temp\_ODR}!LSM6DSV16X@{LSM6DSV16X}}
+\doxysubsubsection{\texorpdfstring{Get\_Temp\_ODR()}{Get\_Temp\_ODR()}}
+{\footnotesize\ttfamily LSM6\+DSV16\+XStatus\+Type\+Def LSM6\+DSV16\+X\+::\+Get\+\_\+\+Temp\+\_\+\+ODR (\begin{DoxyParamCaption}\item[{float \texorpdfstring{$\ast$}{*}}]{Odr }\end{DoxyParamCaption})}
+
+
+
+Get the temperature output data rate (ODR). 
+
+This function retrieves the output data rate (ODR) for the temperature sensor.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ out}}  & {\em Odr} & Pointer to store the temperature output data rate (ODR) in Hz.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Status of the operation.
+\begin{DoxyItemize}
+\item LSM6\+DSV16\+X\+\_\+\+OK if the operation is successful.
+\item LSM6\+DSV16\+X\+\_\+\+ERROR if the operation fails. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\Hypertarget{class_l_s_m6_d_s_v16_x_a094dbad0bb72a7e48acd59a6f7731e63}\label{class_l_s_m6_d_s_v16_x_a094dbad0bb72a7e48acd59a6f7731e63} 
+\index{LSM6DSV16X@{LSM6DSV16X}!Get\_Temp\_Raw@{Get\_Temp\_Raw}}
+\index{Get\_Temp\_Raw@{Get\_Temp\_Raw}!LSM6DSV16X@{LSM6DSV16X}}
+\doxysubsubsection{\texorpdfstring{Get\_Temp\_Raw()}{Get\_Temp\_Raw()}}
+{\footnotesize\ttfamily LSM6\+DSV16\+XStatus\+Type\+Def LSM6\+DSV16\+X\+::\+Get\+\_\+\+Temp\+\_\+\+Raw (\begin{DoxyParamCaption}\item[{int16\+\_\+t \texorpdfstring{$\ast$}{*}}]{value }\end{DoxyParamCaption})}
+
+
+
+Get the raw temperature value. 
+
+This function retrieves the raw temperature value from the sensor.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ out}}  & {\em value} & Pointer to store the raw temperature value.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Status of the operation.
+\begin{DoxyItemize}
+\item LSM6\+DSV16\+X\+\_\+\+OK if the operation is successful.
+\item LSM6\+DSV16\+X\+\_\+\+ERROR if the operation fails. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\Hypertarget{class_l_s_m6_d_s_v16_x_a996ab3abe4d370f6a624b883cea581d2}\label{class_l_s_m6_d_s_v16_x_a996ab3abe4d370f6a624b883cea581d2} 
+\index{LSM6DSV16X@{LSM6DSV16X}!Get\_X\_AxesRaw@{Get\_X\_AxesRaw}}
+\index{Get\_X\_AxesRaw@{Get\_X\_AxesRaw}!LSM6DSV16X@{LSM6DSV16X}}
+\doxysubsubsection{\texorpdfstring{Get\_X\_AxesRaw()}{Get\_X\_AxesRaw()}}
+{\footnotesize\ttfamily LSM6\+DSV16\+XStatus\+Type\+Def LSM6\+DSV16\+X\+::\+Get\+\_\+\+X\+\_\+\+Axes\+Raw (\begin{DoxyParamCaption}\item[{int16\+\_\+t \texorpdfstring{$\ast$}{*}}]{Value }\end{DoxyParamCaption})}
+
+
+
+Get the raw accelerometer data along the X, Y, and Z axes. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em Value} & Pointer to an array to store the raw data values \mbox{[}X, Y, Z\mbox{]}. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+LSM6\+DSV16\+XStatus\+Type\+Def Status of the operation. 
+\end{DoxyReturn}
+\Hypertarget{class_l_s_m6_d_s_v16_x_a26c4e2d38416313d4ce7fbde2a55df52}\label{class_l_s_m6_d_s_v16_x_a26c4e2d38416313d4ce7fbde2a55df52} 
+\index{LSM6DSV16X@{LSM6DSV16X}!Get\_X\_AxesRaw\_When\_Aval@{Get\_X\_AxesRaw\_When\_Aval}}
+\index{Get\_X\_AxesRaw\_When\_Aval@{Get\_X\_AxesRaw\_When\_Aval}!LSM6DSV16X@{LSM6DSV16X}}
+\doxysubsubsection{\texorpdfstring{Get\_X\_AxesRaw\_When\_Aval()}{Get\_X\_AxesRaw\_When\_Aval()}}
+{\footnotesize\ttfamily LSM6\+DSV16\+XStatus\+Type\+Def LSM6\+DSV16\+X\+::\+Get\+\_\+\+X\+\_\+\+Axes\+Raw\+\_\+\+When\+\_\+\+Aval (\begin{DoxyParamCaption}\item[{int16\+\_\+t \texorpdfstring{$\ast$}{*}}]{Value }\end{DoxyParamCaption})}
+
+
+
+Get the raw accelerometer data when available. 
+
+This function retrieves the raw accelerometer data when available.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ out}}  & {\em Value} & Pointer to store the raw accelerometer data.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Status of the operation.
+\begin{DoxyItemize}
+\item LSM6\+DSV16\+X\+\_\+\+OK if the operation is successful.
+\item LSM6\+DSV16\+X\+\_\+\+ERROR if the operation fails. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\Hypertarget{class_l_s_m6_d_s_v16_x_a6fab27962fa98b936301f94faebf640c}\label{class_l_s_m6_d_s_v16_x_a6fab27962fa98b936301f94faebf640c} 
+\index{LSM6DSV16X@{LSM6DSV16X}!Get\_X\_Event\_Status@{Get\_X\_Event\_Status}}
+\index{Get\_X\_Event\_Status@{Get\_X\_Event\_Status}!LSM6DSV16X@{LSM6DSV16X}}
+\doxysubsubsection{\texorpdfstring{Get\_X\_Event\_Status()}{Get\_X\_Event\_Status()}}
+{\footnotesize\ttfamily LSM6\+DSV16\+XStatus\+Type\+Def LSM6\+DSV16\+X\+::\+Get\+\_\+\+X\+\_\+\+Event\+\_\+\+Status (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_l_s_m6_d_s_v16_x___event___status__t}{LSM6\+DSV16\+X\+\_\+\+Event\+\_\+\+Status\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{Status }\end{DoxyParamCaption})}
+
+
+
+Get the event status of the \doxylink{class_l_s_m6_d_s_v16_x}{LSM6\+DSV16X} sensor. 
+
+This function retrieves various event statuses from the \doxylink{class_l_s_m6_d_s_v16_x}{LSM6\+DSV16X} sensor and populates the provided \doxylink{struct_l_s_m6_d_s_v16_x___event___status__t}{LSM6\+DSV16\+X\+\_\+\+Event\+\_\+\+Status\+\_\+t} structure with the obtained information.
+
+
+\begin{DoxyParams}{Parameters}
+{\em Status} & Pointer to the structure where the event statuses will be stored.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Status of the operation.
+\begin{DoxyItemize}
+\item LSM6\+DSV16\+X\+\_\+\+OK if the operation is successful.
+\item LSM6\+DSV16\+X\+\_\+\+ERROR if the operation fails. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\Hypertarget{class_l_s_m6_d_s_v16_x_aa2e8cc4ad40feffc76e972cd5c2453d7}\label{class_l_s_m6_d_s_v16_x_aa2e8cc4ad40feffc76e972cd5c2453d7} 
+\index{LSM6DSV16X@{LSM6DSV16X}!initialize@{initialize}}
+\index{initialize@{initialize}!LSM6DSV16X@{LSM6DSV16X}}
+\doxysubsubsection{\texorpdfstring{initialize()}{initialize()}}
+{\footnotesize\ttfamily void LSM6\+DSV16\+X\+::initialize (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Initialize the \doxylink{class_l_s_m6_d_s_v16_x}{LSM6\+DSV16X} device. 
+
+Configures communication settings based on the selected interface (I2C or SPI). \Hypertarget{class_l_s_m6_d_s_v16_x_a9ef0d588ce9957e99999055257198ab9}\label{class_l_s_m6_d_s_v16_x_a9ef0d588ce9957e99999055257198ab9} 
+\index{LSM6DSV16X@{LSM6DSV16X}!QVAR\_Disable@{QVAR\_Disable}}
+\index{QVAR\_Disable@{QVAR\_Disable}!LSM6DSV16X@{LSM6DSV16X}}
+\doxysubsubsection{\texorpdfstring{QVAR\_Disable()}{QVAR\_Disable()}}
+{\footnotesize\ttfamily LSM6\+DSV16\+XStatus\+Type\+Def LSM6\+DSV16\+X\+::\+QVAR\+\_\+\+Disable (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Disable QVAR feature. 
+
+This function disables the QVAR feature.
+
+\begin{DoxyReturn}{Returns}
+Status of the operation.
+\begin{DoxyItemize}
+\item LSM6\+DSV16\+X\+\_\+\+OK if the operation is successful.
+\item LSM6\+DSV16\+X\+\_\+\+ERROR if the operation fails. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\Hypertarget{class_l_s_m6_d_s_v16_x_a77b2be81ce339e2e339b462751d7c9a5}\label{class_l_s_m6_d_s_v16_x_a77b2be81ce339e2e339b462751d7c9a5} 
+\index{LSM6DSV16X@{LSM6DSV16X}!QVAR\_Enable@{QVAR\_Enable}}
+\index{QVAR\_Enable@{QVAR\_Enable}!LSM6DSV16X@{LSM6DSV16X}}
+\doxysubsubsection{\texorpdfstring{QVAR\_Enable()}{QVAR\_Enable()}}
+{\footnotesize\ttfamily LSM6\+DSV16\+XStatus\+Type\+Def LSM6\+DSV16\+X\+::\+QVAR\+\_\+\+Enable (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Enable QVAR feature. 
+
+This function enables the QVAR feature.
+
+\begin{DoxyReturn}{Returns}
+Status of the operation.
+\begin{DoxyItemize}
+\item LSM6\+DSV16\+X\+\_\+\+OK if the operation is successful.
+\item LSM6\+DSV16\+X\+\_\+\+ERROR if the operation fails. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\Hypertarget{class_l_s_m6_d_s_v16_x_a0478eedf4366b52b7e6e58d217f61efa}\label{class_l_s_m6_d_s_v16_x_a0478eedf4366b52b7e6e58d217f61efa} 
+\index{LSM6DSV16X@{LSM6DSV16X}!QVAR\_GetData@{QVAR\_GetData}}
+\index{QVAR\_GetData@{QVAR\_GetData}!LSM6DSV16X@{LSM6DSV16X}}
+\doxysubsubsection{\texorpdfstring{QVAR\_GetData()}{QVAR\_GetData()}}
+{\footnotesize\ttfamily LSM6\+DSV16\+XStatus\+Type\+Def LSM6\+DSV16\+X\+::\+QVAR\+\_\+\+Get\+Data (\begin{DoxyParamCaption}\item[{float \texorpdfstring{$\ast$}{*}}]{Data }\end{DoxyParamCaption})}
+
+
+
+Get QVAR data. 
+
+This function retrieves QVAR data.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ out}}  & {\em Data} & Pointer to store the QVAR data.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Status of the operation.
+\begin{DoxyItemize}
+\item LSM6\+DSV16\+X\+\_\+\+OK if the operation is successful.
+\item LSM6\+DSV16\+X\+\_\+\+ERROR if the operation fails. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\Hypertarget{class_l_s_m6_d_s_v16_x_aadce494b7c247e238f99c7ba658e0b33}\label{class_l_s_m6_d_s_v16_x_aadce494b7c247e238f99c7ba658e0b33} 
+\index{LSM6DSV16X@{LSM6DSV16X}!QVAR\_GetImpedance@{QVAR\_GetImpedance}}
+\index{QVAR\_GetImpedance@{QVAR\_GetImpedance}!LSM6DSV16X@{LSM6DSV16X}}
+\doxysubsubsection{\texorpdfstring{QVAR\_GetImpedance()}{QVAR\_GetImpedance()}}
+{\footnotesize\ttfamily LSM6\+DSV16\+XStatus\+Type\+Def LSM6\+DSV16\+X\+::\+QVAR\+\_\+\+Get\+Impedance (\begin{DoxyParamCaption}\item[{uint16\+\_\+t \texorpdfstring{$\ast$}{*}}]{val }\end{DoxyParamCaption})}
+
+
+
+Get QVAR impedance. 
+
+This function retrieves QVAR impedance.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ out}}  & {\em val} & Pointer to store the QVAR impedance.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Status of the operation.
+\begin{DoxyItemize}
+\item LSM6\+DSV16\+X\+\_\+\+OK if the operation is successful.
+\item LSM6\+DSV16\+X\+\_\+\+ERROR if the operation fails. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\Hypertarget{class_l_s_m6_d_s_v16_x_a8074ff4160e12e3aafd31f1a6e853cc6}\label{class_l_s_m6_d_s_v16_x_a8074ff4160e12e3aafd31f1a6e853cc6} 
+\index{LSM6DSV16X@{LSM6DSV16X}!QVAR\_GetStatus@{QVAR\_GetStatus}}
+\index{QVAR\_GetStatus@{QVAR\_GetStatus}!LSM6DSV16X@{LSM6DSV16X}}
+\doxysubsubsection{\texorpdfstring{QVAR\_GetStatus()}{QVAR\_GetStatus()}}
+{\footnotesize\ttfamily LSM6\+DSV16\+XStatus\+Type\+Def LSM6\+DSV16\+X\+::\+QVAR\+\_\+\+Get\+Status (\begin{DoxyParamCaption}\item[{uint8\+\_\+t \texorpdfstring{$\ast$}{*}}]{val }\end{DoxyParamCaption})}
+
+
+
+Get QVAR status. 
+
+This function retrieves QVAR status.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ out}}  & {\em val} & Pointer to store the QVAR status.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Status of the operation.
+\begin{DoxyItemize}
+\item LSM6\+DSV16\+X\+\_\+\+OK if the operation is successful.
+\item LSM6\+DSV16\+X\+\_\+\+ERROR if the operation fails. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\Hypertarget{class_l_s_m6_d_s_v16_x_a9f8b7b59ab19e5ccde2dec1ac0d48469}\label{class_l_s_m6_d_s_v16_x_a9f8b7b59ab19e5ccde2dec1ac0d48469} 
+\index{LSM6DSV16X@{LSM6DSV16X}!QVAR\_SetImpedance@{QVAR\_SetImpedance}}
+\index{QVAR\_SetImpedance@{QVAR\_SetImpedance}!LSM6DSV16X@{LSM6DSV16X}}
+\doxysubsubsection{\texorpdfstring{QVAR\_SetImpedance()}{QVAR\_SetImpedance()}}
+{\footnotesize\ttfamily LSM6\+DSV16\+XStatus\+Type\+Def LSM6\+DSV16\+X\+::\+QVAR\+\_\+\+Set\+Impedance (\begin{DoxyParamCaption}\item[{uint16\+\_\+t}]{val }\end{DoxyParamCaption})}
+
+
+
+Set QVAR impedance. 
+
+This function sets QVAR impedance.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em val} & QVAR impedance to set.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Status of the operation.
+\begin{DoxyItemize}
+\item LSM6\+DSV16\+X\+\_\+\+OK if the operation is successful.
+\item LSM6\+DSV16\+X\+\_\+\+ERROR if the operation fails. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\Hypertarget{class_l_s_m6_d_s_v16_x_aafb3c5b570d6499aea47edf3f771a969}\label{class_l_s_m6_d_s_v16_x_aafb3c5b570d6499aea47edf3f771a969} 
+\index{LSM6DSV16X@{LSM6DSV16X}!ReadID@{ReadID}}
+\index{ReadID@{ReadID}!LSM6DSV16X@{LSM6DSV16X}}
+\doxysubsubsection{\texorpdfstring{ReadID()}{ReadID()}}
+{\footnotesize\ttfamily LSM6\+DSV16\+XStatus\+Type\+Def LSM6\+DSV16\+X\+::\+Read\+ID (\begin{DoxyParamCaption}\item[{uint8\+\_\+t \texorpdfstring{$\ast$}{*}}]{val }\end{DoxyParamCaption})}
+
+
+
+Read the device ID. 
+
+This function reads the device ID of the \doxylink{class_l_s_m6_d_s_v16_x}{LSM6\+DSV16X} sensor.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ out}}  & {\em val} & Pointer to store the device ID.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Status of the operation.
+\begin{DoxyItemize}
+\item LSM6\+DSV16\+X\+\_\+\+OK if the operation is successful.
+\item LSM6\+DSV16\+X\+\_\+\+ERROR if the operation fails. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\Hypertarget{class_l_s_m6_d_s_v16_x_a47162653f6dbbd383f901f828753f98b}\label{class_l_s_m6_d_s_v16_x_a47162653f6dbbd383f901f828753f98b} 
+\index{LSM6DSV16X@{LSM6DSV16X}!Reset\_SFLP@{Reset\_SFLP}}
+\index{Reset\_SFLP@{Reset\_SFLP}!LSM6DSV16X@{LSM6DSV16X}}
+\doxysubsubsection{\texorpdfstring{Reset\_SFLP()}{Reset\_SFLP()}}
+{\footnotesize\ttfamily LSM6\+DSV16\+XStatus\+Type\+Def LSM6\+DSV16\+X\+::\+Reset\+\_\+\+SFLP (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Reset SFLP (Sensor Filtered Low Power). 
+
+This function resets the SFLP mode.
+
+\begin{DoxyReturn}{Returns}
+Status of the operation.
+\begin{DoxyItemize}
+\item LSM6\+DSV16\+X\+\_\+\+OK if the operation is successful.
+\item LSM6\+DSV16\+X\+\_\+\+ERROR if the operation fails. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\Hypertarget{class_l_s_m6_d_s_v16_x_adde3463948d409eefa9ee425b6ac9d97}\label{class_l_s_m6_d_s_v16_x_adde3463948d409eefa9ee425b6ac9d97} 
+\index{LSM6DSV16X@{LSM6DSV16X}!Set\_6D\_Orientation\_Threshold@{Set\_6D\_Orientation\_Threshold}}
+\index{Set\_6D\_Orientation\_Threshold@{Set\_6D\_Orientation\_Threshold}!LSM6DSV16X@{LSM6DSV16X}}
+\doxysubsubsection{\texorpdfstring{Set\_6D\_Orientation\_Threshold()}{Set\_6D\_Orientation\_Threshold()}}
+{\footnotesize\ttfamily LSM6\+DSV16\+XStatus\+Type\+Def LSM6\+DSV16\+X\+::\+Set\+\_\+6\+D\+\_\+\+Orientation\+\_\+\+Threshold (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{Threshold }\end{DoxyParamCaption})}
+
+
+
+Sets the threshold for 6D orientation detection on the \doxylink{class_l_s_m6_d_s_v16_x}{LSM6\+DSV16X} sensor. 
+
+This function sets the threshold for 6D orientation detection based on the provided threshold value.
+
+
+\begin{DoxyParams}{Parameters}
+{\em Threshold} & The threshold value to set. It should be one of the following\+:
+\begin{DoxyItemize}
+\item 0\+: 80 degrees.
+\item 1\+: 70 degrees.
+\item 2\+: 60 degrees.
+\item 3\+: 50 degrees.
+\end{DoxyItemize}\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Status of the operation.
+\begin{DoxyItemize}
+\item LSM6\+DSV16\+X\+\_\+\+OK if the operation is successful.
+\item LSM6\+DSV16\+X\+\_\+\+ERROR if the operation fails. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\Hypertarget{class_l_s_m6_d_s_v16_x_aa448f825368679b4f9c6ebfdfa9b5e48}\label{class_l_s_m6_d_s_v16_x_aa448f825368679b4f9c6ebfdfa9b5e48} 
+\index{LSM6DSV16X@{LSM6DSV16X}!Set\_Free\_Fall\_Duration@{Set\_Free\_Fall\_Duration}}
+\index{Set\_Free\_Fall\_Duration@{Set\_Free\_Fall\_Duration}!LSM6DSV16X@{LSM6DSV16X}}
+\doxysubsubsection{\texorpdfstring{Set\_Free\_Fall\_Duration()}{Set\_Free\_Fall\_Duration()}}
+{\footnotesize\ttfamily LSM6\+DSV16\+XStatus\+Type\+Def LSM6\+DSV16\+X\+::\+Set\+\_\+\+Free\+\_\+\+Fall\+\_\+\+Duration (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{Duration }\end{DoxyParamCaption})}
+
+
+
+Set Free Fall Duration. 
+
+Sets the duration for free fall detection in the \doxylink{class_l_s_m6_d_s_v16_x}{LSM6\+DSV16X} device.
+
+
+\begin{DoxyParams}{Parameters}
+{\em Duration} & The duration value to be set, in number of samples.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Status of the free fall duration setting operation.
+\begin{DoxyItemize}
+\item LSM6\+DSV16\+X\+\_\+\+OK if the operation is successful.
+\item LSM6\+DSV16\+X\+\_\+\+ERROR if the operation fails. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\Hypertarget{class_l_s_m6_d_s_v16_x_ac67a401c8481437c7f2d586a385ee987}\label{class_l_s_m6_d_s_v16_x_ac67a401c8481437c7f2d586a385ee987} 
+\index{LSM6DSV16X@{LSM6DSV16X}!Set\_Free\_Fall\_Threshold@{Set\_Free\_Fall\_Threshold}}
+\index{Set\_Free\_Fall\_Threshold@{Set\_Free\_Fall\_Threshold}!LSM6DSV16X@{LSM6DSV16X}}
+\doxysubsubsection{\texorpdfstring{Set\_Free\_Fall\_Threshold()}{Set\_Free\_Fall\_Threshold()}}
+{\footnotesize\ttfamily LSM6\+DSV16\+XStatus\+Type\+Def LSM6\+DSV16\+X\+::\+Set\+\_\+\+Free\+\_\+\+Fall\+\_\+\+Threshold (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{Threshold }\end{DoxyParamCaption})}
+
+
+
+Set Free Fall Threshold. 
+
+Sets the threshold for free fall detection in the \doxylink{class_l_s_m6_d_s_v16_x}{LSM6\+DSV16X} device.
+
+
+\begin{DoxyParams}{Parameters}
+{\em Threshold} & The threshold value to be set. It should be one of the predefined threshold values\+:
+\begin{DoxyItemize}
+\item LSM6\+DSV16\+X\+\_\+156\+\_\+mg
+\item LSM6\+DSV16\+X\+\_\+219\+\_\+mg
+\item LSM6\+DSV16\+X\+\_\+250\+\_\+mg
+\item LSM6\+DSV16\+X\+\_\+312\+\_\+mg
+\item LSM6\+DSV16\+X\+\_\+344\+\_\+mg
+\item LSM6\+DSV16\+X\+\_\+406\+\_\+mg
+\item LSM6\+DSV16\+X\+\_\+469\+\_\+mg
+\item LSM6\+DSV16\+X\+\_\+500\+\_\+mg
+\end{DoxyItemize}\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Status of the free fall threshold setting operation.
+\begin{DoxyItemize}
+\item LSM6\+DSV16\+X\+\_\+\+OK if the operation is successful.
+\item LSM6\+DSV16\+X\+\_\+\+ERROR if the operation fails. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\Hypertarget{class_l_s_m6_d_s_v16_x_a50db1bebe8f48fd49ddee6567fb59882}\label{class_l_s_m6_d_s_v16_x_a50db1bebe8f48fd49ddee6567fb59882} 
+\index{LSM6DSV16X@{LSM6DSV16X}!Set\_G\_Filter\_Mode@{Set\_G\_Filter\_Mode}}
+\index{Set\_G\_Filter\_Mode@{Set\_G\_Filter\_Mode}!LSM6DSV16X@{LSM6DSV16X}}
+\doxysubsubsection{\texorpdfstring{Set\_G\_Filter\_Mode()}{Set\_G\_Filter\_Mode()}}
+{\footnotesize\ttfamily LSM6\+DSV16\+XStatus\+Type\+Def LSM6\+DSV16\+X\+::\+Set\+\_\+\+G\+\_\+\+Filter\+\_\+\+Mode (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{Low\+High\+Pass\+Flag,  }\item[{uint8\+\_\+t}]{Filter\+Mode }\end{DoxyParamCaption})}
+
+
+
+Set the gyroscope filter mode. 
+
+This function sets the filter mode of the gyroscope.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em Low\+High\+Pass\+Flag} & Flag to select low-\/pass or high-\/pass filter mode. \\
+\hline
+\mbox{\texttt{ in}}  & {\em Filter\+Mode} & Filter mode to set for the gyroscope.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Status of the operation.
+\begin{DoxyItemize}
+\item LSM6\+DSV16\+X\+\_\+\+OK if the operation is successful.
+\item LSM6\+DSV16\+X\+\_\+\+ERROR if the operation fails. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\Hypertarget{class_l_s_m6_d_s_v16_x_acf3fbfc232f99cff7eead90ee4015604}\label{class_l_s_m6_d_s_v16_x_acf3fbfc232f99cff7eead90ee4015604} 
+\index{LSM6DSV16X@{LSM6DSV16X}!Set\_G\_FS@{Set\_G\_FS}}
+\index{Set\_G\_FS@{Set\_G\_FS}!LSM6DSV16X@{LSM6DSV16X}}
+\doxysubsubsection{\texorpdfstring{Set\_G\_FS()}{Set\_G\_FS()}}
+{\footnotesize\ttfamily LSM6\+DSV16\+XStatus\+Type\+Def LSM6\+DSV16\+X\+::\+Set\+\_\+\+G\+\_\+\+FS (\begin{DoxyParamCaption}\item[{int32\+\_\+t}]{Full\+Scale }\end{DoxyParamCaption})}
+
+
+
+Set the full-\/scale range (FS) of the gyroscope. 
+
+This function sets the full-\/scale range (FS) of the gyroscope to the specified value.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em Full\+Scale} & Desired full-\/scale range (FS) value in dps.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Status of the operation.
+\begin{DoxyItemize}
+\item LSM6\+DSV16\+X\+\_\+\+OK if the operation is successful.
+\item LSM6\+DSV16\+X\+\_\+\+ERROR if the operation fails. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\Hypertarget{class_l_s_m6_d_s_v16_x_a832c164d8975c1cf4be1c94d46720950}\label{class_l_s_m6_d_s_v16_x_a832c164d8975c1cf4be1c94d46720950} 
+\index{LSM6DSV16X@{LSM6DSV16X}!Set\_G\_ODR@{Set\_G\_ODR}}
+\index{Set\_G\_ODR@{Set\_G\_ODR}!LSM6DSV16X@{LSM6DSV16X}}
+\doxysubsubsection{\texorpdfstring{Set\_G\_ODR()}{Set\_G\_ODR()}}
+{\footnotesize\ttfamily LSM6\+DSV16\+XStatus\+Type\+Def LSM6\+DSV16\+X\+::\+Set\+\_\+\+G\+\_\+\+ODR (\begin{DoxyParamCaption}\item[{float}]{Odr,  }\item[{LSM6\+DSV16\+X\+\_\+\+GYRO\+\_\+\+Operating\+\_\+\+Mode\+\_\+t}]{Mode = {\ttfamily LSM6DSV16X\+\_\+GYRO\+\_\+HIGH\+\_\+PERFORMANCE\+\_\+MODE} }\end{DoxyParamCaption})}
+
+
+
+Set the output data rate (ODR) of the gyroscope. 
+
+This function sets the output data rate (ODR) of the gyroscope according to the specified mode.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em Odr} & Desired output data rate (ODR) value in Hz. \\
+\hline
+\mbox{\texttt{ in}}  & {\em Mode} & Operating mode of the gyroscope.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Status of the operation.
+\begin{DoxyItemize}
+\item LSM6\+DSV16\+X\+\_\+\+OK if the operation is successful.
+\item LSM6\+DSV16\+X\+\_\+\+ERROR if the operation fails. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\Hypertarget{class_l_s_m6_d_s_v16_x_a3c976c0c29f533b533f5dd4bc2f875ea}\label{class_l_s_m6_d_s_v16_x_a3c976c0c29f533b533f5dd4bc2f875ea} 
+\index{LSM6DSV16X@{LSM6DSV16X}!Set\_G\_ODR\_When\_Disabled@{Set\_G\_ODR\_When\_Disabled}}
+\index{Set\_G\_ODR\_When\_Disabled@{Set\_G\_ODR\_When\_Disabled}!LSM6DSV16X@{LSM6DSV16X}}
+\doxysubsubsection{\texorpdfstring{Set\_G\_ODR\_When\_Disabled()}{Set\_G\_ODR\_When\_Disabled()}}
+{\footnotesize\ttfamily LSM6\+DSV16\+XStatus\+Type\+Def LSM6\+DSV16\+X\+::\+Set\+\_\+\+G\+\_\+\+ODR\+\_\+\+When\+\_\+\+Disabled (\begin{DoxyParamCaption}\item[{float}]{Odr }\end{DoxyParamCaption})}
+
+
+
+Set the gyroscope output data rate (ODR) when the gyroscope is disabled. 
+
+This method sets the gyroscope output data rate (ODR) to the specified value when the gyroscope is disabled.
+
+
+\begin{DoxyParams}{Parameters}
+{\em Odr} & The desired gyroscope output data rate (ODR) in Hz. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+LSM6\+DSV16\+XStatus\+Type\+Def Indicates whether the operation was successful or encountered an error. 
+\end{DoxyReturn}
+\Hypertarget{class_l_s_m6_d_s_v16_x_a2488db35bc1ae15e9d963fe450af0ec4}\label{class_l_s_m6_d_s_v16_x_a2488db35bc1ae15e9d963fe450af0ec4} 
+\index{LSM6DSV16X@{LSM6DSV16X}!Set\_G\_ODR\_When\_Enabled@{Set\_G\_ODR\_When\_Enabled}}
+\index{Set\_G\_ODR\_When\_Enabled@{Set\_G\_ODR\_When\_Enabled}!LSM6DSV16X@{LSM6DSV16X}}
+\doxysubsubsection{\texorpdfstring{Set\_G\_ODR\_When\_Enabled()}{Set\_G\_ODR\_When\_Enabled()}}
+{\footnotesize\ttfamily LSM6\+DSV16\+XStatus\+Type\+Def LSM6\+DSV16\+X\+::\+Set\+\_\+\+G\+\_\+\+ODR\+\_\+\+When\+\_\+\+Enabled (\begin{DoxyParamCaption}\item[{float}]{Odr }\end{DoxyParamCaption})}
+
+
+
+Set the gyroscope output data rate (ODR) when the gyroscope is enabled. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em Odr} & The desired output data rate (ODR) in Hz. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+LSM6\+DSV16\+XStatus\+Type\+Def Indicates whether the operation was successful or encountered an error. 
+\end{DoxyReturn}
+\Hypertarget{class_l_s_m6_d_s_v16_x_aae4ebe8f840684a73e96bc91db40b697}\label{class_l_s_m6_d_s_v16_x_aae4ebe8f840684a73e96bc91db40b697} 
+\index{LSM6DSV16X@{LSM6DSV16X}!Set\_G\_Power\_Mode@{Set\_G\_Power\_Mode}}
+\index{Set\_G\_Power\_Mode@{Set\_G\_Power\_Mode}!LSM6DSV16X@{LSM6DSV16X}}
+\doxysubsubsection{\texorpdfstring{Set\_G\_Power\_Mode()}{Set\_G\_Power\_Mode()}}
+{\footnotesize\ttfamily LSM6\+DSV16\+XStatus\+Type\+Def LSM6\+DSV16\+X\+::\+Set\+\_\+\+G\+\_\+\+Power\+\_\+\+Mode (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{Power\+Mode }\end{DoxyParamCaption})}
+
+
+
+Set the gyroscope power mode. 
+
+This function sets the power mode of the gyroscope.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em Power\+Mode} & Power mode to set for the gyroscope.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Status of the operation.
+\begin{DoxyItemize}
+\item LSM6\+DSV16\+X\+\_\+\+OK if the operation is successful.
+\item LSM6\+DSV16\+X\+\_\+\+ERROR if the operation fails. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\Hypertarget{class_l_s_m6_d_s_v16_x_af6bcf3a6e2295cad2fef1864ca14cb85}\label{class_l_s_m6_d_s_v16_x_af6bcf3a6e2295cad2fef1864ca14cb85} 
+\index{LSM6DSV16X@{LSM6DSV16X}!Set\_SFLP\_Batch@{Set\_SFLP\_Batch}}
+\index{Set\_SFLP\_Batch@{Set\_SFLP\_Batch}!LSM6DSV16X@{LSM6DSV16X}}
+\doxysubsubsection{\texorpdfstring{Set\_SFLP\_Batch()}{Set\_SFLP\_Batch()}}
+{\footnotesize\ttfamily LSM6\+DSV16\+XStatus\+Type\+Def LSM6\+DSV16\+X\+::\+Set\+\_\+\+SFLP\+\_\+\+Batch (\begin{DoxyParamCaption}\item[{bool}]{Game\+Rotation,  }\item[{bool}]{Gravity,  }\item[{bool}]{g\+Bias }\end{DoxyParamCaption})}
+
+
+
+Set SFLP Batch. 
+
+This function sets the SFLP Batch configuration.
+
+
+\begin{DoxyParams}{Parameters}
+{\em Game\+Rotation} & Flag to enable or disable Game Rotation. \\
+\hline
+{\em Gravity} & Flag to enable or disable Gravity. \\
+\hline
+{\em g\+Bias} & Flag to enable or disable Gyroscope Bias.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Status of the operation.
+\begin{DoxyItemize}
+\item LSM6\+DSV16\+X\+\_\+\+OK if the operation is successful.
+\item LSM6\+DSV16\+X\+\_\+\+ERROR if the operation fails. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\Hypertarget{class_l_s_m6_d_s_v16_x_a2134add05aedfb0eeacea97fc9105c1c}\label{class_l_s_m6_d_s_v16_x_a2134add05aedfb0eeacea97fc9105c1c} 
+\index{LSM6DSV16X@{LSM6DSV16X}!Set\_SFLP\_GBIAS@{Set\_SFLP\_GBIAS}}
+\index{Set\_SFLP\_GBIAS@{Set\_SFLP\_GBIAS}!LSM6DSV16X@{LSM6DSV16X}}
+\doxysubsubsection{\texorpdfstring{Set\_SFLP\_GBIAS()}{Set\_SFLP\_GBIAS()}}
+{\footnotesize\ttfamily LSM6\+DSV16\+XStatus\+Type\+Def LSM6\+DSV16\+X\+::\+Set\+\_\+\+SFLP\+\_\+\+GBIAS (\begin{DoxyParamCaption}\item[{float}]{x,  }\item[{float}]{y,  }\item[{float}]{z }\end{DoxyParamCaption})}
+
+
+
+Set the Gyroscope Bias for SFLP (Sensor Filtered Low Power) mode. 
+
+This function sets the Gyroscope Bias values for SFLP mode.
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & The Gyroscope Bias value for the X-\/axis. \\
+\hline
+{\em y} & The Gyroscope Bias value for the Y-\/axis. \\
+\hline
+{\em z} & The Gyroscope Bias value for the Z-\/axis.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Status of the operation.
+\begin{DoxyItemize}
+\item LSM6\+DSV16\+X\+\_\+\+OK if the operation is successful.
+\item LSM6\+DSV16\+X\+\_\+\+ERROR if the operation fails. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\Hypertarget{class_l_s_m6_d_s_v16_x_a15625ea6cb53b45ca39f25314acc00e3}\label{class_l_s_m6_d_s_v16_x_a15625ea6cb53b45ca39f25314acc00e3} 
+\index{LSM6DSV16X@{LSM6DSV16X}!Set\_SFLP\_ODR@{Set\_SFLP\_ODR}}
+\index{Set\_SFLP\_ODR@{Set\_SFLP\_ODR}!LSM6DSV16X@{LSM6DSV16X}}
+\doxysubsubsection{\texorpdfstring{Set\_SFLP\_ODR()}{Set\_SFLP\_ODR()}}
+{\footnotesize\ttfamily LSM6\+DSV16\+XStatus\+Type\+Def LSM6\+DSV16\+X\+::\+Set\+\_\+\+SFLP\+\_\+\+ODR (\begin{DoxyParamCaption}\item[{float}]{odr }\end{DoxyParamCaption})}
+
+
+
+Set the SFLP (Sensor Filtered Low Power) data rate. 
+
+This function sets the SFLP data rate based on the given parameter.
+
+
+\begin{DoxyParams}{Parameters}
+{\em odr} & The desired output data rate (in Hz).\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Status of the operation.
+\begin{DoxyItemize}
+\item LSM6\+DSV16\+X\+\_\+\+OK if the operation is successful.
+\item LSM6\+DSV16\+X\+\_\+\+ERROR if the operation fails. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\Hypertarget{class_l_s_m6_d_s_v16_x_a56aa513b06fe071ab1db04d9afc54fc8}\label{class_l_s_m6_d_s_v16_x_a56aa513b06fe071ab1db04d9afc54fc8} 
+\index{LSM6DSV16X@{LSM6DSV16X}!Set\_Temp\_ODR@{Set\_Temp\_ODR}}
+\index{Set\_Temp\_ODR@{Set\_Temp\_ODR}!LSM6DSV16X@{LSM6DSV16X}}
+\doxysubsubsection{\texorpdfstring{Set\_Temp\_ODR()}{Set\_Temp\_ODR()}}
+{\footnotesize\ttfamily LSM6\+DSV16\+XStatus\+Type\+Def LSM6\+DSV16\+X\+::\+Set\+\_\+\+Temp\+\_\+\+ODR (\begin{DoxyParamCaption}\item[{float}]{Odr }\end{DoxyParamCaption})}
+
+
+
+Set the temperature output data rate (ODR). 
+
+This function sets the output data rate (ODR) for the temperature sensor.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em Odr} & Temperature output data rate (ODR) to set in Hz.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Status of the operation.
+\begin{DoxyItemize}
+\item LSM6\+DSV16\+X\+\_\+\+OK if the operation is successful.
+\item LSM6\+DSV16\+X\+\_\+\+ERROR if the operation fails. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\Hypertarget{class_l_s_m6_d_s_v16_x_a3131d9d208a7579cc6e395d1a3ceb315}\label{class_l_s_m6_d_s_v16_x_a3131d9d208a7579cc6e395d1a3ceb315} 
+\index{LSM6DSV16X@{LSM6DSV16X}!Set\_Wake\_Up\_Duration@{Set\_Wake\_Up\_Duration}}
+\index{Set\_Wake\_Up\_Duration@{Set\_Wake\_Up\_Duration}!LSM6DSV16X@{LSM6DSV16X}}
+\doxysubsubsection{\texorpdfstring{Set\_Wake\_Up\_Duration()}{Set\_Wake\_Up\_Duration()}}
+{\footnotesize\ttfamily LSM6\+DSV16\+XStatus\+Type\+Def LSM6\+DSV16\+X\+::\+Set\+\_\+\+Wake\+\_\+\+Up\+\_\+\+Duration (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{Duration }\end{DoxyParamCaption})}
+
+
+
+Set Wake-\/\+Up Duration. 
+
+Sets the wake-\/up duration value for the \doxylink{class_l_s_m6_d_s_v16_x}{LSM6\+DSV16X} device.
+
+
+\begin{DoxyParams}{Parameters}
+{\em Duration} & Wake-\/up duration value to be set.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Status of the wake-\/up duration setting operation.
+\begin{DoxyItemize}
+\item LSM6\+DSV16\+X\+\_\+\+OK if the operation is successful.
+\item LSM6\+DSV16\+X\+\_\+\+ERROR if the operation fails. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\Hypertarget{class_l_s_m6_d_s_v16_x_a2ce542a0911b27749814a780e8dba991}\label{class_l_s_m6_d_s_v16_x_a2ce542a0911b27749814a780e8dba991} 
+\index{LSM6DSV16X@{LSM6DSV16X}!Set\_Wake\_Up\_Threshold@{Set\_Wake\_Up\_Threshold}}
+\index{Set\_Wake\_Up\_Threshold@{Set\_Wake\_Up\_Threshold}!LSM6DSV16X@{LSM6DSV16X}}
+\doxysubsubsection{\texorpdfstring{Set\_Wake\_Up\_Threshold()}{Set\_Wake\_Up\_Threshold()}}
+{\footnotesize\ttfamily LSM6\+DSV16\+XStatus\+Type\+Def LSM6\+DSV16\+X\+::\+Set\+\_\+\+Wake\+\_\+\+Up\+\_\+\+Threshold (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{Threshold }\end{DoxyParamCaption})}
+
+
+
+Set Wake-\/\+Up Threshold. 
+
+Sets the wake-\/up threshold value for the \doxylink{class_l_s_m6_d_s_v16_x}{LSM6\+DSV16X} device.
+
+
+\begin{DoxyParams}{Parameters}
+{\em Threshold} & Wake-\/up threshold value to be set.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Status of the wake-\/up threshold setting operation.
+\begin{DoxyItemize}
+\item LSM6\+DSV16\+X\+\_\+\+OK if the operation is successful.
+\item LSM6\+DSV16\+X\+\_\+\+ERROR if the operation fails. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\Hypertarget{class_l_s_m6_d_s_v16_x_a72004eb0fc6012e8bcaa734e8b9dc4f4}\label{class_l_s_m6_d_s_v16_x_a72004eb0fc6012e8bcaa734e8b9dc4f4} 
+\index{LSM6DSV16X@{LSM6DSV16X}!Set\_X\_FS@{Set\_X\_FS}}
+\index{Set\_X\_FS@{Set\_X\_FS}!LSM6DSV16X@{LSM6DSV16X}}
+\doxysubsubsection{\texorpdfstring{Set\_X\_FS()}{Set\_X\_FS()}}
+{\footnotesize\ttfamily LSM6\+DSV16\+XStatus\+Type\+Def LSM6\+DSV16\+X\+::\+Set\+\_\+\+X\+\_\+\+FS (\begin{DoxyParamCaption}\item[{int32\+\_\+t}]{Full\+Scale }\end{DoxyParamCaption})}
+
+
+
+Set the full-\/scale range for the X axis. 
+
+This function sets the full-\/scale range for the X axis accelerometer.
+
+
+\begin{DoxyParams}{Parameters}
+{\em Full\+Scale} & Full-\/scale range to set for the X axis. Valid values are\+:
+\begin{DoxyItemize}
+\item 2\+: ±2g
+\item 4\+: ±4g
+\item 8\+: ±8g
+\item 16\+: ±16g
+\end{DoxyItemize}\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Status of the operation.
+\begin{DoxyItemize}
+\item LSM6\+DSV16\+X\+\_\+\+OK if the operation is successful.
+\item LSM6\+DSV16\+X\+\_\+\+ERROR if the operation fails. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\Hypertarget{class_l_s_m6_d_s_v16_x_a94752de123a71b6bd68ddc742521650b}\label{class_l_s_m6_d_s_v16_x_a94752de123a71b6bd68ddc742521650b} 
+\index{LSM6DSV16X@{LSM6DSV16X}!Set\_X\_ODR@{Set\_X\_ODR}}
+\index{Set\_X\_ODR@{Set\_X\_ODR}!LSM6DSV16X@{LSM6DSV16X}}
+\doxysubsubsection{\texorpdfstring{Set\_X\_ODR()}{Set\_X\_ODR()}}
+{\footnotesize\ttfamily LSM6\+DSV16\+XStatus\+Type\+Def LSM6\+DSV16\+X\+::\+Set\+\_\+\+X\+\_\+\+ODR (\begin{DoxyParamCaption}\item[{float}]{Odr,  }\item[{LSM6\+DSV16\+X\+\_\+\+ACC\+\_\+\+Operating\+\_\+\+Mode\+\_\+t}]{Mode = {\ttfamily LSM6DSV16X\+\_\+ACC\+\_\+HIGH\+\_\+PERFORMANCE\+\_\+MODE} }\end{DoxyParamCaption})}
+
+
+
+Set the output data rate (ODR) for the X axis accelerometer. 
+
+This function sets the output data rate (ODR) for the X axis accelerometer based on the specified mode.
+
+
+\begin{DoxyParams}{Parameters}
+{\em Odr} & Output data rate to set. \\
+\hline
+{\em Mode} & Operating mode for the accelerometer.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Status of the operation.
+\begin{DoxyItemize}
+\item LSM6\+DSV16\+X\+\_\+\+OK if the operation is successful.
+\item LSM6\+DSV16\+X\+\_\+\+ERROR if the operation fails. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\Hypertarget{class_l_s_m6_d_s_v16_x_ad8c229338e775a3a0322ccc128d2de49}\label{class_l_s_m6_d_s_v16_x_ad8c229338e775a3a0322ccc128d2de49} 
+\index{LSM6DSV16X@{LSM6DSV16X}!Set\_X\_ODR\_When\_Disabled@{Set\_X\_ODR\_When\_Disabled}}
+\index{Set\_X\_ODR\_When\_Disabled@{Set\_X\_ODR\_When\_Disabled}!LSM6DSV16X@{LSM6DSV16X}}
+\doxysubsubsection{\texorpdfstring{Set\_X\_ODR\_When\_Disabled()}{Set\_X\_ODR\_When\_Disabled()}}
+{\footnotesize\ttfamily LSM6\+DSV16\+XStatus\+Type\+Def LSM6\+DSV16\+X\+::\+Set\+\_\+\+X\+\_\+\+ODR\+\_\+\+When\+\_\+\+Disabled (\begin{DoxyParamCaption}\item[{float}]{Odr }\end{DoxyParamCaption})}
+
+
+
+Set the output data rate (ODR) for the X axis accelerometer when disabled. 
+
+This function sets the output data rate (ODR) for the X axis accelerometer when it is disabled.
+
+
+\begin{DoxyParams}{Parameters}
+{\em Odr} & Output data rate to set.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Status of the operation.
+\begin{DoxyItemize}
+\item LSM6\+DSV16\+X\+\_\+\+OK if the operation is successful.
+\item LSM6\+DSV16\+X\+\_\+\+ERROR if the operation fails. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\Hypertarget{class_l_s_m6_d_s_v16_x_a19588d698ef1daaef9779f5c851160a6}\label{class_l_s_m6_d_s_v16_x_a19588d698ef1daaef9779f5c851160a6} 
+\index{LSM6DSV16X@{LSM6DSV16X}!Set\_X\_ODR\_When\_Enabled@{Set\_X\_ODR\_When\_Enabled}}
+\index{Set\_X\_ODR\_When\_Enabled@{Set\_X\_ODR\_When\_Enabled}!LSM6DSV16X@{LSM6DSV16X}}
+\doxysubsubsection{\texorpdfstring{Set\_X\_ODR\_When\_Enabled()}{Set\_X\_ODR\_When\_Enabled()}}
+{\footnotesize\ttfamily LSM6\+DSV16\+XStatus\+Type\+Def LSM6\+DSV16\+X\+::\+Set\+\_\+\+X\+\_\+\+ODR\+\_\+\+When\+\_\+\+Enabled (\begin{DoxyParamCaption}\item[{float}]{Odr }\end{DoxyParamCaption})}
+
+
+
+Set the output data rate (ODR) for the X axis accelerometer when enabled. 
+
+This function sets the output data rate (ODR) for the X axis accelerometer when it is enabled.
+
+
+\begin{DoxyParams}{Parameters}
+{\em Odr} & Output data rate to set.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Status of the operation.
+\begin{DoxyItemize}
+\item LSM6\+DSV16\+X\+\_\+\+OK if the operation is successful.
+\item LSM6\+DSV16\+X\+\_\+\+ERROR if the operation fails. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\Hypertarget{class_l_s_m6_d_s_v16_x_a404252728c628b3508167e442497f6e6}\label{class_l_s_m6_d_s_v16_x_a404252728c628b3508167e442497f6e6} 
+\index{LSM6DSV16X@{LSM6DSV16X}!Test\_G\_IMU@{Test\_G\_IMU}}
+\index{Test\_G\_IMU@{Test\_G\_IMU}!LSM6DSV16X@{LSM6DSV16X}}
+\doxysubsubsection{\texorpdfstring{Test\_G\_IMU()}{Test\_G\_IMU()}}
+{\footnotesize\ttfamily LSM6\+DSV16\+XStatus\+Type\+Def LSM6\+DSV16\+X\+::\+Test\+\_\+\+G\+\_\+\+IMU (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{Test\+Type = {\ttfamily LSM6DSV16X\+\_\+GY\+\_\+ST\+\_\+POSITIVE} }\end{DoxyParamCaption})}
+
+
+
+Perform gyroscope self-\/test. 
+
+This function performs the gyroscope self-\/test.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em Test\+Type} & Type of self-\/test to perform.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Status of the self-\/test.
+\begin{DoxyItemize}
+\item LSM6\+DSV16\+X\+\_\+\+OK if the self-\/test passes.
+\item LSM6\+DSV16\+X\+\_\+\+ERROR if the self-\/test fails. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\Hypertarget{class_l_s_m6_d_s_v16_x_a12f84ad247cabd12084c2900fc2e7ea3}\label{class_l_s_m6_d_s_v16_x_a12f84ad247cabd12084c2900fc2e7ea3} 
+\index{LSM6DSV16X@{LSM6DSV16X}!Test\_IMU@{Test\_IMU}}
+\index{Test\_IMU@{Test\_IMU}!LSM6DSV16X@{LSM6DSV16X}}
+\doxysubsubsection{\texorpdfstring{Test\_IMU()}{Test\_IMU()}}
+{\footnotesize\ttfamily LSM6\+DSV16\+XStatus\+Type\+Def LSM6\+DSV16\+X\+::\+Test\+\_\+\+IMU (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{XTest\+Type,  }\item[{uint8\+\_\+t}]{GTest\+Type }\end{DoxyParamCaption})}
+
+
+
+Test the IMU functionality. 
+
+This function tests the functionality of the IMU by performing X-\/axis and gyroscope tests.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em XTest\+Type} & Type of X-\/axis test to perform. \\
+\hline
+\mbox{\texttt{ in}}  & {\em GTest\+Type} & Type of gyroscope test to perform.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Status of the operation.
+\begin{DoxyItemize}
+\item LSM6\+DSV16\+X\+\_\+\+OK if the IMU test is successful.
+\item LSM6\+DSV16\+X\+\_\+\+ERROR if the IMU test fails. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\Hypertarget{class_l_s_m6_d_s_v16_x_a83e933e8132d0b23de9a4d83092c18b5}\label{class_l_s_m6_d_s_v16_x_a83e933e8132d0b23de9a4d83092c18b5} 
+\index{LSM6DSV16X@{LSM6DSV16X}!Test\_X\_IMU@{Test\_X\_IMU}}
+\index{Test\_X\_IMU@{Test\_X\_IMU}!LSM6DSV16X@{LSM6DSV16X}}
+\doxysubsubsection{\texorpdfstring{Test\_X\_IMU()}{Test\_X\_IMU()}}
+{\footnotesize\ttfamily LSM6\+DSV16\+XStatus\+Type\+Def LSM6\+DSV16\+X\+::\+Test\+\_\+\+X\+\_\+\+IMU (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{Test\+Type }\end{DoxyParamCaption})}
+
+
+
+Perform X-\/axis accelerometer self-\/test. 
+
+This function performs the X-\/axis accelerometer self-\/test.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em Test\+Type} & Type of self-\/test to perform.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Status of the self-\/test.
+\begin{DoxyItemize}
+\item LSM6\+DSV16\+X\+\_\+\+OK if the self-\/test passes.
+\item LSM6\+DSV16\+X\+\_\+\+ERROR if the self-\/test fails. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+LSM6\+DSV16\+X.\+h\item 
+LSM6\+DSV16\+X.\+cpp\end{DoxyCompactItemize}
