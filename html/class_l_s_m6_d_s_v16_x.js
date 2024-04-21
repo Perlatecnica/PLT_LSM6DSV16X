@@ -72,6 +72,7 @@ var class_l_s_m6_d_s_v16_x =
     [ "Get_MLC_Status", "class_l_s_m6_d_s_v16_x.html#a8a19466118d40004966366470813e120", null ],
     [ "Get_Temp_ODR", "class_l_s_m6_d_s_v16_x.html#a3053b1a75efbf71b59aab56daf21a931", null ],
     [ "Get_Temp_Raw", "class_l_s_m6_d_s_v16_x.html#a094dbad0bb72a7e48acd59a6f7731e63", null ],
+    [ "Get_X_Axes", "class_l_s_m6_d_s_v16_x.html#ac916b4cee2989affea5ff7e4905efd80", null ],
     [ "Get_X_AxesRaw", "class_l_s_m6_d_s_v16_x.html#a996ab3abe4d370f6a624b883cea581d2", null ],
     [ "Get_X_AxesRaw_When_Aval", "class_l_s_m6_d_s_v16_x.html#a26c4e2d38416313d4ce7fbde2a55df52", null ],
     [ "Get_X_Event_Status", "class_l_s_m6_d_s_v16_x.html#a6fab27962fa98b936301f94faebf640c", null ],
