@@ -29,7 +29,7 @@ SOFTWARE.
 
 #include "mbed.h"
 #include <cstdint>
-#include ".\registers.h"
+#include "registers.h"
 
 
 
