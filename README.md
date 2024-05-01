@@ -26,4 +26,4 @@ The LSM6DSV16X embeds an analog hub able to connect an external analog input and
 - **[xNucleo-IKS4A1_LSM6DS1V6X_mbedOS_011-FIFO_Interrupt](https://github.com/Perlatecnica/xNucleo-IKS4A1_LSM6DSV16X_mbedOS_011-FIFO_Interrupt):** This application shows how to get accelerometer and gyroscope data from FIFO using interrupt and print them on terminal.
 
 ## Official Documentation
-[LSM6DSV16X Documentation] (https://www.st.com/en/mems-and-sensors/lsm6dsv16x.html)
+[LSM6DSV16X Documentation](https://www.st.com/en/mems-and-sensors/lsm6dsv16x.html)
