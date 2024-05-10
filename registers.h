@@ -372,8 +372,7 @@ typedef enum {
   LSM6DSV16X_GY_XTREME        = 0x7,
 } lsm6dsv16x_filt_gy_lp1_bandwidth_t;
 
-typedef struct {
-#if DRV_BYTE_ORDER == DRV_LITTLE_ENDIAN
+typedef struct{
   uint8_t bit0       : 1;
   uint8_t bit1       : 1;
   uint8_t bit2       : 1;
@@ -382,17 +381,7 @@ typedef struct {
   uint8_t bit5       : 1;
   uint8_t bit6       : 1;
   uint8_t bit7       : 1;
-#elif DRV_BYTE_ORDER == DRV_BIG_ENDIAN
-  uint8_t bit7       : 1;
-  uint8_t bit6       : 1;
-  uint8_t bit5       : 1;
-  uint8_t bit4       : 1;
-  uint8_t bit3       : 1;
-  uint8_t bit2       : 1;
-  uint8_t bit1       : 1;
-  uint8_t bit0       : 1;
-#endif /* DRV_BYTE_ORDER */
-} bitwise_t;
+} lsm6dsv16x_bitwise_t;
 
 
 #define LSM6DSV16X_FUNC_CFG_ACCESS              0x1U
@@ -3732,7 +3721,7 @@ typedef union {
   lsm6dsv16x_slv3_config_t              slv3_config;
   lsm6dsv16x_datawrite_slv0_t           datawrite_slv0;
   lsm6dsv16x_status_master_t            status_master;
-  bitwise_t                             bitwise;
+  lsm6dsv16x_bitwise_t                             bitwise;
   uint8_t                               byte;
 } lsm6dsv16x_reg_t;
 
